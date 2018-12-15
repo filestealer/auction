@@ -3,6 +3,8 @@ import { hot } from 'react-hot-loader';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import HelloWorld from './components/hello-world';
 
+import img from '../images/1.png';
+
 const Index = () => <h2>Home</h2>;
 const About = () => <h2>About</h2>;
 const Users = () => <h2>Users</h2>;
@@ -33,6 +35,7 @@ class App extends Component {
               </li>
             </ul>
           </nav>
+          <img src={img} alt="" />
 
           <Route path="/" exact component={Index} />
           <Route path="/about/" component={About} />
