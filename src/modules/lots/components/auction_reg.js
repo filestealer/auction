@@ -14,6 +14,16 @@ class AuctionReg extends Component {
           <div className={styles.container}>
             <form>
               <h2>1. Опишите запрос</h2>
+              <div>
+                <select
+                  style={{
+                    width: '100%',
+                    marginBottom: '15px',
+                  }}
+                >
+                  <option value={'category'}>Выберите категорию</option>
+                </select>
+              </div>
               <div className={styles.fields}>
                 <div className={styles.textarea_block}>
                   <textarea
@@ -63,7 +73,7 @@ class AuctionReg extends Component {
                 </div>
 
                 <div className={styles.order_date}>
-                  <div className={styles.date_box}>
+                  <div>
                     <div className={styles.label}>Дата поставки</div>
                     <input type="date" name="date" placeholder="дд.мм.гггг" />
                   </div>
@@ -105,6 +115,13 @@ class AuctionReg extends Component {
                     </select>
                   </div>
                   <a className={styles.add_node} />
+                </div>
+              </div>
+              <h2>4. Файлы</h2>
+              <div className={styles.fields}>
+                <div className={styles.order_address}>
+                  <span>Загрузить файлы спецификации</span>
+                  <a className={styles.delete_node} />
                 </div>
               </div>
               <div className={styles.center}>

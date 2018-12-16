@@ -1395,6 +1395,7 @@ textarea {
   width: 20px;
   height: 20px;
   margin-left: 18px;
+  cursor: pointer;
 }
 .auction_reg_content .container form .fields .order_address .delete_node {
   background: url(../images/order-add-point.png) no-repeat center center;
@@ -1403,6 +1404,7 @@ textarea {
   width: 20px;
   height: 20px;
   margin-left: 18px;
+  cursor: pointer;
 }
 .auction_reg_content .container form .fields .order_date {
   margin-top: 15px;
