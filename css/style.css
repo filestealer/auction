@@ -31,7 +31,7 @@ body {
   height: 18px;
   width: 16px;
 }
-.header .login-popup {
+.header .login_popup {
   display: none;
   position: absolute;
   z-index: 2;
@@ -39,7 +39,7 @@ body {
   right: 0px;
   color: #fff;
 }
-.header .login-popup > div {
+.header .login_popup > div {
   background: #464646;
   display: inline-block;
   width: 20px;
@@ -62,7 +62,7 @@ body {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-.header .login-popup > div a {
+.header .login_popup > div a {
   display: inline-block;
   color: #fff;
   font-weight: bold;
@@ -73,7 +73,7 @@ body {
   transform: skew(-20deg);
   text-decoration: none;
 }
-.header .login-popup form {
+.header .login_popup form {
   background: #464646;
   display: inline-block;
   position: relative;
@@ -86,7 +86,7 @@ body {
   vertical-align: top;
   font-size: 14px;
 }
-.header .login-popup form:before {
+.header .login_popup form:before {
   content: '';
   position: absolute;
   background: #464646;
@@ -103,27 +103,27 @@ body {
   -moz-box-shadow: -2px 5px 0px 0px #000000;
   box-shadow: -2px 5px 0px 0px #000000;
 }
-.header .login-popup form h4 {
+.header .login_popup form h4 {
   margin: 0px;
   margin-top: 10px;
   padding-left: 50px;
   font-weight: normal;
   font-size: 16px;
 }
-.header .login-popup form p {
+.header .login_popup form p {
   margin: 0px;
   margin-top: 9px;
   position: relative;
 }
-.header .login-popup form p label {
+.header .login_popup form p label {
   width: 50px;
   display: inline-block;
 }
-.header .login-popup form p label:before {
+.header .login_popup form p label:before {
   content: ' ';
   display: block;
 }
-.header .login-popup form p input:not([type='submit']) {
+.header .login_popup form p input:not([type='submit']) {
   background: #fff;
   width: 180px;
   height: 16px;
@@ -134,7 +134,7 @@ body {
   border: none;
   border-radius: 0px;
 }
-.header .login-popup form p span {
+.header .login_popup form p span {
   display: inline-block;
   -webkit-transform: skew(-7deg);
   -moz-transform: skew(-7deg);
@@ -147,7 +147,7 @@ body {
   margin-left: 50px;
   margin-right: 10px;
 }
-.header .login-popup form p span input {
+.header .login_popup form p span input {
   -webkit-transform: skew(7deg);
   -moz-transform: skew(7deg);
   -ms-transform: skew(7deg);
@@ -159,15 +159,15 @@ body {
   border: none;
   border-radius: 0px;
 }
-.header .login-popup form p a {
+.header .login_popup form p a {
   color: #fff;
   position: relative;
 }
-.header .login-popup form a {
+.header .login_popup form a {
   color: #fff;
   position: relative;
 }
-.header .login-popup form .register {
+.header .login_popup form .register {
   margin-left: 50px;
 }
 .header .container {
