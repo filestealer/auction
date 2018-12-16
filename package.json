@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=production webpack",
     "format": "prettier --write 'packages/**/*.js'",
     "test": "jest --watchAll --coverage",
-    "precommit": "lint-staged"
+    "precommit": ""
   },
   "lint-staged": {
     "*.{js,jsx,css,md}": [
@@ -87,7 +87,6 @@
     "@babel/register": "7.0.0",
     "@babel/runtime": "7.2.0",
     "babel-core": "7.0.0-beta.3",
-    "babel-eslint": "10.0.1",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.4",
     "babel-plugin-lodash": "3.3.4",
@@ -98,16 +97,6 @@
     "css-loader": "1.0.1",
     "enzyme": "3.7.0",
     "enzyme-adapter-react-16": "1.7.0",
-    "eslint": "5.9.0",
-    "eslint-config-airbnb": "17.1.0",
-    "eslint-config-prettier": "3.3.0",
-    "eslint-loader": "2.1.1",
-    "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-jest": "22.1.2",
-    "eslint-plugin-jsx-a11y": "6.1.2",
-    "eslint-plugin-prettier": "3.0.0",
-    "eslint-plugin-react": "7.11.1",
-    "eslint-watch": "4.0.2",
     "file-loader": "2.0.0",
     "html-webpack-plugin": "3.2.0",
     "husky": "1.2.0",

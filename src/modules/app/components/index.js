@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import {test_auth} from '../../../api/user';
+import { test_auth } from '../../../api/user';
 // import styles from '../../../css/style.css'
 
-class App extends  React.PureComponent {
+class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
@@ -12,7 +12,7 @@ class App extends  React.PureComponent {
 
   testApi = () => {
     console.log('test click');
-    this.props.signIn({email: 'andrey2@osmushko.com', password: '1q2w3e4r'})
+    this.props.signIn({ email: 'andrey2@osmushko.com', password: '1q2w3e4r' });
   };
 
   getProfile = () => {
@@ -28,7 +28,6 @@ class App extends  React.PureComponent {
     this.props.createLot();
   };
 
-
   render() {
     return (
       <div>
@@ -43,6 +42,9 @@ class App extends  React.PureComponent {
             <li>
               <Link to="/lot/3/">Lot</Link>
             </li>
+            <li>
+              <Link to="/auction_reg/">Auction_reg</Link>
+            </li>
           </ul>
         </nav>
         <button onClick={this.testApi}>click</button>
@@ -50,8 +52,7 @@ class App extends  React.PureComponent {
         <button onClick={this.openLots}>openLots</button>
         <button onClick={this.createLot}>Create LOT</button>
       </div>
-
     );
   }
 }
-export default App
+export default App;

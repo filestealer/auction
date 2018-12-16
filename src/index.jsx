@@ -7,11 +7,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import rootReducer from './reducers';
-import {store} from './store';
+import { store } from './store';
 
 // const history = createBrowserHistory();
 
-import {history} from 'utils/history'
+import { history } from 'utils/history';
 const render = () => {
   ReactDOM.render(
     <AppContainer>
@@ -19,21 +19,21 @@ const render = () => {
         <App history={history} />
       </Provider>
     </AppContainer>,
-    document.getElementById('app')
-  )
-}
+    document.getElementById('app'),
+  );
+};
 
 render();
 
-// // Hot reloading
-// if (module.hot) {
-//   // Reload components
-//   module.hot.accept('./App', () => {
-//     render()
-//   })
-//
-//   // Reload reducers
-//   module.hot.accept('./reducers', () => {
-//     store.replaceReducer(rootReducer(history))
-//   })
-// }
+// Hot reloading
+if (module.hot) {
+  // Reload components
+  module.hot.accept('./App', () => {
+    render();
+  });
+
+  // Reload reducers
+  module.hot.accept('./reducers', () => {
+    store.replaceReducer(rootReducer(history));
+  });
+}
