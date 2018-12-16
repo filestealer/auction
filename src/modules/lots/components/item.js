@@ -5,30 +5,40 @@ import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
 import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
+import moment from 'moment';
+moment().format();
 
 class Lot extends Component {
+
+  // id: item.id,
+  // category: item.request_category,
+  // publish_date: item.created,
+  // description: item.request_description,
+  // delivery_address: item.delivery_address,
+  // expired_date: item.contract_expiration_date,
+  //
   render() {
     return (
       <div>
         <div id="app">
           <Header />
-          <TopBlock text="Заказ №00000696" />
+          <TopBlock text={"Заказ №" + this.props.id} />
         </div>
 
         <div className={styles.lot_content}>
           <div className={styles.container}>
-            <h1 className={styles.title}>Трубы</h1>
+            <h1 className={styles.title}>{this.props.category}</h1>
             <h3 />
             <div className={styles.main_part}>
               <input type="hidden" name="lot-id" value="00000696" />
-              <p>Трубы</p>
+              <p>{this.props.description}</p>
               <div className={styles.columns}>
                 <div className={styles.column + ' ' + styles.left}>
                   <div className={styles.when_date + ' ' + styles.back}>
                     <span className={styles.name}>Когда нужно:</span>
                     <span className={styles.date}>
-                      20 Ноябрь
-                      <span className={styles.time}>00:00</span>
+                      {moment(this.props.expired_date).format('DD-MM-YYYY')}
+                      <span className={styles.time}>{moment(this.props.expired_date).format('HH:mm')}</span>
                     </span>
                   </div>
 
@@ -50,16 +60,16 @@ class Lot extends Component {
                     <div className={styles.destination_holder}>
                       <div className={styles.flex_box}>
                         <div className={styles.from}>
-                          <span className={styles.city}>Астана</span>
+                          <span className={styles.city}>{this.props.delivery_address}</span>
                           <span className={styles.address} />
                         </div>
-                        <i />
+                        {/*<i />*/}
                         <div className={styles.to}>
-                          <span className={styles.city}>Алматы</span>
+                          <span className={styles.city}></span>
                           <span className={styles.address} />
                         </div>
                       </div>
-                      <span className={styles.distance}>1 216 км</span>
+                      <span className={styles.distance}></span>
                       <div className={styles.flex_box}>
                         <input type="hidden" name="geo_saved" value="0" />
                         <input
@@ -78,13 +88,13 @@ class Lot extends Component {
                           <div className={styles.box}>
                             <div className={styles.status}>
                               Статус:
-                              <span>Активен</span>
+                              <span>{this.props.status}</span>
                             </div>
                             <div className={styles.create_at}>
-                              Создан: 19 Ноябрь
+                              Создан: {moment(this.props.publish_date).format('DD-MM-YYYY')}
                             </div>
                             <div className={styles.finish}>
-                              <strong>Окончание: 22 Ноябрь</strong>
+                              <strong>Окончание: {moment(this.props.expired_date).format('DD-MM-YYYY')}</strong>
                             </div>
                           </div>
                         </aside>

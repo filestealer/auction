@@ -8,7 +8,7 @@ export function openLots() {
 }
 
 export function openLot(id) {
-  return {type: t.OPEN_LOTS, payload: id}
+  return {type: t.OPEN_LOT, payload: id}
 }
 
 export function createLot() {

@@ -5,12 +5,11 @@ import List from '../components/list';
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-
+    list: state.lots.list || []
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  test: () => dispatch(fetchList()),
   openLot: (id) => dispatch(openLot(id)),
 });
 

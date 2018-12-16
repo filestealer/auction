@@ -3,6 +3,7 @@ import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
 import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
+import ListItem from './list_item';
 
 class Lots extends Component {
   render() {
@@ -58,69 +59,43 @@ class Lots extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <p>№ 00000696</p>
-                    <span className={styles.category}>Металлопродукция</span>
-                    <span className={styles.publishedon}>
-                      21:31 / 19.11.2018
-                    </span>
-                  </td>
-                  <td>
-                    <a href="">Трубы</a>
-                  </td>
-                  <td>
-                    Астана→Алматы
-                    <p>1 215.92 км</p>
-                  </td>
-                  <td />
-                  <td>20 Ноябрь</td>
-                </tr>
+              {this.props.list.map((item)=> <ListItem
+                id={item.id}
+                category={item.request_category}
+                publish_date={item.created}
+                description={item.request_description}
+                delivery_address={item.delivery_address}
+                expired_date={item.contract_expiration_date}
+                onClick={()=>{this.props.openLot(item.id)}}
+                key={item.id}
+              />)}
+                {/*<tr>*/}
+                  {/*<td>*/}
+                    {/*<p>№ 00000696</p>*/}
+                    {/*<span className={styles.category}>Металлопродукция</span>*/}
+                    {/*<span className={styles.publishedon}>*/}
+                      {/*21:31 / 19.11.2018*/}
+                    {/*</span>*/}
+                  {/*</td>*/}
+                  {/*<td>*/}
+                    {/*<a href="">Трубы</a>*/}
+                  {/*</td>*/}
+                  {/*<td>*/}
+                    {/*Астана→Алматы*/}
+                    {/*<p>1 215.92 км</p>*/}
+                  {/*</td>*/}
+                  {/*<td />*/}
+                  {/*<td>20 Ноябрь</td>*/}
+                {/*</tr>*/}
 
-                <tr>
-                  <td>
-                    <p>№ 00000686</p>
-                    <span className={styles.category}>Негабарит</span>
-                    <span className={styles.publishedon}>
-                      21:31 / 19.11.2018
-                    </span>
-                  </td>
-                  <td>
-                    <a href="">Оборудование складское</a>
-                  </td>
-                  <td>
-                    Алматы→Костанай
-                    <p>1 952.64 км</p>
-                  </td>
-                  <td>2 т.</td>
-                  <td>30 Ноябрь</td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <p>№ 00000684</p>
-                    <span className={styles.category}>Животные</span>
-                    <span className={styles.publishedon}>
-                      21:31 / 19.11.2018
-                    </span>
-                  </td>
-                  <td>
-                    <a href="">Коза</a>
-                  </td>
-                  <td>
-                    Алматы→Караганда
-                    <p>1 002.51 км</p>
-                  </td>
-                  <td>30 кг.</td>
-                  <td>20 Ноябрь</td>
-                </tr>
               </tbody>
             </table>
-            <div className={styles['lot-pages']}>
-              <a href="" className={styles.active}>
-                1
-              </a>
-            </div>
+            {/* ПАГИНАЦИЯ */}
+            {/*<div className={styles['lot-pages']}>*/}
+              {/*<a href="" className={styles.active}>*/}
+                {/*1*/}
+              {/*</a>*/}
+            {/*</div>*/}
           </div>
         </div>
         <Footer />

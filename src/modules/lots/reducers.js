@@ -1,7 +1,7 @@
 import t from './types';
 
 const defaultState ={
-  list: {},
+  list: [],
   isFetching: false,
   isRemoving: false,
   isPublishing: false,
