@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getProfile } from "../actions";
+import { signUp } from "../actions";
 import Registration from '../components/registartion';
 
 
@@ -10,7 +10,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  test: () => dispatch(fetchList()),
+  save: (data) => dispatch(signUp(data)),
 });
 
 export default connect(

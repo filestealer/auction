@@ -16,6 +16,31 @@ function* signIn(data) {
   }
 }
 
+function* signUp(data) {
+  let info = data.payload,
+      user = info.user,
+      type = info.type,
+      company = info.company,
+      person = info.person;
+  let payload;
+
+  if (type === "person") {
+    try {
+      payload = yield API.signUpPerson({user: user, ...person});
+      yield put({type: t.SIGN_UP_SUCCESS, payload})
+    } catch (error) {
+      yield put({type: t.SIGN_UP_FAILURE, payload: error})
+    }
+  } else {
+    try {
+      payload = yield API.signUpCompany({user: user, ...company});
+      yield put({type: t.SIGN_UP_SUCCESS, payload})
+    } catch (error) {
+      yield put({type: t.SIGN_IN_FAILURE, payload: error})
+    }
+  }
+}
+
 function* fetchProfile() {
   console.log('Fetch Profile');
   const state = yield select(), token = state.user.token;
@@ -38,6 +63,7 @@ function* fetchProfile() {
 
 export function* sagas() {
   yield takeEvery(t.SIGN_IN, signIn);
+  yield takeEvery(t.SIGN_UP, signUp);
   yield takeEvery(t.FETCH_PROFILE, fetchProfile);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);

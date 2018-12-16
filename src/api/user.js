@@ -14,7 +14,7 @@ export function fetchProfile(token) {
 }
 
 
-export function signUp(user) {
+export function signUpCompany(user) {
   // user = Object.select(user, [
   //   'phone', 'email', 'password',
   //   'name', 'surname', 'company_name', 'company_address', 'company_bin',
@@ -34,6 +34,29 @@ export function signUp(user) {
     //   "email": "andrey2@osmushko.com",
     //   "password": "1q2w3e4r"
     // }
+  });
+}
+export function signUpPerson(user) {
+  // user = Object.select(user, [
+  //   'phone', 'email', 'password',
+  //   'name', 'surname', 'company_name', 'company_address', 'company_bin',
+  //   'company_contacts', 'company_description',
+  // ]);
+  // user.phone = unFormatPhone(user.phone);
+  // TODO: пока регистрироваться с веба могут только работадатели
+  // user.group = 'employers';
+  return post('Auth::reg', APIUrl + 'register/person/', {
+    ...user,
+  // {
+  //   "name": "Евгений",
+  //   "last_name": "Култышев",
+  //   "address": "Алматы",
+  //   "balance": 5000,
+  //   "user": {
+  //   "email": "cds@gmail.com",
+  //     "password": "Qwerty123456"
+  // }
+  // }
   });
 }
 
@@ -77,4 +100,4 @@ export function updatePassword(params) {
   return post('Auth::updatePassword', APIUrl + '/user/update_password', params);
 }
 
-export default {signIn, fetchProfile, signUp, signOut, restorePasswordSend, restorePasswordCheck, updatePassword, test, test_auth};
+export default {signIn, fetchProfile, signUpCompany, signUpPerson, signOut, restorePasswordSend, restorePasswordCheck, updatePassword, test, test_auth};
