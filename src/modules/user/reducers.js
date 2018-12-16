@@ -7,7 +7,8 @@ const defaultState ={
   isPublishing: false,
   isSaving: false,
   isCreating: false,
-  error: false
+  error: false,
+  modalActive: false,
 };
 
 export function Reducers(state = defaultState, action) {
@@ -20,13 +21,16 @@ export function Reducers(state = defaultState, action) {
     case t.SIGN_IN:
       return Object.assign({}, state, {
         isFetching: true,
-        error: false
+        error: false,
+        email: payload.email,
       });
     case t.SIGN_IN_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
         error: false,
-        token: payload.token
+        ...payload,
+        // token: payload.token
+
       });
     case t.SIGN_IN_FAILURE:
       return Object.assign({}, state, {
@@ -51,6 +55,15 @@ export function Reducers(state = defaultState, action) {
         error: true,
         profile: '',
       });
+    case t.SHOW_MODAL:
+      return Object.assign({}, state, {
+        modalActive: true
+      });
+    case t.HIDE_MODAL:
+      return Object.assign({}, state, {
+        modalActive: false
+      });
+
 
     default:
       return state;

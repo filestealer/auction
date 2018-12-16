@@ -14,12 +14,13 @@ export function getList() {
 export function createLot(data) {
   console.log("API LOTS CreateLot");
   return post('Lots::CreateLot', APIUrl + 'auctions/', {
-    "request_category": 1,
-    "auction_type": 1,
-    "request_description": "Вот такой вот аукцион",
-    "delivery_date": "2019-10-02T00:00:00Z",
-    "delivery_address": "куда?:D",
-    "auction_duration": "2019-10-02T00:00:00Z"
+    ...data.data
+    // "request_category": 1,
+    // "auction_type": 1,
+    // "request_description": "Вот такой вот аукцион",
+    // "delivery_date": "2019-10-02T00:00:00Z",
+    // "delivery_address": "куда?:D",
+    // "auction_duration": "2019-10-02T00:00:00Z"
   }, {'Authorization': 'Token '+data.token});
 }
 

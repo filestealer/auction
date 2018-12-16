@@ -5,7 +5,39 @@ import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
 
 class AuctionReg extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      request_category: 1,
+      auction_type: 1,
+      request_description: '',
+      delivery_date: '',
+      delivery_address: '',
+      auction_duration: '',
+    };
+  }
+
+  save = () => {
+    this.props.save(this.state);
+  };
+
+  onChange = (e) => {
+    console.log(e, e.target.value, e.target.name);
+    this.setState({ [e.target.name]: e.target.value})
+  };
+
+
+// {
+//   "request_category": 1,
+//   "auction_type": 1,
+//   "request_description": "Вот такой вот аукцион",
+//   "delivery_date": "2019-10-02T00:00:00Z",
+//   "delivery_address": "куда?:D",
+//   "auction_duration": "2019-10-02T00:00:00Z"
+// }
+
   render() {
+    let state = this.state;
     return (
       <div>
         <Header />
@@ -20,78 +52,88 @@ class AuctionReg extends Component {
                     width: '100%',
                     marginBottom: '15px',
                   }}
+                  name={'request_category'}
+                  // value={user.user.password}
+                  onChange={this.onChange}
+
                 >
                   <option value={'category'}>Выберите категорию</option>
+                  <option value={1}>Стройматериалы</option>
+                  <option value={2}>Бытовая химия</option>
                 </select>
               </div>
               <div className={styles.fields}>
                 <div className={styles.textarea_block}>
                   <textarea
-                    data-name="description"
-                    name="description"
+                    name="request_description"
                     placeholder="Краткое описание"
+                    onChange={this.onChange}
+                    value={state.request_description}
                   />
                 </div>
               </div>
               <h2>2. Куда поставить</h2>
               <div className={styles.fields}>
-                <input type="hidden" name="distance" />
                 <div className={styles.order_address}>
-                  <div className={styles.label}>
-                    Город:
-                    <input
-                      type="text"
-                      data-counter="1"
-                      name="cities[]"
-                      placeholder="откуда"
-                      autoComplete="off"
-                    />
-                  </div>
+                  {/*<div className={styles.label}>*/}
+                    {/*Город:*/}
+                    {/*<input*/}
+                      {/*type="text"*/}
+                      {/*data-counter="1"*/}
+                      {/*name="cities[]"*/}
+                      {/*placeholder="откуда"*/}
+                      {/*autoComplete="off"*/}
+                    {/*/>*/}
+                  {/*</div>*/}
                   <div className={styles.label}>
                     Адрес:
-                    <input type="text" data-counter="1" name="addresses[]" />
+                    <input type="text" data-counter="1" name="delivery_address" onChange={this.onChange}
+                           value={state.delivery_address}/>
                   </div>
-                  <a className={styles.delete_node} />
+                  {/*<a className={styles.delete_node} />*/}
                 </div>
 
-                <div className={styles.order_address}>
-                  <div className={styles.label}>
-                    Город:
-                    <input
-                      type="text"
-                      data-counter="1"
-                      name="cities[]"
-                      placeholder="откуда"
-                      autoComplete="off"
-                    />
-                  </div>
-                  <div className={styles.label}>
-                    Адрес:
-                    <input type="text" data-counter="1" name="addresses[]" />
-                  </div>
-                  <a className={styles.add_node} />
-                </div>
+                {/*<div className={styles.order_address}>*/}
+                  {/*<div className={styles.label}>*/}
+                    {/*Город:*/}
+                    {/*<input*/}
+                      {/*type="text"*/}
+                      {/*data-counter="1"*/}
+                      {/*name="cities[]"*/}
+                      {/*placeholder="откуда"*/}
+                      {/*autoComplete="off"*/}
+                    {/*/>*/}
+                  {/*</div>*/}
+                  {/*<div className={styles.label}>*/}
+                    {/*Адрес:*/}
+                    {/*<input type="text" data-counter="1" name="addresses[]" />*/}
+                  {/*</div>*/}
+                  {/*<a className={styles.add_node} />*/}
+                {/*</div>*/}
 
                 <div className={styles.order_date}>
                   <div>
                     <div className={styles.label}>Дата поставки</div>
-                    <input type="date" name="date" placeholder="дд.мм.гггг" />
+                    <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" onChange={this.onChange}
+                           value={state.delivery_date_day}/>
                   </div>
                   <div className={styles.time_box}>
                     <div className={styles.label}>Время</div>
                     <input
                       type="time"
                       data-counter="1"
-                      name="cities[]"
-                      placeholder="мм:чч"
+                      name="delivery_date_time"
+                      placeholder="чч:мм"
+                      onChange={this.onChange}
+                      value={state.delivery_date_time}
                     />
                   </div>
-                  <a className={styles.add_node} />
+                  {/*<a className={styles.add_node} />*/}
                 </div>
               </div>
               <h2>3. Дополнительная информация</h2>
               <div className={styles.fields}>
-                <input type="hidden" name="distance" />
+                {/*<input type="hidden" name="distance" />*/}
                 <div className={styles.input_select}>
                   <div className={styles.label}>
                     Максимальная цена:
@@ -99,12 +141,15 @@ class AuctionReg extends Component {
                       className={styles['input-width-100']}
                       type="text"
                       name="max_price"
+                      onChange={this.onChange}
+                      value={state.max_price}
                     />
                     тг.
                   </div>
                   <div className={styles.label}>
                     Запрос актуален
-                    <select>
+                    <select name={"auction_duration"} onChange={this.onChange}
+                            value={state.auction_duration}>
                       <option>1 день</option>
                       <option>2 дня</option>
                       <option>3 дня</option>
@@ -114,7 +159,7 @@ class AuctionReg extends Component {
                       <option>7 дня</option>
                     </select>
                   </div>
-                  <a className={styles.add_node} />
+                  {/*<a className={styles.add_node} />*/}
                 </div>
               </div>
               <h2>4. Файлы</h2>
@@ -126,7 +171,7 @@ class AuctionReg extends Component {
               </div>
               <div className={styles.center}>
                 <a>
-                  <span>Разместить запрос</span>
+                  <span onClick={this.save}>Разместить запрос</span>
                 </a>
               </div>
             </form>

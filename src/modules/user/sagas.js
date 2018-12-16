@@ -1,6 +1,8 @@
 import t, {FETCH_PROFILE} from './types'
 import {select, put, takeEvery} from 'redux-saga/effects'
 import API from '../../api/user';
+import {push} from "connected-react-router";
+
 // import {informErrorInfo} from '../../utils/informer';
 // import {openArticleEditScene, openArticleShowScene, openArticlesScene, pushScene} from '../../utils/nav';
 // import Immutable from 'immutable';
@@ -9,7 +11,9 @@ function* signIn(data) {
   console.log('Users auth', data);
   try {
     const payload = yield API.signIn(data.payload);
-    yield put({type: t.SIGN_IN_SUCCESS, payload})
+    yield put({type: t.SIGN_IN_SUCCESS, payload});
+    yield put({type: t.HIDE_MODAL});
+    yield put({type: t.FETCH_PROFILE});
   } catch (error) {
     // informErrorInfo(error, 'Ошибка загрузки новостей');
     yield put({type: t.SIGN_IN_FAILURE, payload: error})
@@ -53,6 +57,13 @@ function* fetchProfile() {
     yield put({type: t.FETCH_PROFILE_FAILURE, payload: error})
   }
 }
+
+function* openRegistration() {
+  yield put(push('/registration/'));
+}
+function* openProfile() {
+  yield put(push('/profile/'));
+}
 //
 //
 // function* openShowScene({payload}) {
@@ -65,6 +76,8 @@ export function* sagas() {
   yield takeEvery(t.SIGN_IN, signIn);
   yield takeEvery(t.SIGN_UP, signUp);
   yield takeEvery(t.FETCH_PROFILE, fetchProfile);
+  yield takeEvery(t.OPEN_REGISTRATION, openRegistration);
+  yield takeEvery(t.OPEN_PROFILE, openProfile);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);
   // yield takeEvery(OPEN_EDIT_SCENE, openEditScene);

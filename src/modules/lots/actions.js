@@ -11,8 +11,8 @@ export function openLot(id) {
   return {type: t.OPEN_LOT, payload: id}
 }
 
-export function createLot() {
-  return {type: t.CREATE_LOT}
+export function createLot(data) {
+  return {type: t.CREATE_LOT, payload: data}
 }
 
 

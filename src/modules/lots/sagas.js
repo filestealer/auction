@@ -17,11 +17,11 @@ function* fetchList() {
   }
 }
 
-function* createLot() {
+function* createLot(data) {
   console.log('createLot Saga');
   const state = yield select(), token = state.user.token;
   try {
-    const payload = yield API.createLot({token, lot: 1});
+    const payload = yield API.createLot({token, data: data.payload});
     yield put({type: t.CREATE_LOT_SUCCESS, payload})
   } catch (error) {
     yield put({type: t.CREATE_LOT_FAILURE, payload: error})
