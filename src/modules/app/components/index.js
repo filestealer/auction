@@ -22,7 +22,12 @@ class App extends  React.PureComponent {
   openLots = () => {
     console.log(this.props, 'push');
     this.props.openLots();
-  }
+  };
+
+  createLot = () => {
+    this.props.createLot();
+  };
+
 
   render() {
     return (
@@ -43,6 +48,7 @@ class App extends  React.PureComponent {
         <button onClick={this.testApi}>click</button>
         <button onClick={this.getProfile}>get profile</button>
         <button onClick={this.openLots}>openLots</button>
+        <button onClick={this.createLot}>Create LOT</button>
       </div>
 
     );

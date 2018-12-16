@@ -18,8 +18,8 @@ function* signIn(data) {
 
 function* fetchProfile() {
   console.log('Fetch Profile');
-  const state = yield select(), token = state.user.token
-  debugger;
+  const state = yield select(), token = state.user.token;
+
   try {
     const payload = yield API.fetchProfile(token);
     yield put({type: t.FETCH_PROFILE_SUCCESS, payload})

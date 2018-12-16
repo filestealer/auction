@@ -1,16 +1,17 @@
 import { connect } from "react-redux";
-import { fetchList } from "../actions";
+import {fetchList, openLots, openLot} from "../actions";
 import List from '../components/list';
 // const Counter = ...
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    counter: state.counter
+
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   test: () => dispatch(fetchList()),
+  openLot: (id) => dispatch(openLot(id)),
 });
 
 export default connect(

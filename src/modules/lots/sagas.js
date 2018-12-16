@@ -17,9 +17,26 @@ function* fetchList() {
   }
 }
 
+function* createLot() {
+  console.log('createLot Saga');
+  const state = yield select(), token = state.user.token;
+  try {
+    const payload = yield API.createLot({token, lot: 1});
+    yield put({type: t.CREATE_LOT_SUCCESS, payload})
+  } catch (error) {
+    yield put({type: t.CREATE_LOT_FAILURE, payload: error})
+  }
+}
 
 function* openLotsScene() {
   yield put(push('/lots/'));
+}
+function* openLotScene(id) {
+  yield put(push('/lot/'+id+'/'));
+}
+
+function* openCreateLotScene() {
+  yield put(push('/create_lot/'));
 }
 
 
@@ -27,6 +44,9 @@ export function* sagas() {
   console.log('LOTS SAGAS');
   yield takeEvery(t.FETCH_LIST, fetchList);
   yield takeEvery(t.OPEN_LOTS, openLotsScene);
+  yield takeEvery(t.CREATE_LOT, createLot);
+  yield takeEvery(t.OPEN_LOT, openLotScene);
+  yield takeEvery(t.OPEN_CREATE_LOT, openCreateLotScene);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);
   // yield takeEvery(OPEN_EDIT_SCENE, openEditScene);

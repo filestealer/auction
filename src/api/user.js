@@ -6,30 +6,35 @@ import {unFormatPhone} from '../utils';
 
 
 export function signIn(data) {
-  // user = Object.select(user, ['phone', 'password', 'fcm_token']);
-  // user.phone = unFormatPhone(user.phone);
-
   return post('Auth::signIn', APIUrl + 'auth/', {...data});
 }
 
 export function fetchProfile(token) {
-  // user = Object.select(user, ['phone', 'password', 'fcm_token']);
-  // user.phone = unFormatPhone(user.phone);
-
   return get('Auth::profile', APIUrl + 'profile/', {'Authorization': 'Token '+token});
 }
 
 
 export function signUp(user) {
-  user = Object.select(user, [
-    'phone', 'email', 'password',
-    'name', 'surname', 'company_name', 'company_address', 'company_bin',
-    'company_contacts', 'company_description',
-  ]);
-  user.phone = unFormatPhone(user.phone);
+  // user = Object.select(user, [
+  //   'phone', 'email', 'password',
+  //   'name', 'surname', 'company_name', 'company_address', 'company_bin',
+  //   'company_contacts', 'company_description',
+  // ]);
+  // user.phone = unFormatPhone(user.phone);
   // TODO: пока регистрироваться с веба могут только работадатели
-  user.group = 'employers';
-  return post('Auth::signUp', APIUrl + '/user/sign_up', {user});
+  // user.group = 'employers';
+  return post('Auth::reg', APIUrl + 'register/company/', {
+    ...user,
+    // "name": "TEST COMPANY 2",
+    // "address": "Somewhere",
+    // "website": "https://test.kz",
+    // "description": "test description",
+    // "balance": 5000,
+    // "user": {
+    //   "email": "andrey2@osmushko.com",
+    //   "password": "1q2w3e4r"
+    // }
+  });
 }
 
 export function signOut() {
