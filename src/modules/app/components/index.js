@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {test_auth} from '../../../api/user';
 // import styles from '../../../css/style.css'
 
-class App extends Component {
+class App extends  React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
@@ -18,6 +18,11 @@ class App extends Component {
   getProfile = () => {
     this.props.fetchProfile();
   };
+
+  openLots = () => {
+    console.log(this.props, 'push');
+    this.props.openLots();
+  }
 
   render() {
     return (
@@ -37,10 +42,10 @@ class App extends Component {
         </nav>
         <button onClick={this.testApi}>click</button>
         <button onClick={this.getProfile}>get profile</button>
+        <button onClick={this.openLots}>openLots</button>
       </div>
 
     );
   }
 }
-
-export default hot(module)(App);
+export default App

@@ -1,6 +1,6 @@
 import { AppContainer } from 'react-hot-loader';
 import { applyMiddleware, compose, createStore } from 'redux';
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 // import { routerMiddleware } from 'connected-react-router';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -9,8 +9,9 @@ import App from './App';
 import rootReducer from './reducers';
 import {store} from './store';
 
-const history = createBrowserHistory();
+// const history = createBrowserHistory();
 
+import {history} from 'utils/history'
 const render = () => {
   ReactDOM.render(
     <AppContainer>
@@ -24,15 +25,15 @@ const render = () => {
 
 render();
 
-// Hot reloading
-if (module.hot) {
-  // Reload components
-  module.hot.accept('./App', () => {
-    render()
-  })
-
-  // Reload reducers
-  module.hot.accept('./reducers', () => {
-    store.replaceReducer(rootReducer(history))
-  })
-}
+// // Hot reloading
+// if (module.hot) {
+//   // Reload components
+//   module.hot.accept('./App', () => {
+//     render()
+//   })
+//
+//   // Reload reducers
+//   module.hot.accept('./reducers', () => {
+//     store.replaceReducer(rootReducer(history))
+//   })
+// }

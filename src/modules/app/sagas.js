@@ -1,14 +1,15 @@
 import {put, take, select, call} from 'redux-saga/effects'
 import tApp from './types';
 import tLots from '../lots/types';
+import {push} from 'connected-react-router';
 // import tUser from '../user/types';
 // import tCareers from '../careers/types';
 
 function* appStart() {
   console.log('Init::Sagas::appStart');
   yield put({type: tLots.FETCH_LIST});
-  console.log('Init::Sagas::appStart 22222');
   //yield put({type: tGeoData.FETCH_GEO_DATA});
+  // yield put(push('/lots/'))
   return null;
 }
 
@@ -20,7 +21,7 @@ export function* sagas() {
   // res = yield take('persist/REHYDRATE');
   // console.log('Init::Sagas::start', 'REHYDRATED ok', res);
 
-  state = yield select();
+  // state = yield select();
   // const router = state.get('router');
   // const location = (router.toJS ? router.toJS() : router).location;
   // console.log('Init::Sagas::start', 'router: ', location);
@@ -30,6 +31,7 @@ export function* sagas() {
   yield call(appStart);
 
   state = yield select();
+
   console.log('Init::Sagas::start', 'state is', state);
   // const {user, dontAutoSignIn} = state.get('user').toJS();
 

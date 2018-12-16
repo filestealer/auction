@@ -9,8 +9,9 @@ export default function* mainSaga() {
   console.log('::mainSaga start');
   const results = yield all([
     call(lotsSagas),
-    call(appSagas),
     call(userSagas),
+    call(appSagas),
+
 
     // call(geoSagas),
   ]);
