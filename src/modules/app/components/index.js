@@ -48,6 +48,9 @@ class App extends React.PureComponent {
             <li>
               <Link to="/registration/">User Reg</Link>
             </li>
+            <li>
+              <Link to="/profile/">Profile</Link>
+            </li>
           </ul>
         </nav>
         <button onClick={this.testApi}>click</button>

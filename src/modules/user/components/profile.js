@@ -1,183 +1,185 @@
 import React, { Component } from 'react';
 import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
+import iconUserpic from '../../../../images/icon-userpic.png';
+import logo_text from '../../../../images/logo-text.png';
 
 
-class Lots extends Component {
+class Profile extends Component {
   render() {
     return <div>
       <div id="app">
         <Header />
-        <div className={styles['top_block']}>
-          <h4>
-            Быстрый и удобный сервис онлайн аукциона
-          </h4>
-          <h1>
-            Заказы
-          </h1>
-        </div>
-      </div>
-      <div className={styles['filter']}>
-        <form method="get">
-          <div className={styles['container']}>
-            <div className={styles['columns']}>
-              <div className={styles['column'] + ' ' + styles['date']}>
-                <div className={styles['label']}>
-                  Дата доставки
-                </div>
-                <div className={styles['input_row']}>
-                              <span>
-                                  с
-                              </span>
-                  <input type="date" name="date_from"/>
-                </div>
-                <div className={styles['input_row']}>
-                              <span>
-                                  с
-                              </span>
-                  <input type="date" name="date_to"/>
-                </div>
+        <div className={styles.profile_content}>
+          <div className={styles.container}>
+            <div className={styles.reg_tabs}>
+              <div className={styles.person + ' ' + styles.active}>
+                Профиль
               </div>
-
-              <div className={styles['column order']}>
-                <div className={styles['label']}>
-                  Номер заказа
-                </div>
-                <div className={styles['input_row']}>
-                  <input type="text" name="lot_id"/>
-                </div>
-                <a href="">
-                              <span>
-                                  Найти
-                              </span>
-                </a>
+              <div className={styles.person}>
+                Мои заказы
+              </div>
+              <div className={styles.person}>
+                Мои предложения
               </div>
             </div>
-          </div>
-        </form>
-      </div>
-      <div className={styles['lots_content']}>
-        <div className={styles['container']}>
-          <table className={styles['lots-list']} >
-            <thead>
-            <tr>
-              <td>
-                № и тип
-                <br/>
-                аукциона
-              </td>
-              <td>Описание</td>
-              <td>Адрес поставки</td>
-              <td>Габариты</td>
-              <td>Дата поставки</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                <p>
-                  № 00000696
-                </p>
-                <span className={styles['category']}>
-                                    Металлопродукция
-                                </span>
-                <span className={styles['publishedon']}>
-                                    21:31 / 19.11.2018
-                                </span>
-              </td>
-              <td>
-                <a href="">
-                  Трубы
-                </a>
-              </td>
-              <td>
-                Астана→Алматы
-                <p>
-                  1 215.92 км
-                </p>
-              </td>
-              <td></td>
-              <td>20 Ноябрь</td>
-            </tr>
+            <div className={styles.profile}>
+              <div className={styles.top_row}>
+                <div className={styles.photo_block}>
+                  <div>
+                    <a href="">
+                      <img alt={''} src={'/' + iconUserpic}/>
+                    </a>
+                  </div>
+                  <div className={styles.desc}>
+                    <h2>
+                      test
+                    </h2>
+                    <div>
+                      заказчик/перевозчик
+                    </div>
 
-            <tr>
-              <td>
-                <p>
-                  № 00000686
-                </p>
-                <span className={styles['category']}>
-                                    Негабарит
-                                </span>
-                <span className={styles['publishedon']}>
-                                    21:31 / 19.11.2018
-                                </span>
-              </td>
-              <td>
-                <a href="">
-                  Оборудование складское
+                    <div className={styles.count_transitions}>
+                      <a href="">0 перевозок</a>
+                      /
+                      <a href="">0 ставки</a>
+                    </div>
+                    <div className={styles.count_orders}>
+                      <a href="">0 заказов</a>
+                      /
+                      <a href="">0 выполненных</a>
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.what_person}>
+						<span>
+							Частное лицо
+						</span>
+                </div>
+                <a href="" className={styles.change_password}>
+                  Сменить пароль
                 </a>
-              </td>
-              <td>
-                Алматы→Костанай
-                <p>
-                  1 952.64 км
-                </p>
-              </td>
-              <td>2 т.</td>
-              <td>30 Ноябрь</td>
-            </tr>
-
-            <tr>
-              <td>
-                <p>
-                  № 00000684
-                </p>
-                <span className={styles['category']}>
-                                    Животные
-                                </span>
-                <span className={styles['publishedon']}>
-                                    21:31 / 19.11.2018
-                                </span>
-              </td>
-              <td>
-                <a href="">
-                  Коза
-                </a>
-              </td>
-              <td>
-                Алматы→Караганда
-                <p>
-                  1 002.51 км
-                </p>
-              </td>
-              <td>30 кг.</td>
-              <td>20 Ноябрь</td>
-            </tr>
-            </tbody>
-          </table>
-          <div className={styles['lot-pages']}>
-            <a href="" className={styles['active']}>
-              1
-            </a>
+              </div>
+              <div className={styles.categories}>
+                Категории перевозок
+              </div>
+              <div className={styles.cars}>
+                <h2>Автопарк <span>(0 машин)</span></h2>
+              </div>
+            </div>
+            <div className={styles.orders}>
+              <table>
+                <tbody>
+                <tr>
+                  <td className={styles.status}>Активен</td>
+                  <td className={styles.left + ' ' + styles.info}>
+                    <p>
+                      №392334634
+                    </p>
+                    <span className={styles.category}>
+									Стройматериалы
+								</span>
+                    <span className={styles.publishedon}>
+									16:52 16 декабря
+								</span>
+                  </td>
+                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
+                  <td>14 предложений</td>
+                </tr>
+                <tr>
+                  <td className={styles.status}>Активен</td>
+                  <td className={styles.left + ' ' + styles.info}>
+                    <p>
+                      №392334634
+                    </p>
+                    <span className={styles.category}>
+									Стройматериалы
+								</span>
+                    <span className={styles.publishedon}>
+									16:52 16 декабря
+								</span>
+                  </td>
+                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
+                  <td>14 предложений</td>
+                </tr>
+                <tr>
+                  <td className={styles.status}>Активен</td>
+                  <td className={styles.left + ' ' + styles.info}>
+                    <p>
+                      №392334634
+                    </p>
+                    <span className={styles.category}>
+									Стройматериалы
+								</span>
+                    <span className={styles.publishedon}>
+									16:52 16 декабря
+								</span>
+                  </td>
+                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
+                  <td>14 предложений</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className={styles.requests}>
+              <table>
+                <tbody>
+                <tr>
+                  <td className={styles.status}>Активен</td>
+                  <td className={styles.left + ' ' + styles.info}>
+                    <p>
+                      №392334634
+                    </p>
+                    <span className={styles.category}>
+									Стройматериалы
+								</span>
+                    <span className={styles.publishedon}>
+									16:52 16 декабря
+								</span>
+                  </td>
+                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
+                  <td>50 000 тенге</td>
+                </tr>
+                <tr>
+                  <td className={styles.status}>Активен</td>
+                  <td className={styles.left + ' ' + styles.info}>
+                    <p>
+                      №392334634
+                    </p>
+                    <span className={styles.category}>
+									Стройматериалы
+								</span>
+                    <span className={styles.publishedon}>
+									16:52 16 декабря
+								</span>
+                  </td>
+                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
+                  <td>50 000 тенге</td>
+                </tr>
+                <tr>
+                  <td className={styles.status}>Активен</td>
+                  <td className={styles.left + ' ' + styles.info}>
+                    <p>
+                      №392334634
+                    </p>
+                    <span className={styles.category}>
+									Стройматериалы
+								</span>
+                    <span className={styles.publishedon}>
+									16:52 16 декабря
+								</span>
+                  </td>
+                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
+                  <td>50 000 тенге</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={styles['footer']}>
-        <div className={styles['container']}>
-          <div>
-            <a href="" className={styles['place_order']}>
-              Разместить заказ
-            </a>
-          </div>
-          <div>
-            <a href="" className={styles['orders_list']}>
-              Смотреть заявки
-            </a>
-          </div>
-        </div>
-      </div>
+    </div>
     </div>
   }
 }
 
-export default Lots;
+export default Profile;
