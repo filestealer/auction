@@ -17,12 +17,14 @@ class Lot extends Component {
   // delivery_address: item.delivery_address,
   // expired_date: item.contract_expiration_date,
   //
+
   render() {
     return (
       <div>
         <div id="app">
           <Header />
           <TopBlock text={"Заказ №" + this.props.id} />
+
         </div>
 
         <div className={styles.lot_content}>

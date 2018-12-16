@@ -13,7 +13,6 @@ export const routes = (
       <Route path="/lot/:id/" component={lots.scenes.Item} />
       <Route path="/auction_reg" component={lots.scenes.Auction_reg} />
       <Route path="/registration" component={user.scenes.Registration} />
-
       {/* <Route component={NoMatch} /> */}
     </Switch>
   </div>

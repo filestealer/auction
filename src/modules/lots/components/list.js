@@ -5,6 +5,7 @@ import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
 import ListItem from './list_item';
 
+
 class Lots extends Component {
   render() {
     return (
@@ -87,15 +88,8 @@ class Lots extends Component {
                   {/*<td />*/}
                   {/*<td>20 Ноябрь</td>*/}
                 {/*</tr>*/}
-
               </tbody>
             </table>
-            {/* ПАГИНАЦИЯ */}
-            {/*<div className={styles['lot-pages']}>*/}
-              {/*<a href="" className={styles.active}>*/}
-                {/*1*/}
-              {/*</a>*/}
-            {/*</div>*/}
           </div>
         </div>
         <Footer />
