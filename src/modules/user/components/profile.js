@@ -109,7 +109,7 @@ class Profile extends Component {
                       </span>
                      </td>
                     <td className={styles.left + ' ' + styles.title}><a>{e.request_description}</a></td>
-                    <td>{e.partners.size()} предложений</td>
+                    <td>{e.partners.length} предложений</td>
                   </tr>
                 )}
                 {/*<tr>*/}

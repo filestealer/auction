@@ -114,12 +114,12 @@ class Registration extends Component {
 
                 </div>
 
-                <div className={styles.phone + ' ' + styles.input_block}>
+                <div className={styles.mail + ' ' + styles.input_block}>
                   <div className={styles.label}>
                     Пароль:
                   </div>
                   <div className={styles.input_box}>
-                    <InputMask mask="99/99/9999" type="password" className={styles.phone} name="password" value={user.user.password} placeholder="" onChange={this.onChangeUser}/>
+                    <input type="password" value={user.user.password} name="password"  onChange={this.onChangeUser}/>
                   </div>
 
                 </div>
