@@ -2,6 +2,8 @@ import t from './types'
 import {select, put, takeEvery} from 'redux-saga/effects'
 import API from '../../api/lots';
 import {push} from "connected-react-router";
+import moment from 'moment';
+moment().format();
 // import {informErrorInfo} from '../../utils/informer';
 // import {openArticleEditScene, openArticleShowScene, openArticlesScene, pushScene} from '../../utils/nav';
 // import Immutable from 'immutable';
@@ -18,11 +20,32 @@ function* fetchList() {
 }
 
 function* createLot(data) {
-  console.log('createLot Saga');
+  console.log('createLot Saga', data);
   const state = yield select(), token = state.user.token;
+  // {
+//   "request_category": 1,
+//   "auction_type": 1,
+//   "request_description": "Вот такой вот аукцион",
+//   "delivery_date": "2019-10-02T00:00:00Z",
+//   "delivery_address": "куда?:D",
+//   "auction_duration": "2019-10-02T00:00:00Z"
+// }
+  data = data.payload;
+  let info = {
+    request_category: data.request_category,
+    auction_type: data.auction_type || 1,
+    request_description: data.request_description,
+    delivery_address: data.delivery_address,
+    delivery_date: moment(data.delivery_date_day + ' ' + data.delivery_date_time).format('YYYY-MM-DD HH:mm:ssZ'),
+    auction_duration: moment().add(data.auction_duration, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
+  }
+  console.log(info);
+
   try {
-    const payload = yield API.createLot({token, data: data.payload});
-    yield put({type: t.CREATE_LOT_SUCCESS, payload})
+    const payload = yield API.createLot({token, data: info});
+    yield put({type: t.CREATE_LOT_SUCCESS, payload});
+    yield put({type: t.FETCH_LIST, payload});
+    yield put(push('/lots/'));
   } catch (error) {
     yield put({type: t.CREATE_LOT_FAILURE, payload: error})
   }

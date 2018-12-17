@@ -12,7 +12,8 @@ export function getList() {
 
 
 export function createLot(data) {
-  console.log("API LOTS CreateLot");
+  console.log("API LOTS CreateLot", data);
+
   return post('Lots::CreateLot', APIUrl + 'auctions/', {
     ...data.data
     // "request_category": 1,

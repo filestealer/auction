@@ -150,13 +150,13 @@ class AuctionReg extends Component {
                     Запрос актуален
                     <select name={"auction_duration"} onChange={this.onChange}
                             value={state.auction_duration}>
-                      <option>1 день</option>
-                      <option>2 дня</option>
-                      <option>3 дня</option>
-                      <option>4 дня</option>
-                      <option>5 дня</option>
-                      <option>6 дня</option>
-                      <option>7 дня</option>
+                      <option value={1}>1 день</option>
+                      <option value={2}>2 дня</option>
+                      <option value={3}>3 дня</option>
+                      <option value={4}>4 дня</option>
+                      <option value={5}>5 дня</option>
+                      <option value={6}>6 дня</option>
+                      <option value={7}>7 дня</option>
                     </select>
                   </div>
                   {/*<a className={styles.add_node} />*/}

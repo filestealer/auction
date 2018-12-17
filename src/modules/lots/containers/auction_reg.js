@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchList } from '../actions';
+import { createLot } from '../actions';
 import Auction_reg from '../components/auction_reg';
 // const Counter = ...
 
@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  test: () => dispatch(fetchList()),
+  save: (data) => dispatch(createLot(data)),
 });
 
 export default connect(
