@@ -4,7 +4,11 @@ export function fetchList() {
   return {type: t.FETCH_LIST}
 }
 
-export function fetchLBids() {
+export function fetchBids() {
+  return {type: t.FETCH_BIDS}
+}
+
+export function fetchCategories() {
   return {type: t.FETCH_BIDS}
 }
 
@@ -32,5 +36,5 @@ export function createLot(data) {
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-  fetchList, openLots, createLot, openLot, openCreateLot, createRequest, fetchLBids,
+  fetchList, openLots, createLot, openLot, openCreateLot, createRequest, fetchBids,
 };

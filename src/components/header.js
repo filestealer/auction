@@ -37,7 +37,7 @@ class Header extends Component {
   };
 
   openOrder = () => {
-    this.state.email ? this.props.openCreateLot() : this.props.openReg();
+    this.props.email ? this.props.openCreateLot() : this.props.openReg();
   }
 
 

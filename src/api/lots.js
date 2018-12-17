@@ -15,6 +15,11 @@ export function getBids() {
   return get('Auth::getBids', APIUrl + 'bids/', {});
 }
 
+export function getCategories() {
+  console.log("API LOTS getBids");
+  return get('Auth::getBids', APIUrl + 'categories/', {});
+}
+
 
 
 export function createLot(data) {
@@ -57,4 +62,4 @@ export function createRequest(data) {
 
 
 
-export default {getList, createLot, createRequest, getBids};
+export default {getList, createLot, createRequest, getBids, getCategories};

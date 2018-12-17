@@ -10,6 +10,7 @@ const defaultState ={
   error: false,
   newLot: {},
   bids: [],
+  categories: []
 };
 
 export function lotsReducers(state = defaultState, action) {
@@ -53,6 +54,24 @@ export function lotsReducers(state = defaultState, action) {
         isFetching: false,
         error: true,
         bids: [],
+      });
+
+    case t.FETCH_CATEGORIES:
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: false
+      });
+    case t.FETCH_CATEGORIES_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: false,
+        categories: payload
+      });
+    case t.FETCH_CATEGORIES_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: true,
+        categories: [],
       });
 
     case t.CREATE_LOT:

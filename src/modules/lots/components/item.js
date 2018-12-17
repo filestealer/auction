@@ -57,7 +57,7 @@ class Lot extends Component {
 
         <div className={styles.lot_content}>
           <div className={styles.container}>
-            <h1 className={styles.title}>{this.props.category}</h1>
+            <h1 className={styles.title}>{this.props.category.name}</h1>
             <h3 />
             <div className={styles.main_part}>
               <input type="hidden" name="lot-id" value="00000696" />
@@ -72,11 +72,11 @@ class Lot extends Component {
                     </span>
                   </div>
 
-                  <div className={styles.weight + ' ' + styles.back}>
-                    <span className={styles.name}>Вес:</span>
+                  {/*<div className={styles.weight + ' ' + styles.back}>*/}
+                    {/*<span className={styles.name}>Вес:</span>*/}
 
-                    <span className={styles.date}>0 кг.</span>
-                  </div>
+                    {/*<span className={styles.date}>0 кг.</span>*/}
+                  {/*</div>*/}
 
                   <div className={styles.back} />
 

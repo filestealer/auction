@@ -9,7 +9,7 @@ class ListItem extends Component {
       <tr onClick={this.props.onClick}>
         <td>
           <p>№ {this.props.id}</p>
-          <span className={styles.category}>{this.props.category}</span>
+          <span className={styles.category}>{this.props.category.name}</span>
           <span className={styles.publishedon}>{moment(this.props.publish_date).format('DD-MM-YYYY')}</span>
         </td>
         <td>

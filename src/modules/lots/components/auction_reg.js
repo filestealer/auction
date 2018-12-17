@@ -58,8 +58,9 @@ class AuctionReg extends Component {
 
                 >
                   <option value={'category'}>Выберите категорию</option>
-                  <option value={1}>Стройматериалы</option>
-                  <option value={2}>Бытовая химия</option>
+                  {this.props.categories.map((e)=>
+                    <option key={e.id} value={e.id}>{e.name}</option>
+                  )}
                 </select>
               </div>
               <div className={styles.fields}>

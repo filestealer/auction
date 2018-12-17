@@ -32,6 +32,19 @@ function* fetchBids() {
   }
 }
 
+function* fetchCategories() {
+  console.log('LOTS FetchList');
+  try {
+    const payload = yield API.getCategories();
+    yield put({type: t.FETCH_CATEGORIES_SUCCESS, payload})
+  } catch (error) {
+    // informErrorInfo(error, 'Ошибка загрузки новостей');
+    yield put({type: t.FETCH_CATEGORIES_FAILURE, payload: error})
+  }
+}
+
+
+
 function* createLot(data) {
   console.log('createLot Saga', data);
   const state = yield select(), token = state.user.token;
@@ -105,6 +118,7 @@ export function* sagas() {
   yield takeEvery(t.OPEN_CREATE_LOT, openCreateLotScene);
   yield takeEvery(t.CREATE_REQUEST, createRequest);
   yield takeEvery(t.FETCH_BIDS, fetchBids);
+  yield takeEvery(t.FETCH_CATEGORIES, fetchCategories);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);
   // yield takeEvery(OPEN_EDIT_SCENE, openEditScene);

@@ -36,15 +36,19 @@ function* signUp(data) {
     try {
       payload = yield API.signUpPerson({user: user, ...person});
       yield put({type: t.SIGN_UP_SUCCESS, payload})
+      alert('Вы зарегистрировались, можете войти');
     } catch (error) {
       yield put({type: t.SIGN_UP_FAILURE, payload: error})
+      alert('Ошибка при регистрации');
     }
   } else {
     try {
       payload = yield API.signUpCompany({user: user, ...company});
       yield put({type: t.SIGN_UP_SUCCESS, payload})
+      alert('Вы зарегистрировались, можете войти');
     } catch (error) {
       yield put({type: t.SIGN_IN_FAILURE, payload: error})
+      alert('Ошибка при регистрации');
     }
   }
 }

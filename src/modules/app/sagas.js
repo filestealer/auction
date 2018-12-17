@@ -8,6 +8,7 @@ import {push} from 'connected-react-router';
 function* appStart() {
   console.log('Init::Sagas::appStart');
   yield put({type: tLots.FETCH_LIST});
+  yield put({type: tLots.FETCH_CATEGORIES});
   //yield put({type: tGeoData.FETCH_GEO_DATA});
   // yield put(push('/lots/'))
   return null;
