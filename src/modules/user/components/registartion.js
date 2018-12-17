@@ -35,10 +35,10 @@ class Registration extends Component {
     super(props);
     this.state = {
       company: {
-        name: "OWLSTUDIO",
-        address: "Somewhere",
-        website: "https://owlstudio.kz",
-        description: "web studio",
+        name: "",
+        address: "",
+        website: "",
+        description: "",
         balance: 0,
         bin: '',
       },

@@ -28,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     expired_date: item.contract_expiration_date || '',
     delivery_date: item.delivery_date || '',
     status: item.status || '',
+    initiator: item.initiator || {person: {name: ''}},
     // categories: categories || [],
     // category_name: category_name || '',
 

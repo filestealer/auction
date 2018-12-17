@@ -3,7 +3,8 @@ import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
 import iconUserpic from '../../../../images/icon-userpic.png';
 import logo_text from '../../../../images/logo-text.png';
-
+import moment from 'moment';
+moment().format();
 
 class Profile extends Component {
   constructor(props) {
@@ -93,54 +94,40 @@ class Profile extends Component {
             <div className={styles.orders}>
               <table>
                 <tbody>
-                <tr>
-                  <td className={styles.status}>Активен</td>
-                  <td className={styles.left + ' ' + styles.info}>
-                    <p>
-                      №392334634
-                    </p>
-                    <span className={styles.category}>
-									Стройматериалы
-								</span>
-                    <span className={styles.publishedon}>
-									16:52 16 декабря
-								</span>
-                  </td>
-                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
-                  <td>14 предложений</td>
-                </tr>
-                <tr>
-                  <td className={styles.status}>Активен</td>
-                  <td className={styles.left + ' ' + styles.info}>
-                    <p>
-                      №392334634
-                    </p>
-                    <span className={styles.category}>
-									Стройматериалы
-								</span>
-                    <span className={styles.publishedon}>
-									16:52 16 декабря
-								</span>
-                  </td>
-                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
-                  <td>14 предложений</td>
-                </tr>
-                <tr>
-                  <td className={styles.status}>Активен</td>
-                  <td className={styles.left + ' ' + styles.info}>
-                    <p>
-                      №392334634
-                    </p>
-                    <span className={styles.category}>
-									Стройматериалы
-								</span>
-                    <span className={styles.publishedon}>
-									16:52 16 декабря
-								</span>
-                  </td>
-                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
-                  <td>14 предложений</td>
-                </tr>
+                {this.props.myList.map(e =>
+                  <tr key={e.id}>
+                    <td className={styles.status}>Активен</td>
+                    <td className={styles.left + ' ' + styles.info}>
+                      <p>
+                        {e.id}
+                      </p>
+                      <span className={styles.category}>
+                          {e.request_category.name}
+                      </span>
+                      <span className={styles.publishedon}>
+                        {moment(e.contract_expiration_date).format('DD.MM.YYY')}
+                      </span>
+                     </td>
+                    <td className={styles.left + ' ' + styles.title}><a>{e.request_description}</a></td>
+                    <td>{e.partners.size()} предложений</td>
+                  </tr>
+                )}
+                {/*<tr>*/}
+                  {/*<td className={styles.status}>Активен</td>*/}
+                  {/*<td className={styles.left + ' ' + styles.info}>*/}
+                    {/*<p>*/}
+                      {/*№392334634*/}
+                    {/*</p>*/}
+                    {/*<span className={styles.category}>*/}
+									{/*Стройматериалы*/}
+								{/*</span>*/}
+                    {/*<span className={styles.publishedon}>*/}
+									{/*16:52 16 декабря*/}
+								{/*</span>*/}
+                  {/*</td>*/}
+                  {/*<td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>*/}
+                  {/*<td>14 предложений</td>*/}
+                {/*</tr>*/}
                 </tbody>
               </table>
             </div>
@@ -149,54 +136,40 @@ class Profile extends Component {
             <div className={styles.requests}>
               <table>
                 <tbody>
-                <tr>
-                  <td className={styles.status}>Активен</td>
-                  <td className={styles.left + ' ' + styles.info}>
-                    <p>
-                      №392334634
-                    </p>
-                    <span className={styles.category}>
-									Стройматериалы
-								</span>
-                    <span className={styles.publishedon}>
-									16:52 16 декабря
-								</span>
-                  </td>
-                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
-                  <td>50 000 тенге</td>
-                </tr>
-                <tr>
-                  <td className={styles.status}>Активен</td>
-                  <td className={styles.left + ' ' + styles.info}>
-                    <p>
-                      №392334634
-                    </p>
-                    <span className={styles.category}>
-									Стройматериалы
-								</span>
-                    <span className={styles.publishedon}>
-									16:52 16 декабря
-								</span>
-                  </td>
-                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
-                  <td>50 000 тенге</td>
-                </tr>
-                <tr>
-                  <td className={styles.status}>Активен</td>
-                  <td className={styles.left + ' ' + styles.info}>
-                    <p>
-                      №392334634
-                    </p>
-                    <span className={styles.category}>
-									Стройматериалы
-								</span>
-                    <span className={styles.publishedon}>
-									16:52 16 декабря
-								</span>
-                  </td>
-                  <td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>
-                  <td>50 000 тенге</td>
-                </tr>
+                {this.props.myBids.map(e =>
+                  <tr key={e.id}>
+                    <td className={styles.status}>Активен</td>
+                    <td className={styles.left + ' ' + styles.info}>
+                      <p>
+                        {e.auction}
+                      </p>
+                      <span className={styles.category}>
+                          {e.auction_info.request_category.name}
+                      </span>
+                      <span className={styles.publishedon}>
+                        {moment(e.auction_info.contract_expiration_date).format('DD.MM.YYY')}
+                      </span>
+                    </td>
+                    <td className={styles.left + ' ' + styles.title}><a>{e.auction_info.request_description}</a></td>
+                    <td>{e.amount}</td>
+                  </tr>
+                )}
+                {/*<tr>*/}
+                  {/*<td className={styles.status}>Активен</td>*/}
+                  {/*<td className={styles.left + ' ' + styles.info}>*/}
+                    {/*<p>*/}
+                      {/*№392334634*/}
+                    {/*</p>*/}
+                    {/*<span className={styles.category}>*/}
+									{/*Стройматериалы*/}
+								{/*</span>*/}
+                    {/*<span className={styles.publishedon}>*/}
+									{/*16:52 16 декабря*/}
+								{/*</span>*/}
+                  {/*</td>*/}
+                  {/*<td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>*/}
+                  {/*<td>50 000 тенге</td>*/}
+                {/*</tr>*/}
                 </tbody>
               </table>
             </div>

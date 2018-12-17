@@ -21,7 +21,7 @@ class Lot extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: 0,
+      price: '',
       openRequest: false,
       file: {},
     };
@@ -81,7 +81,7 @@ class Lot extends Component {
                   <div className={styles.back} />
 
                   <div className={styles.user + ' ' + styles.back}>
-                    <a href="">Администратор по умолчанию</a>
+                    <a >{(this.props.initiator.person) ? this.props.initiator.person.name : this.props.initiator.company.name}</a>
                   </div>
                 </div>
 
@@ -143,7 +143,8 @@ class Lot extends Component {
             </div>
             <div className={styles.make_offer + (this.state.openRequest ? ' ' + styles.active : '')}>
               <div className={styles.remaining_time}>
-                Осталось <span>27</span> дней <span>8</span> часа
+                Сделайте свое предложение
+                {/*Осталось <span>27</span> дней <span>8</span> часа*/}
               </div>
               <input placeholder={'Сумма в тенге'} type="text" name="price" value={this.state.price} onChange={this.onChange} />
               {/*<input type="file" name={"file"} onChange={this.uploadFile}/>*/}
