@@ -1532,6 +1532,32 @@ textarea {
   width: auto !important;
 }
 
+.auction_reg_content .container form div select {
+  width: 101%!important;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  margin-right: 3px;
+  border: 1px solid #ebebeb;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  -moz-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  outline: none;
+  background-color: white;
+}
+
+.auction_reg_content .container form .fields .input_select .label select {
+  width: inherit!important;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  margin-right: 3px;
+  border: 1px solid #ebebeb;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  -moz-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  outline: none;
+  background-color: white;
+}
+
 .footer {
   border-top: 2px solid #000;
   padding: 2% 0px;
