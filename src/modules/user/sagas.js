@@ -28,6 +28,8 @@ function* signUp(data) {
       type = info.type,
       company = info.company,
       person = info.person;
+    person['address'] = 'test';
+    person['last_name'] = 'test';
   let payload;
 
   if (type === "person") {

@@ -66,10 +66,12 @@ function* createLot(data) {
 
 function* createRequest(data) {
   const state = yield select(), token = state.user.token;
-  let price = data.payload.price, id = data.payload.id;
-
+  let amount = data.payload.price, id = data.payload.id;
+  let files = [
+    data.payload.file
+  ]
   try {
-    const payload = yield API.createRequest({token, price, id});
+    const payload = yield API.createRequest({token, amount, id, files});
     yield put({type: t.CREATE_REQUEST_SUCCESS, payload});
     yield put({type: t.FETCH_LIST, payload});
     alert('Ваша ставка принята');

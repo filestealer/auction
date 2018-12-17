@@ -23,11 +23,12 @@ class Lot extends Component {
     this.state = {
       price: 0,
       openRequest: false,
+      file: {},
     };
   }
 
   request = () => {
-    this.props.request({price: this.state.price, id: this.props.id});
+    this.props.request({price: this.state.price, id: this.props.id, file: this.state.file});
   };
   openRequest = () => {
     this.setState({openRequest: true});
@@ -37,6 +38,12 @@ class Lot extends Component {
     console.log(e, e.target.value, e.target.name);
     this.setState({ [e.target.name]: e.target.value})
   };
+  uploadFile = (e) => {
+    console.log(e, e.target.value, e.target.name);
+    // debugger;
+    this.setState({ [e.target.name]: e.target.files[0]});
+  };
+
 
   render() {
 
@@ -135,6 +142,7 @@ class Lot extends Component {
             </div>
             <div className={styles.make_offer + (this.state.openRequest ? ' ' + styles.active : '')}>
               <input type="text" name="price" value={this.state.price} onChange={this.onChange} />
+              {/*<input type="file" name={"file"} onChange={this.uploadFile}/>*/}
               <button onClick={this.request}>Отправить</button>
             </div>
             <div className={styles.offers_list}>

@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedVariable
 
 import {APIUrl} from '../config'
-import {post, get} from '../utils/net';
+import {post, get, postFiles} from '../utils/net';
 import {unFormatPhone} from '../utils';
 
 
@@ -33,11 +33,25 @@ export function createLot(data) {
 export function createRequest(data) {
   console.log("API LOTS CreateLot", data);
 
-  return post('Lots::CreateLot', APIUrl + 'bids/', {
-    amount: data.price,
-    auction: data.id,
-    files: [],
-  }, {'Authorization': 'Token '+data.token});
+  // const body = new FormData();
+  // data.files.map((e) => {
+  //   body.append('files[]', e);
+  // });
+  // body.append('amount', data.amount);
+  // body.append('auction', data.id);
+  // debugger;
+  // fetch("http://localhost:3001//upload", {
+  //   method: 'POST',
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   },
+  //   body: data
+  // }).then((response) =>  {
+  //   return response.text();
+  // })
+  return post('Lots::CreateLot', APIUrl + 'bids/', {auction: data.id, amount: data.amount, files: [] }, {'Authorization': 'Token '+data.token});
+  // return postFiles('Lots::CreateLot', APIUrl + 'bids/', body, {'Authorization': 'Token '+data.token, 'Content-Type': 'application/x-www-form-urlencoded'});
 }
 
 

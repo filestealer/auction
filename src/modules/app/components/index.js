@@ -47,28 +47,28 @@ class App extends React.PureComponent {
     return (
       <div>
         <Header/>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/lots/">Lots</Link>
-            </li>
-            <li>
-              <Link to="/lot/3/">Lot</Link>
-            </li>
-            <li>
-              <Link to="/create_lot/">Auction_reg</Link>
-            </li>
-            <li>
-              <Link to="/registration/">User Reg</Link>
-            </li>
-            <li>
-              <Link to="/profile/">Profile</Link>
-            </li>
-          </ul>
-        </nav>
+        {/*<nav>*/}
+          {/*<ul>*/}
+            {/*<li>*/}
+              {/*<Link to="/">Home</Link>*/}
+            {/*</li>*/}
+            {/*<li>*/}
+              {/*<Link to="/lots/">Lots</Link>*/}
+            {/*</li>*/}
+            {/*<li>*/}
+              {/*<Link to="/lot/3/">Lot</Link>*/}
+            {/*</li>*/}
+            {/*<li>*/}
+              {/*<Link to="/create_lot/">Auction_reg</Link>*/}
+            {/*</li>*/}
+            {/*<li>*/}
+              {/*<Link to="/registration/">User Reg</Link>*/}
+            {/*</li>*/}
+            {/*<li>*/}
+              {/*<Link to="/profile/">Profile</Link>*/}
+            {/*</li>*/}
+          {/*</ul>*/}
+        {/*</nav>*/}
         <div className={styles.index}>
           <div className={styles.types}>
             <div className={styles.container}>
