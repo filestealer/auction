@@ -5,7 +5,7 @@ import Profile from '../components/profile';
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    counter: state.counter
+    profile: state.user.profile || {},
   };
 };
 

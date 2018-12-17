@@ -35,7 +35,7 @@ export function get(func, url, headers = jsonHeaders) {
     })
     .catch(error => {
       console.log(`API::${func} -> error:`, error);
-      throw normalizeError(error, -1);
+      throw error; //normalizeError(error, -1);
     });
 }
 
@@ -50,7 +50,8 @@ export function post(func, url, params = {}, headers = jsonHeaders) {
     body: JSON.stringify(params),
   })
     .then(r => {
-      console.log('>>>>>', r);
+      console.log('>>>>>', r, r.status);
+      // if (r.status != 200) throw r;
       return r.json();
     })
     .then(r => {
@@ -61,6 +62,6 @@ export function post(func, url, params = {}, headers = jsonHeaders) {
     })
     .catch(error => {
       console.log(`API::${func} -> error:`, error);
-      throw normalizeError(error, -1);
+      throw error; //normalizeError(error, -1);
     });
 }

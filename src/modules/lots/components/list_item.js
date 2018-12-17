@@ -20,7 +20,7 @@ class ListItem extends Component {
           {/*<p>1 215.92 км</p>*/}
         </td>
         <td />
-        <td>{moment(this.props.expired_date).format('DD-MM-YYYY')}</td>
+        <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
       </tr>
     );
   }

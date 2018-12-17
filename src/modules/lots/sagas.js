@@ -3,6 +3,7 @@ import {select, put, takeEvery} from 'redux-saga/effects'
 import API from '../../api/lots';
 import {push} from "connected-react-router";
 import moment from 'moment';
+
 moment().format();
 // import {informErrorInfo} from '../../utils/informer';
 // import {openArticleEditScene, openArticleShowScene, openArticlesScene, pushScene} from '../../utils/nav';
@@ -16,6 +17,18 @@ function* fetchList() {
   } catch (error) {
     // informErrorInfo(error, 'Ошибка загрузки новостей');
     yield put({type: t.FETCH_LIST_FAILURE, payload: error})
+  }
+}
+
+
+function* fetchBids() {
+  console.log('LOTS FetchList');
+  try {
+    const payload = yield API.getBids();
+    yield put({type: t.FETCH_BIDS_SUCCESS, payload})
+  } catch (error) {
+    // informErrorInfo(error, 'Ошибка загрузки новостей');
+    yield put({type: t.FETCH_BIDS_FAILURE, payload: error})
   }
 }
 
@@ -38,7 +51,7 @@ function* createLot(data) {
     delivery_address: data.delivery_address,
     delivery_date: moment(data.delivery_date_day + ' ' + data.delivery_date_time).format('YYYY-MM-DD HH:mm:ssZ'),
     auction_duration: moment().add(data.auction_duration, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
-  }
+  };
   console.log(info);
 
   try {
@@ -49,6 +62,24 @@ function* createLot(data) {
   } catch (error) {
     yield put({type: t.CREATE_LOT_FAILURE, payload: error})
   }
+}
+
+function* createRequest(data) {
+  const state = yield select(), token = state.user.token;
+  let price = data.payload.price, id = data.payload.id;
+
+  try {
+    const payload = yield API.createRequest({token, price, id});
+    yield put({type: t.CREATE_REQUEST_SUCCESS, payload});
+    yield put({type: t.FETCH_LIST, payload});
+    alert('Ваша ставка принята');
+    yield put(push('/lots/'));
+  } catch (error) {
+    console.log(error);
+    yield put({type: t.CREATE_REQUEST_FAILURE, payload: error})
+    alert(error.statusText);
+  }
+
 }
 
 function* openLotsScene() {
@@ -70,6 +101,8 @@ export function* sagas() {
   yield takeEvery(t.CREATE_LOT, createLot);
   yield takeEvery(t.OPEN_LOT, openLotScene);
   yield takeEvery(t.OPEN_CREATE_LOT, openCreateLotScene);
+  yield takeEvery(t.CREATE_REQUEST, createRequest);
+  yield takeEvery(t.FETCH_BIDS, fetchBids);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);
   // yield takeEvery(OPEN_EDIT_SCENE, openEditScene);

@@ -4,7 +4,7 @@ import styles from '../../css/style.css'
 import logo_text from '../../images/logo-text.png'
 import { connect } from "react-redux";
 import { signIn, openRegistration, openProfile, showModal, hideModal } from "../modules/user/actions";
-import { openLots } from "../modules/lots/actions";
+import { openLots, openCreateLot } from "../modules/lots/actions";
 
 class Header extends Component {
   constructor(props) {
@@ -35,6 +35,10 @@ class Header extends Component {
   openReg = () => {
     this.props.openReg()
   };
+
+  openOrder = () => {
+    this.state.email ? this.props.openCreateLot() : this.props.openReg();
+  }
 
 
 
@@ -102,7 +106,7 @@ class Header extends Component {
           <img src={'/' + logo_text} />
         </div>
         <div className={styles.center_block}>
-          <a href="" className={styles.place_order}>
+          <a className={styles.place_order} onClick={this.openOrder}>
             + Разместить заказ
           </a>
 
@@ -128,6 +132,7 @@ const mapDispatchToProps = (dispatch) => ({
   singIn: (data) => dispatch(signIn(data)),
   openReg: () => dispatch(openRegistration()),
   openLots: () => dispatch(openLots()),
+  openCreateLot: () => dispatch(openCreateLot()),
   openProfile: () => dispatch(openProfile()),
   showModal: () => dispatch(showModal()),
   hideModal: () => dispatch(hideModal()),

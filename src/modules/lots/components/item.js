@@ -18,7 +18,28 @@ class Lot extends Component {
   // expired_date: item.contract_expiration_date,
   //
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      price: 0,
+      openRequest: false,
+    };
+  }
+
+  request = () => {
+    this.props.request({price: this.state.price, id: this.props.id});
+  };
+  openRequest = () => {
+    this.setState({openRequest: true});
+  };
+
+  onChange = (e) => {
+    console.log(e, e.target.value, e.target.name);
+    this.setState({ [e.target.name]: e.target.value})
+  };
+
   render() {
+
     return (
       <div>
         <div id="app">
@@ -39,8 +60,8 @@ class Lot extends Component {
                   <div className={styles.when_date + ' ' + styles.back}>
                     <span className={styles.name}>Когда нужно:</span>
                     <span className={styles.date}>
-                      {moment(this.props.expired_date).format('DD-MM-YYYY')}
-                      <span className={styles.time}>{moment(this.props.expired_date).format('HH:mm')}</span>
+                      {moment(this.props.delivery_date).format('DD-MM-YYYY')}
+                      <span className={styles.time}>{moment(this.props.delivery_date).format('HH:mm')}</span>
                     </span>
                   </div>
 
@@ -96,7 +117,7 @@ class Lot extends Component {
                               Создан: {moment(this.props.publish_date).format('DD-MM-YYYY')}
                             </div>
                             <div className={styles.finish}>
-                              <strong>Окончание: {moment(this.props.expired_date).format('DD-MM-YYYY')}</strong>
+                              <strong>Окончание: {moment(this.props.delivery_date).format('DD-MM-YYYY')}</strong>
                             </div>
                           </div>
                         </aside>
@@ -108,9 +129,13 @@ class Lot extends Component {
             </div>
 
             <div className={styles.make_offer}>
-              <a href="" className={styles['green-button']}>
+              <a className={styles['green-button']} onClick={this.openRequest}>
                 <span>Сделать предложение</span>
               </a>
+            </div>
+            <div className={styles.make_offer + (this.state.openRequest ? ' ' + styles.active : '')}>
+              <input type="text" name="price" value={this.state.price} onChange={this.onChange} />
+              <button onClick={this.request}>Отправить</button>
             </div>
             <div className={styles.offers_list}>
               <h2>

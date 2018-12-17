@@ -11,7 +11,7 @@ export const routes = (
       <Route exact path="/" component={app.scenes.Index} />
       <Route path="/lots/" component={lots.scenes.List} />
       <Route path="/lot/:id/" component={lots.scenes.Item} />
-      <Route path="/auction_reg" component={lots.scenes.Auction_reg} />
+      <Route path="/create_lot" component={lots.scenes.Auction_reg} />
       <Route path="/registration/" component={user.scenes.Registration} />
       <Route path="/profile/" component={user.scenes.Profile} />
       {/* <Route component={NoMatch} /> */}

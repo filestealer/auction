@@ -67,6 +67,7 @@ class Lots extends Component {
                 description={item.request_description}
                 delivery_address={item.delivery_address}
                 expired_date={item.contract_expiration_date}
+                delivery_date={item.delivery_date}
                 onClick={()=>{this.props.openLot(item.id)}}
                 key={item.id}
               />)}

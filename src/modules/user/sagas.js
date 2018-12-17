@@ -1,7 +1,8 @@
-import t, {FETCH_PROFILE} from './types'
+import t from './types'
 import {select, put, takeEvery} from 'redux-saga/effects'
 import API from '../../api/user';
 import {push} from "connected-react-router";
+import tLots from '../lots/types';
 
 // import {informErrorInfo} from '../../utils/informer';
 // import {openArticleEditScene, openArticleShowScene, openArticlesScene, pushScene} from '../../utils/nav';
@@ -14,6 +15,7 @@ function* signIn(data) {
     yield put({type: t.SIGN_IN_SUCCESS, payload});
     yield put({type: t.HIDE_MODAL});
     yield put({type: t.FETCH_PROFILE});
+    yield put({type: tLots.FETCH_BIDS});
   } catch (error) {
     // informErrorInfo(error, 'Ошибка загрузки новостей');
     yield put({type: t.SIGN_IN_FAILURE, payload: error})

@@ -43,7 +43,7 @@ class App extends React.PureComponent {
               <Link to="/lot/3/">Lot</Link>
             </li>
             <li>
-              <Link to="/auction_reg/">Auction_reg</Link>
+              <Link to="/create_lot/">Auction_reg</Link>
             </li>
             <li>
               <Link to="/registration/">User Reg</Link>
