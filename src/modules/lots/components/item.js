@@ -141,7 +141,7 @@ class Lot extends Component {
               </a>
 
             </div>
-            <div className={styles.make_offer + (this.state.openRequest ? ' ' + styles.active : '')}>
+            <div className={styles.make_offer_form + (this.state.openRequest ? ' ' + styles.active : '')}>
               <div className={styles.remaining_time}>
                 Осталось <span>27</span> дней <span>8</span> часа
               </div>

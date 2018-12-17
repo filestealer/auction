@@ -39,6 +39,11 @@ body {
   right: 0px;
   color: #fff;
 }
+
+.header .login_popup form .hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 .header .login_popup > div {
   background: #464646;
   display: inline-block;
@@ -687,13 +692,25 @@ body {
   text-align: center;
   background: #fffaeb;
   padding: 15px 0px;
+    cursor: pointer;
 }
 
-.lot_content .container .make_offer .remaining_time {
+.lot_content .container .active {
+    display: block!important;
+}
+
+.lot_content .container .make_offer_form {
+    text-align: center;
+    background: #fffaeb;
+    padding: 15px 0px;
+    display: none;
+}
+
+.lot_content .container .make_offer_form .remaining_time {
   font-style: italic;
 }
 
-.lot_content .container .make_offer {
+.lot_content .container .make_offer_form {
   input {
     font-size: 32px;
     width: 20%;
@@ -701,7 +718,7 @@ body {
   }
 }
 
-.lot_content .container .make_offer {
+.lot_content .container .make_offer_form {
   button {
     position: relative;
     display: inline-block;
@@ -834,6 +851,7 @@ body {
   border-radius: 5px 5px 5px 5px;
   padding: 25px 60px 70px 60px;
   box-sizing: border-box;
+  margin-bottom: 60px;
 }
 .reg_content .container .register .registaer_content .label {
   display: inline-block;
@@ -1104,6 +1122,7 @@ textarea {
 }
 .reg_content .container .register .registaer_content .center {
   margin-top: 50px;
+    cursor: pointer;
 }
 .reg_content .container .register .registaer_content .center a {
   background: #ffd25e;
@@ -1174,6 +1193,7 @@ textarea {
   border: none;
   border-right: 4px solid #ed9614;
   border-bottom: 4px solid #ed9614;
+  cursor: pointer;
 }
 .reg_content .container .support_block a span {
   display: inline-block;

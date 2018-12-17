@@ -92,7 +92,7 @@ class Header extends Component {
               {/*<input type="submit" name="Login" value="Войти" onClick={this.login}/>*/}
 
             </span>
-            <a href="" onClick={this.openReg}>
+            <a className={styles.hover} onClick={this.openReg}>
               Регистрация
             </a>
           </p>
