@@ -3,6 +3,7 @@ import iconAutopic from '../../../../images/icon-autopic.png'
 import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
 import TopBlock from '../../../components/top_block';
+import InputMask from 'react-input-mask';
 
 
 class Registration extends Component {
@@ -118,7 +119,7 @@ class Registration extends Component {
                     Пароль:
                   </div>
                   <div className={styles.input_box}>
-                    <input type="password" className={styles.phone} name="password" value={user.user.password} placeholder="" onChange={this.onChangeUser}/>
+                    <InputMask mask="99/99/9999" type="password" className={styles.phone} name="password" value={user.user.password} placeholder="" onChange={this.onChangeUser}/>
                   </div>
 
                 </div>
@@ -183,7 +184,7 @@ class Registration extends Component {
                     Телефон:
                   </div>
                   <div className={styles.input_box}>
-                    <input type="phone" className={styles.phone} name="phone" placeholder="+7 (777) 777-7777" value={user.user.phone} onChange={this.onChangeUser}/>
+                    <InputMask mask="+7 (999) 999 99 99" type="phone" className={styles.phone} name="phone" placeholder="+7 (777) 777-7777" value={user.user.phone} onChange={this.onChangeUser}/>
                   </div>
 
                 </div>
