@@ -677,9 +677,53 @@ body {
 }
 .lot_content .container .make_offer {
   text-align: center;
-  margin-top: 20px;
   background: #fffaeb;
   padding: 15px 0px;
+}
+
+.lot_content .container .make_offer .remaining_time {
+  font-style: italic;
+}
+
+.lot_content .container .make_offer {
+  input {
+    font-size: 32px;
+    width: 20%;
+    margin-right: 25px;
+  }
+}
+
+.lot_content .container .make_offer {
+  button {
+    position: relative;
+    display: inline-block;
+    -webkit-transform: skew(-12deg) translateZ(0px);
+    -moz-transform: skew(-12deg) translateZ(0px);
+    -ms-transform: skew(-12deg) translateZ(0px);
+    -o-transform: skew(-12deg) translateZ(0px);
+    transform: skew(-12deg) translateZ(0px);
+    height: 65px;
+    line-height: 65px;
+    vertical-align: bottom;
+    color: #000 !important;
+    text-decoration: none;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    padding: 0px 92px 0px 90px;
+    margin-top: 10px;
+    margin-bottom: 3px;
+    border: none;
+    border-right: 4px solid #ed9614;
+    border-bottom: 4px solid #ed9614;
+    width: auto;
+    height: 50px;
+    line-height: 50px;
+    padding: 0px 20px;
+    font-size: 24px;
+    border-width: 3px;
+    background: #ffd25e;
+  }
 }
 .lot_content .container .make_offer a {
   position: relative;

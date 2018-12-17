@@ -139,9 +139,13 @@ class Lot extends Component {
               <a className={styles['green-button']} onClick={this.openRequest}>
                 <span>Сделать предложение</span>
               </a>
+
             </div>
             <div className={styles.make_offer + (this.state.openRequest ? ' ' + styles.active : '')}>
-              <input type="text" name="price" value={this.state.price} onChange={this.onChange} />
+              <div className={styles.remaining_time}>
+                Осталось <span>27</span> дней <span>8</span> часа
+              </div>
+              <input placeholder={'Сумма в тенге'} type="text" name="price" value={this.state.price} onChange={this.onChange} />
               {/*<input type="file" name={"file"} onChange={this.uploadFile}/>*/}
               <button onClick={this.request}>Отправить</button>
             </div>
