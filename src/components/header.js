@@ -88,17 +88,14 @@ class Header extends Component {
             <input value="" type="password" name="password" id="password" value={state.password} onChange={this.onChange}/>
           </p>
           <p>
-            <span onClick={this.login}>Submit
+            <span onClick={this.login}>Войти
               {/*<input type="submit" name="Login" value="Войти" onClick={this.login}/>*/}
 
             </span>
-            <a href="">
-              забыли пароль
+            <a href="" onClick={this.openReg}>
+              Регистрация
             </a>
           </p>
-          <a className={styles.register}  onClick={this.openReg}>
-            Регистрация
-          </a>
         </form>
       </div>
       <div className={styles.container}>

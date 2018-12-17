@@ -197,10 +197,18 @@ body {
   transform: skew(-15deg) translateZ(0px);
   margin-left: 165px;
 }
+
+.header .container .center_block .place_order:hover {
+  cursor: pointer;
+}
 .header .container .center_block .watch_apps {
   font-size: 18px;
   margin-left: 32px;
   color: #e0a518;
+}
+
+.header .container .center_block .watch_apps:hover {
+  cursor: pointer;
 }
 .header .container .center_block .watch_apps:before {
   content: ' ';
@@ -1494,6 +1502,10 @@ textarea {
 }
 .auction_reg_content .container form .center {
   text-align: center;
+}
+
+.auction_reg_content .container form .center:hover {
+  cursor: pointer;
 }
 .auction_reg_content .container form .center a {
   white-space: nowrap;
