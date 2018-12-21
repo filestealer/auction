@@ -5,6 +5,7 @@ import logo_text from '../../images/logo-text.png'
 import { connect } from "react-redux";
 import { signIn, openRegistration, openProfile, showModal, hideModal } from "../modules/user/actions";
 import { openLots, openCreateLot } from "../modules/lots/actions";
+import FormErrors from "../components/formerrors";
 
 class Header extends Component {
   constructor(props) {
@@ -13,6 +14,10 @@ class Header extends Component {
       modalActive: false,
       email: '',
       password: '',
+      formErrors: {email: '', password: ''},
+      emailValid: false,
+      passwordValid: false,
+      formValid: false
     };
   }
 
@@ -38,7 +43,7 @@ class Header extends Component {
 
   openOrder = () => {
     this.props.email ? this.props.openCreateLot() : this.props.openReg();
-  }
+  };
 
 
 
@@ -46,6 +51,45 @@ class Header extends Component {
     console.log(e, e.target.value, e.target.name);
     this.setState({[e.target.name]: e.target.value})
   };
+
+  handleUserInput (e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: value},
+    () => { this.validateField(name, value) });
+    console.log(e, e.target.value, e.target.name);
+  };
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let emailValid = this.state.emailValid;
+    let passwordValid = this.state.passwordValid;
+
+    switch(fieldName) {
+      case 'email':
+        emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        break;
+      case 'password':
+        passwordValid = value.length >= 6;
+        fieldValidationErrors.password = passwordValid ? '': ' is too short';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+      emailValid: emailValid,
+      passwordValid: passwordValid
+    }, this.validateForm);
+  };
+
+  errorClass(error) {
+    return(error.length === 0 ? '' : 'has-error');
+  };
+
+validateForm() {
+  this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+}
   // openProfile = () => {
   //   this.props.openProfile();
   // }
@@ -75,20 +119,20 @@ class Header extends Component {
           <h4>Вход с паролем</h4>
           <div className={styles.loginMessage}
                style={{display:'none'}}/>
-          <p>
+          <p className={styles[this.errorClass(this.state.formErrors.email)]}>
             <label htmlFor="email">
               Почта
             </label>
-            <input type="text" name="email" id="email" value={state.email} placeholder="email" onChange={this.onChange} />
+            <input type="email" name="email" id="email" value={state.email} placeholder="email" onChange={(event) => this.handleUserInput(event)} />
           </p>
-          <p>
+          <p className={styles[this.errorClass(this.state.formErrors.email)]}>
             <label htmlFor="password">
               Пароль
             </label>
-            <input value="" type="password" name="password" id="password" value={state.password} onChange={this.onChange}/>
+            <input value="" type="password" name="password" id="password" value={state.password} onChange={(event) => this.handleUserInput(event)}/>
           </p>
           <p>
-            <span onClick={this.login}>Войти
+            <span disabled={!this.state.formValid} onClick={this.login}>Войти
               {/*<input type="submit" name="Login" value="Войти" onClick={this.login}/>*/}
 
             </span>
@@ -98,6 +142,7 @@ class Header extends Component {
             </a>
           </p>
         </form>
+        <FormErrors formErrors={this.state.formErrors} />
       </div>
       <div className={styles.container}>
         <div className={styles.logo_box}>

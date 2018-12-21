@@ -120,6 +120,7 @@ body {
   margin-top: 9px;
   position: relative;
 }
+
 .header .login_popup form p label {
   width: 50px;
   display: inline-block;
@@ -1728,5 +1729,12 @@ textarea {
 .index .how_it_works .container .step_box .step h4 {
   font-size: 1.2em;
   margin: 10px 0px 15px 0px; }
+.header .login_popup form .has-error label {
+  color: red;
+}
+.header .login_popup form .has-error input  {
+  border: 1px solid red!important;
+}
+
 
 /*# sourceMappingURL=style.css.map */
