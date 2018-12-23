@@ -4,6 +4,7 @@ import Header from '../../../components/header';
 import iconUserpic from '../../../../images/icon-userpic.png';
 import logo_text from '../../../../images/logo-text.png';
 import moment from 'moment';
+import FileUploader from '../../../components/file_uploader';
 moment().format();
 
 class Profile extends Component {
@@ -11,6 +12,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       tabActive: 'profile',
+      token: props.token,
     };
   }
 
@@ -22,11 +24,27 @@ class Profile extends Component {
     console.log(e, e.target.value, e.target.name);
     this.setState({user: {...this.state.user, [e.target.name]: e.target.value}})
   };
+
+  request = () => {
+    this.props.testFileUpload({file: this.state.file, token: this.props.token});
+  };
+  uploadFile = (e) => {
+    console.log(e, e.target.value, e.target.name);
+    // debugger;
+    this.setState({ [e.target.name]: e.target.files[0]});
+  };
+
   render() {
     let state = this.state;
     return <div>
       <div id="app">
         <Header />
+
+        {/*<input placeholder={'Сумма в тенге'} type="text" name="price" value={this.state.price} onChange={this.onChange} />*/}
+        {/*<input type="file" name={"file"} onChange={this.uploadFile}/>*/}
+        {/*<button onClick={this.request}>Отправить</button>*/}
+
+
         <div className={styles.profile_content}>
           <div className={styles.container}>
             <div className={styles.reg_tabs}>

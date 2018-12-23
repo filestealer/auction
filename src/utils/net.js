@@ -66,29 +66,26 @@ export function post(func, url, params = {}, headers = jsonHeaders) {
     });
 }
 export function postFiles(func, url, data, headers = jsonHeaders) {
-  console.log(`API::${func} -> start`, url, data);
+  console.log(`API::${func} -> start`, url, data, { ...jsonHeaders, ...headers });
+  debugger;
   // noinspection ES6ModulesDependencies, JSUnresolvedFunction
   return fetch(url, {
     method: 'POST',
-    // mode: 'no-cors',
-    credentials: 'same-origin',
-    headers: { ...jsonHeaders, ...headers },
-    body: JSON.stringify(data),
+    body: data,
   })
     .then(r => {
       console.log('>>>>>', r, r.status);
-      // if (r.status != 200) throw r;
       return r.json();
     })
     .then(r => {
       console.log(`API::${func} -> fetched:`, r);
       if (r) return r;
-      // if (r && r.object && r.success) return r.object;
-      throw r;
+      // // if (r && r.object && r.success) return r.object;
+      // throw r;
     })
     .catch(error => {
       console.log(`API::${func} -> error:`, error);
-      throw error; //normalizeError(error, -1);
+      // throw error; //normalizeError(error, -1);
     });
 }
 

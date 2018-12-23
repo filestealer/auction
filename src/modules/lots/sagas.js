@@ -1,5 +1,6 @@
-import t from './types'
-import {select, put, takeEvery} from 'redux-saga/effects'
+import t from './types';
+import tUser from '../user/types';
+import {select, put, takeEvery} from 'redux-saga/effects';
 import API from '../../api/lots';
 import {push} from "connected-react-router";
 import moment from 'moment';
@@ -57,6 +58,9 @@ function* createLot(data) {
 //   "auction_duration": "2019-10-02T00:00:00Z"
 // }
   data = data.payload;
+
+  let files = Object.values(state.user.files).map(e => e.id);
+
   let info = {
     request_category: data.request_category,
     auction_type: data.auction_type || 1,
@@ -64,13 +68,15 @@ function* createLot(data) {
     delivery_address: data.delivery_address,
     delivery_date: moment(data.delivery_date_day + ' ' + data.delivery_date_time).format('YYYY-MM-DD HH:mm:ssZ'),
     auction_duration: moment().add(data.auction_duration, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
+    files,
   };
   console.log(info);
 
   try {
     const payload = yield API.createLot({token, data: info});
     yield put({type: t.CREATE_LOT_SUCCESS, payload});
-    yield put({type: t.FETCH_LIST, payload});
+    yield put({type: t.FETCH_LIST});
+    yield put({type: tUser.FILE_UPLOAD_CLEAR});
     yield put(push('/lots/'));
   } catch (error) {
     yield put({type: t.CREATE_LOT_FAILURE, payload: error})
@@ -80,13 +86,12 @@ function* createLot(data) {
 function* createRequest(data) {
   const state = yield select(), token = state.user.token;
   let amount = data.payload.price, id = data.payload.id;
-  let files = [
-    data.payload.file
-  ]
+  let files = Object.values(state.user.files).map(e => e.id);
   try {
     const payload = yield API.createRequest({token, amount, id, files});
     yield put({type: t.CREATE_REQUEST_SUCCESS, payload});
     yield put({type: t.FETCH_LIST, payload});
+    yield put({type: tUser.FILE_UPLOAD_CLEAR});
     alert('Ваша ставка принята');
     yield put(push('/lots/'));
   } catch (error) {

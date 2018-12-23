@@ -24,10 +24,17 @@ export function hideModal() {
 export function fetchProfile() {
   return {type: t.FETCH_PROFILE}
 }
+export function fileUpload(payload) {
+  return {type: t.FILE_UPLOAD, payload}
+}
+
+export function deleteFile(payload) {
+  return {type: t.FILE_DELETE, payload}
+}
 
 
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-  signIn, fetchProfile, openRegistration, signUp, openProfile, showModal, hideModal
+  signIn, fetchProfile, openRegistration, signUp, openProfile, showModal, hideModal, fileUpload,deleteFile
 };

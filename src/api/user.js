@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedVariable
 
 import {APIUrl} from '../config'
-import {post, get} from '../utils/net';
+import {post, get, postFiles} from '../utils/net';
 import {unFormatPhone} from '../utils';
 
 
@@ -12,6 +12,13 @@ export function signIn(data) {
 export function fetchProfile(token) {
   return get('Auth::profile', APIUrl + 'profile/', {'Authorization': 'Token '+token});
 }
+
+export function fileUpload(data) {
+  const body = new FormData();
+  body.append('content', data);
+  return postFiles('APP::fileUpload', APIUrl + 'files/',  body, {});
+}
+
 
 
 export function signUpCompany(user) {
@@ -100,4 +107,4 @@ export function updatePassword(params) {
   return post('Auth::updatePassword', APIUrl + '/user/update_password', params);
 }
 
-export default {signIn, fetchProfile, signUpCompany, signUpPerson, signOut, restorePasswordSend, restorePasswordCheck, updatePassword, test, test_auth};
+export default {signIn, fetchProfile, signUpCompany, signUpPerson, signOut, restorePasswordSend, restorePasswordCheck, updatePassword, test, test_auth, fileUpload};

@@ -1,14 +1,24 @@
 import {put, take, select, call} from 'redux-saga/effects'
 import tApp from './types';
 import tLots from '../lots/types';
+import tUser from '../user/types';
 import {push} from 'connected-react-router';
 // import tUser from '../user/types';
 // import tCareers from '../careers/types';
 
 function* appStart() {
   console.log('Init::Sagas::appStart');
+  let storage_token = localStorage.getItem('token');
+
+  if (storage_token) {
+    yield put({type: tUser.LOCAL_AUTH, payload: storage_token});
+  }
+
+
+  console.log('GET TOKEN', localStorage.getItem('token'));
   yield put({type: tLots.FETCH_LIST});
   yield put({type: tLots.FETCH_CATEGORIES});
+
   //yield put({type: tGeoData.FETCH_GEO_DATA});
   // yield put(push('/lots/'))
   return null;

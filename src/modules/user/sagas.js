@@ -13,6 +13,7 @@ function* signIn(data) {
   try {
     const payload = yield API.signIn(data.payload);
     yield put({type: t.SIGN_IN_SUCCESS, payload});
+    localStorage.setItem('token', payload.token );
     yield put({type: t.HIDE_MODAL});
     yield put({type: t.FETCH_PROFILE});
     yield put({type: tLots.FETCH_BIDS});
@@ -22,7 +23,15 @@ function* signIn(data) {
   }
 }
 
+function* localAuth(data) {
+  yield put({type: t.SIGN_IN_SUCCESS, payload: {token: data.payload}});
+  // yield put({type: t.HIDE_MODAL});
+  yield put({type: t.FETCH_PROFILE});
+  // yield put({type: tLots.FETCH_BIDS});
+}
+
 function* signUp(data) {
+  const state = yield select();
   let info = data.payload,
       user = info.user,
       type = info.type,
@@ -30,12 +39,14 @@ function* signUp(data) {
       person = info.person;
     person['address'] = 'test';
     person['last_name'] = 'test';
+  let files = Object.values(state.user.files).map(e => e.id);
   let payload;
 
   if (type === "person") {
     try {
-      payload = yield API.signUpPerson({user: user, ...person});
-      yield put({type: t.SIGN_UP_SUCCESS, payload})
+      payload = yield API.signUpPerson({user: user, ...person, files});
+      yield put({type: t.SIGN_UP_SUCCESS, payload});
+      yield put({type: t.FILE_UPLOAD_CLEAR});
       alert('Вы зарегистрировались, можете войти');
     } catch (error) {
       yield put({type: t.SIGN_UP_FAILURE, payload: error})
@@ -43,8 +54,9 @@ function* signUp(data) {
     }
   } else {
     try {
-      payload = yield API.signUpCompany({user: user, ...company});
-      yield put({type: t.SIGN_UP_SUCCESS, payload})
+      payload = yield API.signUpCompany({user: user, ...company, files});
+      yield put({type: t.SIGN_UP_SUCCESS, payload});
+      yield put({type: t.FILE_UPLOAD_CLEAR});
       alert('Вы зарегистрировались, можете войти');
     } catch (error) {
       yield put({type: t.SIGN_IN_FAILURE, payload: error})
@@ -59,10 +71,11 @@ function* fetchProfile() {
 
   try {
     const payload = yield API.fetchProfile(token);
-    yield put({type: t.FETCH_PROFILE_SUCCESS, payload})
+    yield put({type: t.FETCH_PROFILE_SUCCESS, payload});
   } catch (error) {
     // informErrorInfo(error, 'Ошибка загрузки новостей');
-    yield put({type: t.FETCH_PROFILE_FAILURE, payload: error})
+    yield put({type: t.FETCH_PROFILE_FAILURE, payload: error});
+    localStorage.setItem('token', '');
   }
 }
 
@@ -72,6 +85,18 @@ function* openRegistration() {
 function* openProfile() {
   yield put(push('/profile/'));
 }
+function* fileUpload(data) {
+  console.log('User FileUpload', data);
+  try {
+    const payload = yield API.fileUpload(data.payload.file);
+    yield put({type: t.FILE_UPLOAD_SUCCESS, payload: {...payload, file_id: data.payload.file_id}});
+  } catch (error) {
+    yield put({type: t.FILE_UPLOAD_FAILURE, payload: error})
+  }
+}
+
+
+
 //
 //
 // function* openShowScene({payload}) {
@@ -86,6 +111,8 @@ export function* sagas() {
   yield takeEvery(t.FETCH_PROFILE, fetchProfile);
   yield takeEvery(t.OPEN_REGISTRATION, openRegistration);
   yield takeEvery(t.OPEN_PROFILE, openProfile);
+  yield takeEvery(t.LOCAL_AUTH, localAuth);
+  yield takeEvery(t.FILE_UPLOAD, fileUpload);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);
   // yield takeEvery(OPEN_EDIT_SCENE, openEditScene);

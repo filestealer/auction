@@ -118,7 +118,7 @@ class Lot extends Component {
                           <div className={styles.box}>
                             <div className={styles.status}>
                               Статус:
-                              <span>{this.props.status}</span>
+                              <span>{this.props.status == 'active' ? 'Активен' : this.props.status}</span>
                             </div>
                             <div className={styles.create_at}>
                               Создан: {moment(this.props.publish_date).format('DD-MM-YYYY')}

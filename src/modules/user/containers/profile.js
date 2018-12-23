@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { getProfile } from "../actions";
 import Profile from '../components/profile';
+import {testFileUpload} from '../../../api/lots';
 
 
 const mapStateToProps = (state /*, ownProps*/) => {
@@ -11,13 +12,14 @@ const mapStateToProps = (state /*, ownProps*/) => {
   console.log('PROOOOOOFFFIIIIILLELLELELLELE', myList, myBids);
   return {
     profile: state.user.profile || {},
+    token: state.user.token,
     myList: myList || [],
     myBids: myBids || [],
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  test: () => dispatch(fetchList()),
+  testFileUpload: (data) => testFileUpload(data),
 });
 
 export default connect(

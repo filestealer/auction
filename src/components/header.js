@@ -165,7 +165,7 @@ validateForm() {
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    email: state.user.email || '',
+    email: state.user.profile.email || '',
     token: state.user.token || '',
     modalActive: state.user.modalActive || false,
   };

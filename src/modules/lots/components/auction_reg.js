@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
+import FileUploader from '../../../components/file_uploader';
 import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
 
@@ -164,12 +165,14 @@ class AuctionReg extends Component {
                 </div>
               </div>
               <h2>4. Файлы</h2>
-              <div className={styles.fields}>
-                <div className={styles.order_address}>
-                  <span>Загрузить файлы спецификации</span>
-                  <a className={styles.delete_node} />
-                </div>
-              </div>
+              <FileUploader />
+
+              {/*<div className={styles.fields}>*/}
+                {/*<div className={styles.order_address}>*/}
+                  {/*<span>Загрузить файлы спецификации</span>*/}
+                  {/*<a className={styles.delete_node} />*/}
+                {/*</div>*/}
+              {/*</div>*/}
               <div className={styles.center}>
                 <a>
                   <span onClick={this.save}>Разместить запрос</span>

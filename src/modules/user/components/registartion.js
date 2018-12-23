@@ -4,7 +4,7 @@ import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
 import TopBlock from '../../../components/top_block';
 import InputMask from 'react-input-mask';
-
+import FileUploader from '../../../components/file_uploader';
 
 class Registration extends Component {
 
@@ -188,6 +188,8 @@ class Registration extends Component {
                   </div>
 
                 </div>
+
+                <FileUploader />
 
 
                 <div className={styles.aprove}>

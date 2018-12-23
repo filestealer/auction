@@ -55,11 +55,36 @@ export function createRequest(data) {
   // }).then((response) =>  {
   //   return response.text();
   // })
-  return post('Lots::CreateLot', APIUrl + 'bids/', {auction: data.id, amount: data.amount, files: [] }, {'Authorization': 'Token '+data.token});
+  return post('Lots::CreateLot', APIUrl + 'bids/', {auction: data.id, amount: data.amount, files: data.files}, {'Authorization': 'Token '+data.token});
   // return postFiles('Lots::CreateLot', APIUrl + 'bids/', body, {'Authorization': 'Token '+data.token, 'Content-Type': 'application/x-www-form-urlencoded'});
+}
+
+export function testFileUpload(data) {
+  const body = new FormData();
+  // data.files.map((e) => {
+  //   body.append('content', e);
+  // });
+  body.append('content', data.file);
+  // body.append('amount', data.amount);
+  // body.append('bid', 1);
+  debugger;
+  // fetch("http://localhost:3001//upload", {
+  //   method: 'POST',
+  //   headers: {
+  //     'Accept': 'application/json',
+  //     'Content-Type': 'application/x-www-form-urlencoded'
+  //   },
+  //   body: data
+  // }).then((response) =>  {
+  //   return response.text();
+  // })
+  // return postFiles('Lots::CreateLot', APIUrl + 'bidfiles/', body, {'Authorization': 'Token '+data.token, 'Content-Type': 'application/x-www-form-urlencoded'});
+  return postFiles('Lots::CreateLot', APIUrl + 'files/',  body, { 'Content-Type': 'multipart/form-data'});
+  // return postFiles('Lots::CreateLot', APIUrl + 'files/', body, { 'Content-Type': 'application/x-www-form-urlencoded'});
+
 }
 
 
 
 
-export default {getList, createLot, createRequest, getBids, getCategories};
+export default {getList, createLot, createRequest, getBids, getCategories, testFileUpload};
