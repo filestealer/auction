@@ -33,7 +33,8 @@ class Header extends Component {
   //   this.setState({modalActive: false});
   // };
 
-  login = () => {
+  login = (e) => {
+    e.preventDefault();
     // console.log(this.state);
     this.validateField('email', this.state.email);
     this.validateField('password', this.state.password);
@@ -41,6 +42,7 @@ class Header extends Component {
       return;
     };
     this.props.singIn({email: this.state.email, password: this.state.password});
+    return;
   };
   openReg = () => {
     this.props.openReg()
@@ -120,7 +122,7 @@ validateForm() {
           <a  className="close" onClick={this.props.hideModal}>x</a>
         </div>
         <div></div>
-        <form method="post" action="">
+        <form method="post" action="" onSubmit={this.login}>
           <h4>Вход с паролем</h4>
           <div className={styles.loginMessage}
                style={{display:'none'}}/>
@@ -137,8 +139,8 @@ validateForm() {
             <input value="" type="password" name="password" id="password" placeholder="password" value={state.password} onChange={(event) => this.handleUserInput(event)}/>
           </p>
           <p>
-            <span disabled={!this.state.formValid} onClick={this.login}>Войти
-              {/*<input type="submit" name="Login" value="Войти" onClick={this.login}/>*/}
+            <span >
+              <input disabled={!this.state.formValid} type="submit" name="Login" value="Войти" onSubmit={this.login}/>
 
             </span>
 
