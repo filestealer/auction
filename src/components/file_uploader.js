@@ -28,7 +28,7 @@ class FileUploader extends Component {
   render() {
     let state = this.state;
 
-    return <div>
+    return <div className={this.props.className}>
       {state.files.map((e)=>
         <FileRow
           onChange={this.props.fileUpload}

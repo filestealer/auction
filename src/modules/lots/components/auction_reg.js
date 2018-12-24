@@ -15,10 +15,38 @@ class AuctionReg extends Component {
       delivery_date: '',
       delivery_address: '',
       auction_duration: '',
+      file: '',
+      formErrors: {
+        request_category: '',
+        auction_type: '',
+        request_description: '',
+        delivery_date: '',
+        delivery_address: '',
+        auction_duration: '',
+        file: ''
+      },
+      request_categoryValid: false,
+      auction_typeValid: false,
+      request_descriptionValid: false,
+      delivery_dateValid: false,
+      delivery_addressValid: false,
+      auction_durationValid: false,
+      fileValid: false,
+      formValid: false
     };
   }
 
   save = () => {
+    this.validateField('request_category', this.state.request_category);
+    this.validateField('auction_type', this.state.auction_type);
+    this.validateField('request_description', this.state.request_description);
+    this.validateField('delivery_date', this.state.delivery_date);
+    this.validateField('delivery_address', this.state.delivery_address);
+    this.validateField('auction_duration', this.state.auction_duration);
+    this.validateField('file', this.state.file);
+    if (!this.state.formValid) {
+      return;
+    };
     this.props.save(this.state);
   };
 
@@ -26,6 +54,76 @@ class AuctionReg extends Component {
     console.log(e, e.target.value, e.target.name);
     this.setState({ [e.target.name]: e.target.value})
   };
+
+  handleUserInput (e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: value},
+      () => { this.validateField(name, value) });
+    console.log(e, e.target.value, e.target.name);
+  };
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let request_categoryValid = this.state.request_categoryValid;
+    let auction_typeValid = this.state.auction_typeValid;
+    let request_descriptionValid = this.state.request_descriptionValid;
+    let delivery_dateValid = this.state.delivery_dateValid;
+    let delivery_addressValid = this.state.delivery_addressValid;
+    let auction_durationValid = this.state.auction_durationValid;
+    let fileValid = this.state.fileValid;
+
+    switch(fieldName) {
+      case 'request_category':
+        request_categoryValid = value.length >= 1;
+        fieldValidationErrors.request_category = request_categoryValid ? '' : ' is invalid';
+        break;
+      case 'delivery_date':
+        delivery_dateValid = value.length >= 1;
+        fieldValidationErrors.delivery_date = delivery_dateValid ? '': ' is too short';
+        break;
+      case 'delivery_address':
+        delivery_addressValid = value.length >= 0;
+        fieldValidationErrors.delivery_address = delivery_addressValid ? '' : ' is invalid';
+        break;
+      case 'auction_type':
+        auction_typeValid = value.length >= 6;
+        fieldValidationErrors.auction_type = auction_typeValid ? '': ' is too short';
+        break;
+      case 'request_description':
+        request_descriptionValid = value.length >= 1;
+        fieldValidationErrors.request_description = request_descriptionValid ? '' : ' is invalid';
+        break;
+      case 'auction_duration':
+        auction_durationValid = value.length >= 1;
+        fieldValidationErrors.auction_duration = auction_durationValid ? '': ' is too short';
+        break;
+      case 'file':
+        fileValid = value.length >= 1;
+        fieldValidationErrors.file = fileValid ? '': 'need to upload file';
+        break;
+      default:
+        break;
+    }
+    this.setState({formErrors: fieldValidationErrors,
+      request_categoryValid,
+      auction_typeValid,
+      request_descriptionValid,
+      delivery_dateValid,
+      delivery_addressValid,
+      auction_durationValid,
+      fileValid
+
+    }, this.validateForm);
+  };
+
+  errorClass(error) {
+    return(error.length === 0 ? '' : 'has-error');
+  };
+
+  validateForm() {
+    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+  }
 
 
 // {
@@ -38,6 +136,11 @@ class AuctionReg extends Component {
 // }
 
   render() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    var current_date = yyyy + '-' + dd + '-' + mm;
     let state = this.state;
     return (
       <div>
@@ -47,7 +150,7 @@ class AuctionReg extends Component {
           <div className={styles.container}>
             <form>
               <h2>1. Опишите запрос</h2>
-              <div>
+              <div className={styles[this.errorClass(this.state.formErrors.request_category)]}>
                 <select
                   style={{
                     width: '100%',
@@ -55,7 +158,7 @@ class AuctionReg extends Component {
                   }}
                   name={'request_category'}
                   // value={user.user.password}
-                  onChange={this.onChange}
+                  onChange={(event) => this.handleUserInput(event)}
 
                 >
                   <option value={'category'}>Выберите категорию</option>
@@ -64,18 +167,18 @@ class AuctionReg extends Component {
                   )}
                 </select>
               </div>
-              <div className={styles.fields}>
+              <div className={styles.fields + ' ' + styles[this.errorClass(this.state.formErrors.request_description)]}>
                 <div className={styles.textarea_block}>
                   <textarea
                     name="request_description"
                     placeholder="Краткое описание"
-                    onChange={this.onChange}
+                    onChange={(event) => this.handleUserInput(event)}
                     value={state.request_description}
                   />
                 </div>
               </div>
               <h2>2. Куда поставить</h2>
-              <div className={styles.fields}>
+              <div className={styles.fields + ' ' + styles[this.errorClass(this.state.formErrors.delivery_address)]}>
                 <div className={styles.order_address}>
                   {/*<div className={styles.label}>*/}
                     {/*Город:*/}
@@ -89,7 +192,7 @@ class AuctionReg extends Component {
                   {/*</div>*/}
                   <div className={styles.label}>
                     Адрес:
-                    <input type="text" data-counter="1" name="delivery_address" onChange={this.onChange}
+                    <input type="text" data-counter="1" name="delivery_address" onChange={(event) => this.handleUserInput(event)}
                            value={state.delivery_address}/>
                   </div>
                   {/*<a className={styles.delete_node} />*/}
@@ -116,7 +219,7 @@ class AuctionReg extends Component {
                 <div className={styles.order_date}>
                   <div>
                     <div className={styles.label}>Дата поставки</div>
-                    <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" onChange={this.onChange}
+                    <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)}
                            value={state.delivery_date_day}/>
                   </div>
                   <div className={styles.time_box}>
@@ -126,7 +229,7 @@ class AuctionReg extends Component {
                       data-counter="1"
                       name="delivery_date_time"
                       placeholder="чч:мм"
-                      onChange={this.onChange}
+                      onChange={(event) => this.handleUserInput(event)}
                       value={state.delivery_date_time}
                     />
                   </div>
@@ -143,14 +246,14 @@ class AuctionReg extends Component {
                       className={styles['input-width-100']}
                       type="text"
                       name="max_price"
-                      onChange={this.onChange}
+                      onChange={(event) => this.handleUserInput(event)}
                       value={state.max_price}
                     />
                     тг.
                   </div>
-                  <div className={styles.label}>
+                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.auction_duration)]}>
                     Запрос актуален
-                    <select name={"auction_duration"} onChange={this.onChange}
+                    <select name={"auction_duration"} onChange={(event) => this.handleUserInput(event)}
                             value={state.auction_duration}>
                       <option value={1}>1 день</option>
                       <option value={2}>2 дня</option>

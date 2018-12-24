@@ -1736,5 +1736,24 @@ textarea {
   border: 1px solid red!important;
 }
 
+.reg_content .container .register .registaer_content .has-error {
+  color: red;
+}
+
+.reg_content .container .register .registaer_content .has-error div input {
+  color: red;
+}
+
+.auction_reg_content .container .has-error {
+  color: red;
+}
+
+.auction_reg_content .container .has-error select {
+  border: 1px solid red!important;
+  color: red;
+}
+
+
+
 
 /*# sourceMappingURL=style.css.map */

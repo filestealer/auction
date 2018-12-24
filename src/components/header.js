@@ -35,6 +35,11 @@ class Header extends Component {
 
   login = () => {
     // console.log(this.state);
+    this.validateField('email', this.state.email);
+    this.validateField('password', this.state.password);
+    if (!this.state.formValid) {
+      return;
+    };
     this.props.singIn({email: this.state.email, password: this.state.password});
   };
   openReg = () => {
@@ -125,11 +130,11 @@ validateForm() {
             </label>
             <input type="email" name="email" id="email" value={state.email} placeholder="email" onChange={(event) => this.handleUserInput(event)} />
           </p>
-          <p className={styles[this.errorClass(this.state.formErrors.email)]}>
+          <p className={styles[this.errorClass(this.state.formErrors.password)]}>
             <label htmlFor="password">
               Пароль
             </label>
-            <input value="" type="password" name="password" id="password" value={state.password} onChange={(event) => this.handleUserInput(event)}/>
+            <input value="" type="password" name="password" id="password" placeholder="password" value={state.password} onChange={(event) => this.handleUserInput(event)}/>
           </p>
           <p>
             <span disabled={!this.state.formValid} onClick={this.login}>Войти
@@ -142,7 +147,6 @@ validateForm() {
             </a>
           </p>
         </form>
-        <FormErrors formErrors={this.state.formErrors} />
       </div>
       <div className={styles.container}>
         <div className={styles.logo_box}>
