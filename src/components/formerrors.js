@@ -2,7 +2,7 @@ import React from 'react';
 
 var FormErrors;
 export default FormErrors = ({formErrors}) =>
-  <div className='formErrors'>
+  <span className='formErrors'>
     {Object.keys(formErrors).map((fieldName, i) => {
       if(formErrors[fieldName].length > 0){
         return (
@@ -12,4 +12,4 @@ export default FormErrors = ({formErrors}) =>
         return '';
       }
     })}
-  </div>;
+  </span>;
