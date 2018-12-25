@@ -106,7 +106,7 @@ validateForm() {
 
     return <header className={styles.header}>
       {(this.props.email == "") ?
-        <div className={styles.login_box}>
+        <div className={styles.login_box_enter}>
           <a className={styles.login} onClick={this.props.showModal}>
             вход
           </a>
