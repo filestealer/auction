@@ -1471,6 +1471,10 @@ textarea {
   display: flex;
   margin-top: 15px;
 }
+
+.auction_reg_content .container form .fields .order_address .has-error {
+  color: red;
+}
 .auction_reg_content .container form .fields .order_address .label input {
   padding-left: 5px;
   width: 140px;

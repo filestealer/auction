@@ -15,6 +15,7 @@ class AuctionReg extends Component {
       delivery_date: '',
       delivery_address: '',
       auction_duration: '',
+      city_address: '',
       file: '',
       formErrors: {
         request_category: '',
@@ -23,8 +24,10 @@ class AuctionReg extends Component {
         delivery_date: '',
         delivery_address: '',
         auction_duration: '',
+        city_address: '',
         file: ''
       },
+      city_addressValid: false,
       request_categoryValid: false,
       auction_typeValid: false,
       request_descriptionValid: false,
@@ -42,6 +45,7 @@ class AuctionReg extends Component {
     this.validateField('request_description', this.state.request_description);
     this.validateField('delivery_date', this.state.delivery_date);
     this.validateField('delivery_address', this.state.delivery_address);
+    this.validateField('city_address', this.state.city_address);
     this.validateField('auction_duration', this.state.auction_duration);
     this.validateField('file', this.state.file);
     if (!this.state.formValid) {
@@ -71,6 +75,7 @@ class AuctionReg extends Component {
     let delivery_dateValid = this.state.delivery_dateValid;
     let delivery_addressValid = this.state.delivery_addressValid;
     let auction_durationValid = this.state.auction_durationValid;
+    let city_addressValid = this.state.city_addressValid;
     let fileValid = this.state.fileValid;
 
     switch(fieldName) {
@@ -85,6 +90,10 @@ class AuctionReg extends Component {
       case 'delivery_address':
         delivery_addressValid = value.length >= 0;
         fieldValidationErrors.delivery_address = delivery_addressValid ? '' : ' is invalid';
+        break;
+      case 'city_address':
+        city_addressValid = value.length >= 1;
+        fieldValidationErrors.city_address = city_addressValid ? '' : ' is invalid';
         break;
       case 'auction_type':
         auction_typeValid = value.length >= 6;
@@ -122,7 +131,16 @@ class AuctionReg extends Component {
   };
 
   validateForm() {
-    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+    this.setState({formValid:
+      this.state.request_categoryValid
+      && this.state.auction_typeValid
+      && this.state.request_descriptionValid
+      && this.state.delivery_dateValid
+      && this.state.delivery_addressValid
+      && this.state.auction_durationValid
+      && this.state.city_addressValid
+      && this.state.fileValid
+    });
   }
 
 
@@ -178,19 +196,14 @@ class AuctionReg extends Component {
                 </div>
               </div>
               <h2>2. Куда поставить</h2>
-              <div className={styles.fields + ' ' + styles[this.errorClass(this.state.formErrors.delivery_address)]}>
+              <div className={styles.fields}>
                 <div className={styles.order_address}>
-                  {/*<div className={styles.label}>*/}
-                    {/*Город:*/}
-                    {/*<input*/}
-                      {/*type="text"*/}
-                      {/*data-counter="1"*/}
-                      {/*name="cities[]"*/}
-                      {/*placeholder="откуда"*/}
-                      {/*autoComplete="off"*/}
-                    {/*/>*/}
-                  {/*</div>*/}
-                  <div className={styles.label}>
+                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.city_address)]}>
+                    Город:
+                    <input type="text" data-counter="1" name="city_address" onChange={(event) => this.handleUserInput(event)}
+                           value={state.city_address}/>
+                  </div>
+                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.delivery_address)]}>
                     Адрес:
                     <input type="text" data-counter="1" name="delivery_address" onChange={(event) => this.handleUserInput(event)}
                            value={state.delivery_address}/>
