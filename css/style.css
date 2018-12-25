@@ -9,8 +9,12 @@ body {
 }
 
 .header .login {
+
+}
+
+header .login_box {
   background: #000;
-  height: 18px;
+  height: auto;
   display: inline-block;
   color: #ffd25e;
   font-size: 0.8em;
@@ -22,15 +26,31 @@ body {
   padding: 0px 7px;
   vertical-align: middle;
 }
-.header .login:before {
+
+header .login_box:before {
   position: absolute;
   content: '';
   top: 0px;
-  left: -16px;
-  background: url(../images/login-open-before.png) no-repeat center center;
-  height: 18px;
-  width: 16px;
+  background: url(../images/login-open-before.png)no-repeat;
+  background-size: 100% 100%;
+  height: 36px;
+  width: 21px;
+  left: -21px;
 }
+
+header .login_box a {
+  display: block;
+  text-align: left;
+  cursor: pointer;
+}
+
+header .login_box .logout {
+  color: white;
+  text-decoration: underline;
+  margin-top: 3px;
+  padding-bottom: 3px;
+}
+
 .header .login_popup {
   display: none;
   position: absolute;

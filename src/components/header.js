@@ -110,10 +110,14 @@ validateForm() {
           вход
         </a>
         :
-        <a className={styles.login} onClick={this.props.openProfile}>
-          {this.props.email}
-        </a>
-
+        <div className={styles.login_box}>
+          <a className={styles.login} onClick={this.props.openProfile}>
+            {this.props.email}
+          </a>
+          <a className={styles.logout} onClick={this.props.openProfile}>
+            выйти
+          </a>
+        </div>
       }
       <div
         className={styles.login_popup}
