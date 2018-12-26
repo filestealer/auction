@@ -5,7 +5,8 @@ import Registration from '../components/registartion';
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    counter: state.counter
+    counter: state.counter,
+    files: state.user.files,
   };
 };
 

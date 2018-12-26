@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import iconAutopic from '../../../../images/icon-autopic.png'
 import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
@@ -55,6 +55,7 @@ class Registration extends Component {
         address: "",
         balance: 0,
       },
+      files: props.files,
       type: 'person',
       // formErrors: {user: {email: '', password: '', phone: '', file: ''}},
       formErrors: {user: {email: '', password: '', phone: '', file: ''}, company: {bin: '', website: ''}},
@@ -68,13 +69,34 @@ class Registration extends Component {
     };
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.files != this.state.files) {
+      this.setState({files: nextProps.files});
+      this.validateField('file', nextProps.files);
+    }
+  }
+
+  // shouldComponentUpdate(nextProps, nextState){
+  //
+  //   if (nextProps.files != nextState.files) {
+  //       return true;
+  //
+  //   }
+  // }
+
   save = () => {
-    this.validateField('email', this.state.user.email);
-    this.validateField('password', this.state.user.password);
-    this.validateField('phone', this.state.user.phone);
-    this.validateField('file', this.state.user.file);
-    this.validateField('bin', this.state.company.bin);
-    this.validateField('website', this.state.company.website);
+    if (this.state.type === 'preson') {
+      this.validateField('email', this.state.user.email);
+      this.validateField('password', this.state.user.password);
+      this.validateField('phone', this.state.user.phone);
+    } else {
+      this.validateField('email', this.state.user.email);
+      this.validateField('password', this.state.user.password);
+      this.validateField('phone', this.state.user.phone);
+      this.validateField('file', this.state.files);
+      this.validateField('bin', this.state.company.bin);
+      this.validateField('website', this.state.company.website);
+    }
     if (!this.state.formValid) {
       return;
     };
@@ -107,7 +129,7 @@ class Registration extends Component {
   handleCompanyInput (e) {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({company: {...this.state.user, [e.target.name]: e.target.value}},
+    this.setState({company: {...this.state.company, [e.target.name]: e.target.value}},
       () => { this.validateField(name, value) });
     console.log(e, e.target.value, e.target.name);
   };
@@ -115,7 +137,7 @@ class Registration extends Component {
   handlePersonInput (e) {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({[name]: value},
+    this.setState({person: {...this.state.person, [name]: value}},
       () => { this.validateField(name, value) });
     console.log(e, e.target.value, e.target.name);
   };
@@ -151,7 +173,7 @@ class Registration extends Component {
         fieldValidationErrors.user.phone = phoneValid ? '' : ' is invalid';
         break;
       case 'file':
-        fileValid = value.length >= 1;
+        fileValid = Object.values(value).length >= 1 || this.state.type === 'person';
         fieldValidationErrors.user.file = fileValid ? '': 'need to upload file';
         break;
       default:
@@ -199,6 +221,7 @@ class Registration extends Component {
   render() {
 
     let user = this.state;
+
     return <div>
       <Header />
       <TopBlock text="Регистрация" />
@@ -292,7 +315,7 @@ class Registration extends Component {
                         Имя:
                       </div>
                       <div className={styles.input_box}>
-                        <input type="text" className={styles.name} name="name" value={user.person.name} onChange={(event) => this.handleUserInput(event)}/>
+                        <input type="text" className={styles.name} name="name" value={user.person.name} onChange={(event) => this.handlePersonInput(event)}/>
                       </div>
                     </div>
 

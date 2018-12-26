@@ -38,7 +38,11 @@ function* signUp(data) {
       company = info.company,
       person = info.person;
     person['address'] = 'test';
+    company['address'] = 'test';
     person['last_name'] = 'test';
+
+  user.phone = info.user.phone.replace(/[|&;_ $%@"<>()+,]/g, "").substr(1);
+
   let files = Object.values(state.user.files).map(e => e.id);
   let payload;
 
