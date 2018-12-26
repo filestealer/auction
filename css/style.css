@@ -1553,7 +1553,7 @@ textarea {
   display: flex;
 }
 .auction_reg_content .container form .fields .input_select .label:first-child {
-  width: 60%;
+  width: 50%;
 }
 .auction_reg_content
   .container
@@ -1798,11 +1798,21 @@ textarea {
   color: red;
 }
 
+.auction_reg_content .container .has-error .textarea_block textarea {
+  border: 1px solid red !important;
+}
+
 .auction_reg_content .container .has-error select {
   border: 1px solid red!important;
   color: red;
 }
 
+.auction_reg_content .container .has-error.auction_duration {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: initial;
+}
 
 
 

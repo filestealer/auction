@@ -58,14 +58,15 @@ class Registration extends Component {
       files: props.files,
       type: 'person',
       // formErrors: {user: {email: '', password: '', phone: '', file: ''}},
-      formErrors: {user: {email: '', password: '', phone: '', file: ''}, company: {bin: '', website: ''}},
+      formErrors: {user: {email: '', password: '', phone: '', file: ''}, company: {bin: '', website: '', address: ''}},
       phoneValid: false,
       emailValid: false,
       fileValid: false,
       passwordValid: false,
       binValid: false,
       websiteValid: false,
-      formValid: false
+      formValid: false,
+      addressValid: false,
     };
   }
 
@@ -85,7 +86,7 @@ class Registration extends Component {
   // }
 
   save = () => {
-    if (this.state.type === 'preson') {
+    if (this.state.type === 'person') {
       this.validateField('email', this.state.user.email);
       this.validateField('password', this.state.user.password);
       this.validateField('phone', this.state.user.phone);
@@ -96,6 +97,7 @@ class Registration extends Component {
       this.validateField('file', this.state.files);
       this.validateField('bin', this.state.company.bin);
       this.validateField('website', this.state.company.website);
+      this.validateField('address', this.state.company.address);
     }
     if (!this.state.formValid) {
       return;
@@ -150,6 +152,7 @@ class Registration extends Component {
     let websiteValid = this.state.websiteValid;
     let phoneValid = this.state.phoneValid;
     let fileValid = this.state.fileValid;
+    let addressValid = this.state.addressValid;
 
     switch(fieldName) {
       case 'email':
@@ -176,6 +179,9 @@ class Registration extends Component {
         fileValid = Object.values(value).length >= 1 || this.state.type === 'person';
         fieldValidationErrors.user.file = fileValid ? '': 'need to upload file';
         break;
+      case 'address':
+        addressValid = Object.values(value).length >= 1;
+        fieldValidationErrors.company.address = addressValid ? '': 'is invalid';
       default:
         break;
     }
@@ -186,6 +192,7 @@ class Registration extends Component {
       websiteValid,
       phoneValid,
       fileValid,
+      addressValid,
 
     }, this.validateForm);
   };
@@ -213,6 +220,7 @@ class Registration extends Component {
           && this.state.websiteValid
           && this.state.phoneValid
           && this.state.fileValid
+          && this.state.addressValid
       });
     }
 
@@ -274,6 +282,16 @@ class Registration extends Component {
                     </div>
                     <div className={styles.input_box}>
                       <input type="text" className={styles.name} name="name" value={user.company.name} onChange={(event) => this.handleCompanyInput(event)}/>
+                    </div>
+
+                  </div>
+
+                  <div className={styles.name + ' ' + styles.input_block+ ' ' +(this.state.addressValid ? '' : styles[this.errorClass(this.state.formErrors.company.address)] ) }>
+                    <div className={styles.label}>
+                      Адрес:
+                    </div>
+                    <div className={styles.input_box}>
+                      <input type="text" className={styles.name} name="address" value={user.company.address} onChange={(event) => this.handleCompanyInput(event)}/>
                     </div>
 
                   </div>
