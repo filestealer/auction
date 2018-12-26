@@ -34,9 +34,16 @@ class AuctionReg extends Component {
       delivery_dateValid: false,
       delivery_addressValid: false,
       auction_durationValid: false,
-      fileValid: false,
+      fileValid: true,
       formValid: false
     };
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.files != this.state.files) {
+      this.setState({files: nextProps.files});
+      this.validateField('file', nextProps.files);
+    }
   }
 
   save = () => {
@@ -47,7 +54,8 @@ class AuctionReg extends Component {
     this.validateField('delivery_address', this.state.delivery_address);
     this.validateField('city_address', this.state.city_address);
     this.validateField('auction_duration', this.state.auction_duration);
-    this.validateField('file', this.state.file);
+    this.validateField('file', this.state.files);
+    debugger;
     if (!this.state.formValid) {
       return;
     };
@@ -83,7 +91,7 @@ class AuctionReg extends Component {
         request_categoryValid = value.length >= 1;
         fieldValidationErrors.request_category = request_categoryValid ? '' : ' is invalid';
         break;
-      case 'delivery_date':
+      case 'delivery_date_day':
         delivery_dateValid = value.length >= 1;
         fieldValidationErrors.delivery_date = delivery_dateValid ? '': ' is too short';
         break;
@@ -95,10 +103,6 @@ class AuctionReg extends Component {
         city_addressValid = value.length >= 1;
         fieldValidationErrors.city_address = city_addressValid ? '' : ' is invalid';
         break;
-      case 'auction_type':
-        auction_typeValid = value.length >= 6;
-        fieldValidationErrors.auction_type = auction_typeValid ? '': ' is too short';
-        break;
       case 'request_description':
         request_descriptionValid = value.length >= 1;
         fieldValidationErrors.request_description = request_descriptionValid ? '' : ' is invalid';
@@ -107,20 +111,20 @@ class AuctionReg extends Component {
         auction_durationValid = value.length >= 1;
         fieldValidationErrors.auction_duration = auction_durationValid ? '': ' is too short';
         break;
-      case 'file':
-        fileValid = value.length >= 1;
-        fieldValidationErrors.file = fileValid ? '': 'need to upload file';
-        break;
+      // case 'file':
+      //   fileValid = Object.values(value).length >= 1;
+      //   fieldValidationErrors.user.file = fileValid ? '': 'need to upload file';
+      //   break;
       default:
         break;
     }
     this.setState({formErrors: fieldValidationErrors,
       request_categoryValid,
-      auction_typeValid,
       request_descriptionValid,
       delivery_dateValid,
       delivery_addressValid,
       auction_durationValid,
+      city_addressValid,
       fileValid
 
     }, this.validateForm);
@@ -133,7 +137,7 @@ class AuctionReg extends Component {
   validateForm() {
     this.setState({formValid:
       this.state.request_categoryValid
-      && this.state.auction_typeValid
+      && this.state.request_categoryValid
       && this.state.request_descriptionValid
       && this.state.delivery_dateValid
       && this.state.delivery_addressValid
@@ -264,6 +268,11 @@ class AuctionReg extends Component {
                     />
                     тг.
                   </div>
+                  {/*<div className={styles.label+ ' ' + styles.auction_duration + ' ' + styles[this.errorClass(this.state.formErrors.auction_duration)]}>*/}
+                    {/*<div className={styles.label}>Запрос актуален</div>*/}
+                    {/*<input type="date" name="auction_duration" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)}*/}
+                           {/*value={state.delivery_date_day}/>*/}
+                  {/*</div>*/}
                   <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.auction_duration)]}>
                     Запрос актуален
                     <select name={"auction_duration"} onChange={(event) => this.handleUserInput(event)}

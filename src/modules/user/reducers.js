@@ -48,7 +48,6 @@ export function Reducers(state = defaultState, action) {
         error: false,
       });
     case t.FILE_UPLOAD_SUCCESS:
-      debugger;
       return Object.assign({}, state, {
         isFetching: false,
         error: false,

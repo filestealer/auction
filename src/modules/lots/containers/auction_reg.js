@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     id: ownProps.match.params,
     categories: state.lots.categories,
+    files: state.user.files,
   };
 };
 

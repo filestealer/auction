@@ -67,7 +67,7 @@ export function post(func, url, params = {}, headers = jsonHeaders) {
 }
 export function postFiles(func, url, data, headers = jsonHeaders) {
   console.log(`API::${func} -> start`, url, data, { ...jsonHeaders, ...headers });
-  debugger;
+
   // noinspection ES6ModulesDependencies, JSUnresolvedFunction
   return fetch(url, {
     method: 'POST',

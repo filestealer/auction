@@ -92,6 +92,24 @@ export function lotsReducers(state = defaultState, action) {
         // list: [],
       });
 
+    case t.CREATE_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: false
+      });
+    case t.CREATE_REQUEST_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: false,
+        // list: payload
+      });
+    case t.CREATE_REQUEST_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: true,
+        // list: [],
+      });
+
     default:
       return state;
   }

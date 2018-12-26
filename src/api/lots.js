@@ -35,6 +35,20 @@ export function createLot(data) {
     // "auction_duration": "2019-10-02T00:00:00Z"
   }, {'Authorization': 'Token '+data.token});
 }
+
+
+export function requestPartnership(data) {
+  console.log("API LOTS requestPartnership", data);
+
+  return post('Lots::CreateLot', APIUrl + 'partnerships/', {
+    ...data.data
+    // "auction": 13,
+    // "description": "Мой объем"
+  }, {'Authorization': 'Token '+data.token});
+}
+
+
+
 export function createRequest(data) {
   console.log("API LOTS CreateLot", data);
 
@@ -67,7 +81,6 @@ export function testFileUpload(data) {
   body.append('content', data.file);
   // body.append('amount', data.amount);
   // body.append('bid', 1);
-  debugger;
   // fetch("http://localhost:3001//upload", {
   //   method: 'POST',
   //   headers: {
@@ -87,4 +100,4 @@ export function testFileUpload(data) {
 
 
 
-export default {getList, createLot, createRequest, getBids, getCategories, testFileUpload};
+export default {getList, createLot, createRequest, getBids, getCategories, testFileUpload, requestPartnership};
