@@ -17,6 +17,9 @@ class AuctionReg extends Component {
       auction_duration: '',
       city_address: '',
       file: '',
+      time_delay: '',
+      delivery_date_day: '',
+      ecp: '',
       formErrors: {
         request_category: '',
         auction_type: '',
@@ -25,6 +28,8 @@ class AuctionReg extends Component {
         delivery_address: '',
         auction_duration: '',
         city_address: '',
+        time_delay: '',
+        delivery_date_day: '',
         file: ''
       },
       city_addressValid: false,
@@ -35,6 +40,7 @@ class AuctionReg extends Component {
       delivery_addressValid: false,
       auction_durationValid: false,
       fileValid: true,
+      time_delayValid: false,
       formValid: false
     };
   }
@@ -55,7 +61,7 @@ class AuctionReg extends Component {
     this.validateField('city_address', this.state.city_address);
     this.validateField('auction_duration', this.state.auction_duration);
     this.validateField('file', this.state.files);
-    debugger;
+    this.validateField('time_delay', this.state.time_delay);
     if (!this.state.formValid) {
       return;
     };
@@ -84,6 +90,7 @@ class AuctionReg extends Component {
     let delivery_addressValid = this.state.delivery_addressValid;
     let auction_durationValid = this.state.auction_durationValid;
     let city_addressValid = this.state.city_addressValid;
+    let time_delayValid = this.state.time_delayValid;
     let fileValid = this.state.fileValid;
 
     switch(fieldName) {
@@ -95,8 +102,12 @@ class AuctionReg extends Component {
         delivery_dateValid = value.length >= 1;
         fieldValidationErrors.delivery_date = delivery_dateValid ? '': ' is too short';
         break;
+      case 'time_delay':
+        time_delayValid = value.length >= 1;
+        fieldValidationErrors.time_delay = time_delayValid ? '': ' is too short';
+        break;
       case 'delivery_address':
-        delivery_addressValid = value.length >= 0;
+        delivery_addressValid = value.length >= 1;
         fieldValidationErrors.delivery_address = delivery_addressValid ? '' : ' is invalid';
         break;
       case 'city_address':
@@ -125,6 +136,7 @@ class AuctionReg extends Component {
       delivery_addressValid,
       auction_durationValid,
       city_addressValid,
+      time_delayValid,
       fileValid
 
     }, this.validateForm);
@@ -143,6 +155,7 @@ class AuctionReg extends Component {
       && this.state.delivery_addressValid
       && this.state.auction_durationValid
       && this.state.city_addressValid
+      && this.state.time_delayValid
       && this.state.fileValid
     });
   }
@@ -234,7 +247,7 @@ class AuctionReg extends Component {
                 {/*</div>*/}
 
                 <div className={styles.order_date}>
-                  <div>
+                  <div className={styles[this.errorClass(this.state.formErrors.city_address)]}>
                     <div className={styles.label}>Дата поставки</div>
                     <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)}
                            value={state.delivery_date_day}/>
@@ -291,6 +304,28 @@ class AuctionReg extends Component {
               </div>
               <h2>4. Файлы</h2>
               <FileUploader />
+              <h2>5. Совместный аукцион</h2>
+              <div
+                className={styles.aprove}
+                style={{
+                  marginBottom: '15px',
+                }}
+              >
+                <input type="checkbox" name="rulesChecked"/>
+                Наличие ЭЦП
+                <a href="">
+
+                </a>
+              </div>
+              <div
+                className={styles.label+ ' ' + styles[this.errorClass(this.state.formErrors.time_delay)]}
+                style={{
+                  marginBottom: '15px',
+                }}
+              >
+                <div className={styles.label}>Время ожидания</div>
+                <input type="date" name="time_delay" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)} value={state.time_delay}/>
+              </div>
 
               {/*<div className={styles.fields}>*/}
                 {/*<div className={styles.order_address}>*/}
@@ -303,6 +338,7 @@ class AuctionReg extends Component {
                   <span onClick={this.save}>Разместить запрос</span>
                 </a>
               </div>
+
             </form>
 
             <div className={styles.support_block}>
