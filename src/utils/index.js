@@ -1,4 +1,5 @@
-import {createNotification, NOTIFICATION_TYPE_SUCCESS} from 'react-redux-notify';
+import {createNotification, NOTIFICATION_TYPE_SUCCESS, NOTIFICATION_TYPE_ERROR, NOTIFICATION_TYPE_INFO, NOTIFICATION_TYPE_WARNING} from 'react-redux-notify';
+import t from "../modules/user/types";
 
 
 export function normalizeError(error = {}, code = -1) {
@@ -35,7 +36,36 @@ export function unFormatPhone(phone) {
   return `+${(phone || '').replace(/[+)( -]/g, '')}`;
 }
 
+export function makeNotification(inType, message) {
+  let type = NOTIFICATION_TYPE_INFO;
+  switch (inType) {
+    case 'success':
+      type = NOTIFICATION_TYPE_SUCCESS;
+      break;
+    case 'error':
+      type = NOTIFICATION_TYPE_ERROR;
+      break;
+    case 'warning':
+      type = NOTIFICATION_TYPE_WARNING;
+      break;
+    case 'info':
+      type = NOTIFICATION_TYPE_INFO;
+      break;
+    default:
+      type = NOTIFICATION_TYPE_INFO;
+      break;
+  }
 
+  return {
+    message,
+    type,
+    duration: 3000,
+    canDismiss: false,
+    forceClose: false,
+    // icon: <i className="fa fa-check" />
+  }
+
+}
 export const mySuccessNotification = {
   message: 'You have been logged in!',
   type: NOTIFICATION_TYPE_SUCCESS,

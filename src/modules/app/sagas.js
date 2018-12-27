@@ -5,6 +5,8 @@ import tUser from '../user/types';
 import {push} from 'connected-react-router';
 // import tUser from '../user/types';
 // import tCareers from '../careers/types';
+import {createNotification} from 'react-redux-notify';
+import {makeNotification} from '../../utils';
 
 function* appStart() {
   console.log('Init::Sagas::appStart');
@@ -19,7 +21,7 @@ function* appStart() {
   yield put({type: tLots.FETCH_LIST});
 
   yield put({type: tLots.FETCH_CATEGORIES});
-
+  yield put(createNotification(makeNotification('success', 'Test message')));
   //yield put({type: tGeoData.FETCH_GEO_DATA});
   // yield put(push('/lots/'))
   return null;

@@ -109,7 +109,7 @@ validateForm() {
     let state = this.state;
 
     return <header className={styles.header}>
-      <Notify position={"right"}/>
+      <Notify position={"TopRight"}/>
       {(this.props.email == "") ?
         <div className={styles.login_box_enter}>
           <a className={styles.login} onClick={this.props.showModal}>
