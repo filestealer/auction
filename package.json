@@ -62,7 +62,6 @@
     "react-input-mask": "^2.0.4",
     "react-redux": "^6.0.0",
     "react-redux-notify": "^4.1.0",
-    "react-redux-spinner": "^1.1.4",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",

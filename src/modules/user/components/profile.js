@@ -39,7 +39,6 @@ class Profile extends Component {
     return <div>
       <div id="app">
         <Header />
-
         {/*<input placeholder={'Сумма в тенге'} type="text" name="price" value={this.state.price} onChange={this.onChange} />*/}
         {/*<input type="file" name={"file"} onChange={this.uploadFile}/>*/}
         {/*<button onClick={this.request}>Отправить</button>*/}

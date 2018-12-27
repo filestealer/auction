@@ -115,7 +115,7 @@ validateForm() {
         position={"TopRight"}
       />
       <Spinner
-        loading={true}
+        loading={false}
       />
       {(this.props.email == "") ?
         <div className={styles.login_box_enter}>
