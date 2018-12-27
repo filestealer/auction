@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styles from '../../css/style.css'
 import logo_text from '../../images/logo-text.png'
 import { connect } from "react-redux";
-import { signIn, openRegistration, openProfile, showModal, hideModal } from "../modules/user/actions";
+import { signIn, signOut, openRegistration, openProfile, showModal, hideModal } from "../modules/user/actions";
 import { openLots, openCreateLot } from "../modules/lots/actions";
 import FormErrors from "../components/formerrors";
 import 'react-redux-notify/dist/ReactReduxNotify.css';
@@ -121,7 +121,7 @@ validateForm() {
           <a className={styles.login} onClick={this.props.openProfile}>
             {this.props.email}
           </a>
-          <a className={styles.logout} onClick={this.props.openProfile}>
+          <a className={styles.logout} onClick={this.props.signOut}>
             выйти
           </a>
         </div>
@@ -190,6 +190,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
 const mapDispatchToProps = (dispatch) => ({
   singIn: (data) => dispatch(signIn(data)),
+  signOut: () => dispatch(signOut()),
   openReg: () => dispatch(openRegistration()),
   openLots: () => dispatch(openLots()),
   openCreateLot: () => dispatch(openCreateLot()),

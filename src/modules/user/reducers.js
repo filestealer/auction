@@ -42,6 +42,12 @@ export function Reducers(state = defaultState, action) {
         error: true,
         token: '',
       });
+    case t.SIGN_OUT:
+      return Object.assign({}, state, {
+        email: '',
+        token: '',
+        profile: {},
+      });
     case t.FILE_UPLOAD:
       return Object.assign({}, state, {
         isFetching: true,

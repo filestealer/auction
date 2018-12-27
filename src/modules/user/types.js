@@ -2,6 +2,8 @@ export const SIGN_IN = 'User/SIGN_IN';
 export const SIGN_IN_SUCCESS = 'User/SIGN_IN_SUCCESS';
 export const SIGN_IN_FAILURE = 'User/SIGN_IN_FAILURE';
 
+export const SIGN_OUT = 'User/SIGN_OUT';
+
 export const SIGN_UP = 'User/SIGN_UP';
 export const SIGN_UP_SUCCESS = 'User/SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'User/SIGN_UP_FAILURE';
@@ -27,6 +29,7 @@ export const FILE_DELETE = 'User/FILE_DELETE';
 // noinspection JSUnusedGlobalSymbols
 export default {
   SIGN_IN, SIGN_IN_FAILURE, SIGN_IN_SUCCESS,
+  SIGN_OUT,
   FETCH_PROFILE, FETCH_PROFILE_FAILURE, FETCH_PROFILE_SUCCESS,
   SIGN_UP, SIGN_UP_FAILURE, SIGN_UP_SUCCESS,
   OPEN_REGISTRATION, OPEN_PROFILE, SHOW_MODAL, HIDE_MODAL,

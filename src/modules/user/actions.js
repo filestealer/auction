@@ -3,6 +3,9 @@ import t from './types';
 export function signIn(data) {
   return {type: t.SIGN_IN, payload: data}
 }
+export function signOut() {
+  return {type: t.SIGN_OUT}
+}
 export function signUp(data) {
   return {type: t.SIGN_UP, payload: data}
 }
@@ -36,5 +39,5 @@ export function deleteFile(payload) {
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-  signIn, fetchProfile, openRegistration, signUp, openProfile, showModal, hideModal, fileUpload,deleteFile
+  signIn, signOut, fetchProfile, openRegistration, signUp, openProfile, showModal, hideModal, fileUpload,deleteFile
 };

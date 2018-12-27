@@ -199,18 +199,36 @@ header .login_box .logout {
   margin-left: 50px;
   margin-right: 10px;
 }
+
+.header .login_popup form p span:active {
+  -webkit-transform: scale(0.98) skew(-7deg);
+  -moz-transform: scale(0.98) skew(-7deg);
+  -ms-transform: scale(0.98) skew(-7deg);
+  -o-transform: scale(0.98) skew(-7deg);
+  transform: scale(0.98) skew(-7deg);
+}
 .header .login_popup form p span input {
-  -webkit-transform: skew(7deg);
-  -moz-transform: skew(7deg);
-  -ms-transform: skew(7deg);
-  -o-transform: skew(7deg);
-  transform: skew(7deg);
+  -webkit-transform: scale(1) skew(7deg);
+  -moz-transform: scale(1) skew(7deg);
+  -ms-transform: scale(1) skew(7deg);
+  -o-transform: scale(1) skew(7deg);
+  transform: scale(1) skew(7deg);
   height: 19px;
   outline: none;
   background: none;
   border: none;
   border-radius: 0px;
 }
+
+.header .login_popup form p span input:active {
+  -webkit-transform: scale(0.98) skew(7deg);
+  -moz-transform: scale(0.98) skew(7deg);
+  -ms-transform: scale(0.98) skew(7deg);
+  -o-transform: scale(0.98) skew(7deg);
+  transform: scale(0.98) skew(7deg);
+}
+
+
 .header .login_popup form p a {
   color: #fff;
   position: relative;
@@ -242,12 +260,20 @@ header .login_box .logout {
   color: #fff;
   background: #ed9614;
   padding: 0px 20px;
-  -webkit-transform: skew(-15deg) translateZ(0px);
-  -moz-transform: skew(-15deg) translateZ(0px);
-  -ms-transform: skew(-15deg) translateZ(0px);
-  -o-transform: skew(-15deg) translateZ(0px);
-  transform: skew(-15deg) translateZ(0px);
+  -webkit-transform: scale(1) skew(-15deg) translateZ(0px);
+  -moz-transform: scale(1) skew(-15deg) translateZ(0px);
+  -ms-transform: scale(1) skew(-15deg) translateZ(0px);
+  -o-transform: scale(1) skew(-15deg) translateZ(0px);
+  transform: scale(1) skew(-15deg) translateZ(0px);
   margin-left: 165px;
+}
+
+.header .container .center_block .place_order:active {
+  -webkit-transform: scale(0.98) skew(-15deg) translateZ(0px);
+  -moz-transform: scale(0.98) skew(-15deg) translateZ(0px);
+  -ms-transform: scale(0.98) skew(-15deg) translateZ(0px);
+  -o-transform: scale(0.98) skew(-15deg) translateZ(0px);
+  transform: scale(0.98) skew(-15deg) translateZ(0px);
 }
 
 .header .container .center_block .place_order:hover {
@@ -366,6 +392,14 @@ header .login_box .logout {
   border-width: 2px;
   margin-bottom: 1px;
 }
+
+.filter .order a:active {
+  -webkit-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -moz-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -ms-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -o-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  transform: scale(0.98) skew(-12deg) translateZ(0px);
+}
 .filter .order a:after {
   content: '';
   position: absolute;
@@ -377,9 +411,7 @@ header .login_box .logout {
   border-color: transparent #fff transparent transparent;
   border-width: 0px 3px 3px 0px;
 }
-.filter .order a:hover {
-  border-width: 3px;
-}
+
 
 .lots_content table {
   margin: 0px auto;
@@ -795,6 +827,17 @@ header .login_box .logout {
     font-size: 24px;
     border-width: 3px;
     background: #ffd25e;
+    outline: none;
+  }
+}
+
+.lot_content .container .make_offer_form {
+  button:active {
+    -webkit-transform: scale(0.98) skew(-12deg) translateZ(0px);
+    -moz-transform: scale(0.98) skew(-12deg) translateZ(0px);
+    -ms-transform: scale(0.98) skew(-12deg) translateZ(0px);
+    -o-transform: scale(0.98) skew(-12deg) translateZ(0px);
+    transform: scale(0.98) skew(-12deg) translateZ(0px);
   }
 }
 .lot_content .container .make_offer a {
@@ -826,6 +869,14 @@ header .login_box .logout {
   font-size: 24px;
   border-width: 3px;
   background: #ffd25e;
+}
+
+.lot_content .container .make_offer a:active {
+  -webkit-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -moz-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -ms-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -o-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  transform: scale(0.98) skew(-12deg) translateZ(0px);
 }
 .lot_content .container .offers_list {
   background: #fff;
@@ -930,6 +981,7 @@ header .login_box .logout {
   -moz-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
   border: 1px solid #ebebeb;
+  height: 35px;
 }
 .reg_content
 .container
@@ -959,6 +1011,7 @@ textarea {
   margin-bottom: 20px;
   font-style: italic;
   font-size: 14px;
+  margin-top: 10px;
 }
 .reg_content
   .container
@@ -1195,6 +1248,14 @@ textarea {
   border-right: 4px solid #ed9614;
   border-bottom: 4px solid #ed9614;
 }
+
+.reg_content .container .register .registaer_content .center a:active {
+  -webkit-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -moz-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -ms-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -o-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  transform: scale(0.98) skew(-12deg) translateZ(0px);
+}
 .reg_content .container .register .registaer_content .center a span {
   display: inline-block;
   -webkit-transform: skew(12deg) translateZ(0px);
@@ -1241,6 +1302,14 @@ textarea {
   border-right: 4px solid #ed9614;
   border-bottom: 4px solid #ed9614;
   cursor: pointer;
+}
+
+.reg_content .container .support_block a:active {
+  -webkit-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -moz-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -ms-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -o-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  transform: scale(0.98) skew(-12deg) translateZ(0px);
 }
 .reg_content .container .support_block a span {
   display: inline-block;
@@ -1603,6 +1672,14 @@ textarea {
   border-right: 4px solid #ed9614;
   border-bottom: 4px solid #ed9614;
 }
+
+.auction_reg_content .container form .center a:active {
+  -webkit-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -moz-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -ms-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -o-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  transform: scale(0.98) skew(-12deg) translateZ(0px);
+}
 .auction_reg_content .container form .center a span {
   display: inline-block;
   -webkit-transform: skew(12deg) translateZ(0px);
@@ -1648,6 +1725,15 @@ textarea {
   border: none;
   border-right: 4px solid #ed9614;
   border-bottom: 4px solid #ed9614;
+  cursor: pointer;
+}
+
+.auction_reg_content .container .support_block a:active {
+  -webkit-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -moz-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -ms-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  -o-transform: scale(0.98) skew(-12deg) translateZ(0px);
+  transform: scale(0.98) skew(-12deg) translateZ(0px);
 }
 .auction_reg_content .container .support_block a span {
   display: inline-block;
@@ -1737,6 +1823,14 @@ textarea {
 .index .types .container a img {
   display: table;
   margin: 0px auto; }
+
+.index .types .container a img:active {
+  -webkit-transform: scale(0.98);
+  -moz-transform: scale(0.98);
+  -ms-transform: scale(0.98);
+  -o-transform: scale(0.98);
+  transform: scale(0.98);
+}
 .index .how_it_works {
   margin-bottom: 35px;
   padding-top: 20px; }

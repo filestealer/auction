@@ -35,6 +35,16 @@ function* signIn(data) {
   }
 }
 
+function* signOut() {
+  console.log('Users signOut');
+  try {
+    localStorage.setItem('token', '' );
+    yield put(push('/'));
+  } catch (error) {
+    console.log('Error SignOut');
+  }
+}
+
 function* localAuth(data) {
   yield put({type: t.SIGN_IN_SUCCESS, payload: {token: data.payload}});
   // yield put({type: t.HIDE_MODAL});
@@ -125,6 +135,7 @@ function* fileUpload(data) {
 
 export function* sagas() {
   yield takeEvery(t.SIGN_IN, signIn);
+  yield takeEvery(t.SIGN_OUT, signOut);
   yield takeEvery(t.SIGN_UP, signUp);
   yield takeEvery(t.FETCH_PROFILE, fetchProfile);
   yield takeEvery(t.OPEN_REGISTRATION, openRegistration);
