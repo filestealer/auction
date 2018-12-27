@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 import styles from '../../css/style.css'
+import notify from '../../css/notify.css'
 import logo_text from '../../images/logo-text.png'
 import { connect } from "react-redux";
 import { signIn, signOut, openRegistration, openProfile, showModal, hideModal } from "../modules/user/actions";
@@ -8,6 +9,7 @@ import { openLots, openCreateLot } from "../modules/lots/actions";
 import FormErrors from "../components/formerrors";
 import 'react-redux-notify/dist/ReactReduxNotify.css';
 import {Notify} from 'react-redux-notify';
+import Spinner from './spinner';
 
 
 
@@ -109,7 +111,12 @@ validateForm() {
     let state = this.state;
 
     return <header className={styles.header}>
-      <Notify position={"TopRight"}/>
+      <Notify
+        position={"TopRight"}
+      />
+      <Spinner
+        loading={true}
+      />
       {(this.props.email == "") ?
         <div className={styles.login_box_enter}>
           <a className={styles.login} onClick={this.props.showModal}>
