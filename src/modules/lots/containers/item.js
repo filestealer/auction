@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { createRequest, createRequestPartnership } from "../actions";
+import { createRequest, createRequestPartnership, acceptBid, acceptPartnership } from "../actions";
 import Item from '../components/item';
 
 // const Counter = ...
@@ -17,9 +17,9 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
-  let bids = state.lots.bids.filter(e => e.auction == item.id && item.initiator.id == state.user.profile.id);
+  let bids = state.lots.bids.filter(e => e.auction == item.id && item && item.initiator && item.initiator.id == state.user.profile.id);
 
-  let partnerships = (item.initiator.id == state.user.profile.id) ? item.partnerships : [];
+  let partnerships = (item && item.initiator && item.initiator.id == state.user.profile.id) ? item.partnerships : [];
 
 
   //ownProps.match.params
@@ -36,7 +36,7 @@ const mapStateToProps = (state, ownProps) => {
     user: state.user.profile,
     partnerships,
     bids: bids || [],
-    isMy: item.initiator.id == state.user.profile.id,
+    isMy: item && item.initiator && item.initiator.id == state.user.profile.id,
     // categories: categories || [],
     // category_name: category_name || '',
 
@@ -46,6 +46,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   request: (data) => dispatch(createRequest(data)),
   requestPartnership: (data) => dispatch(createRequestPartnership(data)),
+  acceptPartnership: (data) => dispatch(acceptPartnership(data)),
+  acceptBid: (data) => dispatch(acceptBid(data)),
 });
 
 export default connect(

@@ -68,7 +68,7 @@ class Lot extends Component {
             <h1 className={styles.title}>{this.props.category.name}</h1>
             <h3 />
             <div className={styles.main_part}>
-              <input type="hidden" name="lot-id" value="00000696" />
+
               <p>{this.props.description}</p>
               <div className={styles.columns}>
                 <div className={styles.column + ' ' + styles.left}>
@@ -142,10 +142,10 @@ class Lot extends Component {
                 </div>
               </div>
             </div>
-
+            {!this.props.isMy ? <div>
             <div className={styles.make_offer}>
               <a className={styles['green-button']} onClick={this.openRequestPartnership}>
-                <span>Присоединиться как партнер</span>
+                <span>Совместная покупка</span>
               </a>
             </div>
 
@@ -154,13 +154,10 @@ class Lot extends Component {
               <input placeholder={'Ваш объем'} type="text" name="description" value={this.state.description} onChange={this.onChange} />
               <button onClick={this.requestPartnership}>Отправить</button>
             </div>
-
-
             <div className={styles.make_offer}>
               <a className={styles['green-button']} onClick={this.openRequest}>
                 <span>Сделать предложение</span>
               </a>
-
             </div>
             <div className={styles.make_offer_form + (this.state.openRequest ? ' ' + styles.active : '')}>
               <div className={styles.remaining_time}>
@@ -171,6 +168,7 @@ class Lot extends Component {
               {/*<input type="file" name={"file"} onChange={this.uploadFile}/>*/}
               <button onClick={this.request}>Отправить</button>
             </div>
+              </div> : '' }
             {this.props.isMy ? <div>
               <div className={styles.offers_list}>
                 <h2>
@@ -188,7 +186,7 @@ class Lot extends Component {
                   {this.props.partnerships.map((e,i)=> { return <tr key={i}>
                     <td>{e.description}</td>
                     <td>{e.partner}</td>
-                    <td />
+                    <td><div className={styles.newButton} onClick={()=> this.props.acceptPartnership({partnership: e.id, auction: this.props.id})}>Принять</div></td>
                     <td />
                     <td />
                   </tr>})}
@@ -211,7 +209,7 @@ class Lot extends Component {
                   {this.props.bids.map((e,i)=> { return <tr key={i}>
                     <td>{e.amount.split('.')[0]}</td>
                     <td>{e.user}</td>
-                    <td />
+                    <td><div className={styles.newButton} onClick={()=> this.props.acceptBid({bid: e.id, auction: this.props.id})}>Принять</div></td>
                     <td />
                     <td />
                   </tr>})}

@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedVariable
 
 import {APIUrl} from '../config'
-import {post, get, postFiles} from '../utils/net';
+import {post, get, postFiles, patch} from '../utils/net';
 import {unFormatPhone} from '../utils';
 
 
@@ -20,7 +20,35 @@ export function getCategories() {
   return get('Auth::getBids', APIUrl + 'categories/', {});
 }
 
+export function acceptBid(data) {
+  return patch('Lots::CreateLot', APIUrl + 'auctions/'+data.auction+'/', {
+    chosen_bid: data.bid
+  }, {'Authorization': 'Token '+data.token});
 
+  // return post('Lots::CreateLot', APIUrl + 'choose/', {
+  //   auction: data.auction,
+  //   bid: data.bid
+  //   // "request_category": 1,
+  //   // "auction_type": 1,
+  //   // "request_description": "Вот такой вот аукцион",
+  //   // "delivery_date": "2019-10-02T00:00:00Z",
+  //   // "delivery_address": "куда?:D",
+  //   // "auction_duration": "2019-10-02T00:00:00Z"
+  // }, {'Authorization': 'Token '+data.token});
+
+}
+export function acceptPartnership(data) {
+  return post('Lots::CreateLot', APIUrl + 'choose_partnership/', {
+    auction: data.auction,
+    partnership: data.partnership
+    // "request_category": 1,
+    // "auction_type": 1,
+    // "request_description": "Вот такой вот аукцион",
+    // "delivery_date": "2019-10-02T00:00:00Z",
+    // "delivery_address": "куда?:D",
+    // "auction_duration": "2019-10-02T00:00:00Z"
+  }, {'Authorization': 'Token '+data.token});
+}
 
 export function createLot(data) {
   console.log("API LOTS CreateLot", data);
@@ -49,26 +77,8 @@ export function createRequestPartnership(data) {
 
 
 
-export function createRequest(data) {
+export function createBid(data) {
   console.log("API LOTS CreateLot", data);
-
-  // const body = new FormData();
-  // data.files.map((e) => {
-  //   body.append('files[]', e);
-  // });
-  // body.append('amount', data.amount);
-  // body.append('auction', data.id);
-  // debugger;
-  // fetch("http://localhost:3001//upload", {
-  //   method: 'POST',
-  //   headers: {
-  //     'Accept': 'application/json',
-  //     'Content-Type': 'application/x-www-form-urlencoded'
-  //   },
-  //   body: data
-  // }).then((response) =>  {
-  //   return response.text();
-  // })
   return post('Lots::CreateLot', APIUrl + 'bids/', {auction: data.id, amount: data.amount, files: data.files}, {'Authorization': 'Token '+data.token});
   // return postFiles('Lots::CreateLot', APIUrl + 'bids/', body, {'Authorization': 'Token '+data.token, 'Content-Type': 'application/x-www-form-urlencoded'});
 }
@@ -100,4 +110,4 @@ export function testFileUpload(data) {
 
 
 
-export default {getList, createLot, createRequest, getBids, getCategories, testFileUpload, createRequestPartnership};
+export default {getList, createLot, createBid, getBids, getCategories, testFileUpload, createRequestPartnership, acceptPartnership, acceptBid};

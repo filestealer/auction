@@ -56,7 +56,7 @@ class AuctionReg extends Component {
     this.validateField('request_category', this.state.request_category);
     this.validateField('auction_type', this.state.auction_type);
     this.validateField('request_description', this.state.request_description);
-    this.validateField('delivery_date', this.state.delivery_date);
+    this.validateField('delivery_date_day', this.state.delivery_date);
     this.validateField('delivery_address', this.state.delivery_address);
     this.validateField('city_address', this.state.city_address);
     this.validateField('auction_duration', this.state.auction_duration);
@@ -100,7 +100,7 @@ class AuctionReg extends Component {
         break;
       case 'delivery_date_day':
         delivery_dateValid = value.length >= 1;
-        fieldValidationErrors.delivery_date = delivery_dateValid ? '': ' is too short';
+        fieldValidationErrors.delivery_date_day = delivery_dateValid ? '': ' is too short';
         break;
       case 'time_delay':
         time_delayValid = value.length >= 0;
@@ -247,7 +247,7 @@ class AuctionReg extends Component {
                 {/*</div>*/}
 
                 <div className={styles.order_date}>
-                  <div className={styles[this.errorClass(this.state.formErrors.city_address)]}>
+                  <div className={styles[this.errorClass(this.state.formErrors.delivery_date_day)]}>
                     <div className={styles.label}>Дата поставки</div>
                     <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)}
                            value={state.delivery_date_day}/>

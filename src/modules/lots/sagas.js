@@ -5,6 +5,9 @@ import API from '../../api/lots';
 import {push} from "connected-react-router";
 import moment from 'moment';
 
+import {createNotification} from 'react-redux-notify';
+import {makeNotification} from '../../utils';
+
 
 moment().format();
 // import {informErrorInfo} from '../../utils/informer';
@@ -62,12 +65,13 @@ function* createLot(data) {
 
   let files = Object.values(state.user.files).map(e => e.id);
 
+  //FIXME add fields city, 5step
   let info = {
     request_category: data.request_category,
     auction_type: data.auction_type || 1,
     request_description: data.request_description,
     delivery_address: data.delivery_address,
-    delivery_date: moment(data.delivery_date_day + ' ' + data.delivery_date_time).format('YYYY-MM-DD HH:mm:ssZ'),
+    delivery_date: moment(data.delivery_date_day + ' ' + (data.delivery_date_time || "00:00")).format('YYYY-MM-DD HH:mm:ssZ'),
     auction_duration: moment().add(data.auction_duration, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
     files,
   };
@@ -75,21 +79,27 @@ function* createLot(data) {
 
   try {
     const payload = yield API.createLot({token, data: info});
-    yield put({type: t.CREATE_LOT_SUCCESS, payload});
-    yield put({type: t.FETCH_LIST});
-    yield put({type: tUser.FILE_UPLOAD_CLEAR});
-    yield put(push('/lots/'));
+    if (payload.id) {
+      yield put(createNotification(makeNotification('success', "Лот успешно создан")));
+      yield put({type: t.CREATE_LOT_SUCCESS, payload});
+      yield put({type: t.FETCH_LIST});
+      yield put({type: tUser.FILE_UPLOAD_CLEAR});
+      yield put(push('/lots/'));
+    } else {
+      yield put({type: t.CREATE_LOT_FAILURE, payload: error})
+      yield put(createNotification(makeNotification('error', 'Ошибка сохранения. Проверьте правильность заполненных данных')));
+    }
   } catch (error) {
     yield put({type: t.CREATE_LOT_FAILURE, payload: error})
   }
 }
 
-function* createRequest(data) {
+function* createBid(data) {
   const state = yield select(), token = state.user.token;
   let amount = data.payload.price, id = data.payload.id;
   let files = Object.values(state.user.files).map(e => e.id);
   try {
-    const payload = yield API.createRequest({token, amount, id, files});
+    const payload = yield API.createBid({token, amount, id, files});
     yield put({type: t.CREATE_REQUEST_SUCCESS, payload});
     yield put({type: t.FETCH_LIST, payload});
     yield put({type: tUser.FILE_UPLOAD_CLEAR});
@@ -100,12 +110,49 @@ function* createRequest(data) {
     yield put({type: t.CREATE_REQUEST_FAILURE, payload: error})
     alert(error.statusText);
   }
-
 }
+
+function* acceptBid(data) {
+  const state = yield select(), token = state.user.token;
+  let auction = data.payload.auction;
+  let bid = data.payload.bid;
+  debugger;
+  try {
+    const payload = yield API.acceptBid({token, auction, bid});
+    yield put({type: t.ACCEPT_BID_SUCCESS, payload});
+    yield put({type: t.FETCH_LIST, payload});
+    yield put(createNotification(makeNotification('success', "Ставка принята")));
+    // yield put(push('/lots/'));
+  } catch (error) {
+    console.log(error);
+    yield put({type: t.ACCEPT_BID_FAILURE, payload: error});
+    yield put(createNotification(makeNotification('error', "Произошла ошибка")));
+  }
+}
+
+
+function* acceptPartnership(data) {
+  const state = yield select(), token = state.user.token;
+  let auction = data.payload.auction;
+  let partnership = data.payload.partnership;
+  try {
+    const payload = yield API.acceptPartnership({token, auction, partnership});
+    yield put({type: t.ACCEPT_BID_SUCCESS, payload});
+    yield put({type: t.FETCH_LIST, payload});
+    yield put(createNotification(makeNotification('success', "Ставка принята")));
+    // yield put(push('/lots/'));
+  } catch (error) {
+    console.log(error);
+    yield put({type: t.ACCEPT_BID_FAILURE, payload: error});
+    yield put(createNotification(makeNotification('error', "Произошла ошибка")));
+  }
+}
+
+
 function* createRequestPartnership(data) {
   const state = yield select(), token = state.user.token;
   let description = data.payload.description, id = data.payload.id;
-debugger;
+
   try {
     const payload = yield API.createRequestPartnership({token, auction: id, description});
     yield put({type: t.REQUEST_PARTNERSHIP_SUCCESS, payload});
@@ -139,10 +186,12 @@ export function* sagas() {
   yield takeEvery(t.CREATE_LOT, createLot);
   yield takeEvery(t.OPEN_LOT, openLotScene);
   yield takeEvery(t.OPEN_CREATE_LOT, openCreateLotScene);
-  yield takeEvery(t.CREATE_REQUEST, createRequest);
+  yield takeEvery(t.CREATE_REQUEST, createBid);
   yield takeEvery(t.REQUEST_PARTNERSHIP, createRequestPartnership);
   yield takeEvery(t.FETCH_BIDS, fetchBids);
   yield takeEvery(t.FETCH_CATEGORIES, fetchCategories);
+  yield takeEvery(t.ACCEPT_BID, acceptBid);
+  yield takeEvery(t.ACCEPT_PARTNERSHIP, acceptPartnership);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);
   // yield takeEvery(OPEN_EDIT_SCENE, openEditScene);
