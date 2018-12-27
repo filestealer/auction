@@ -75,20 +75,20 @@ class Profile extends Component {
                       {this.props.profile.person ? this.props.profile.person.name : ''}
                       {this.props.profile.company ? this.props.profile.company.name : ''}
                     </h2>
-                    <div>
-                      заказчик/перевозчик
-                    </div>
+                    {/*<div>*/}
+                      {/*заказчик/перевозчик*/}
+                    {/*</div>*/}
 
                     {/*<div className={styles.count_transitions}>*/}
                       {/*<a href="">0 перевозок</a>*/}
                       {/*/*/}
                       {/*<a href="">0 ставки</a>*/}
                     {/*</div>*/}
-                    <div className={styles.count_orders}>
-                      <a href="">0 заказов</a>
-                      /
-                      <a href="">0 выполненных</a>
-                    </div>
+                    {/*<div className={styles.count_orders}>*/}
+                      {/*<a href="">0 заказов</a>*/}
+                      {/*/*/}
+                      {/*<a href="">0 выполненных</a>*/}
+                    {/*</div>*/}
                   </div>
                 </div>
                 <div className={styles.what_person}>
