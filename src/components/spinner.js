@@ -20,7 +20,12 @@ class Spinner extends React.Component {
   }
   render() {
     return (
-      <div className='sweet-loading'>
+      <div
+        className='sweet-loading'
+        style={{
+          display: this.props.loading ? 'block' : 'none',
+        }}
+      >
         <ClipLoader
           className={override}
           sizeUnit={"px"}
