@@ -103,7 +103,7 @@ class AuctionReg extends Component {
         fieldValidationErrors.delivery_date = delivery_dateValid ? '': ' is too short';
         break;
       case 'time_delay':
-        time_delayValid = value.length >= 1;
+        time_delayValid = value.length >= 0;
         fieldValidationErrors.time_delay = time_delayValid ? '': ' is too short';
         break;
       case 'delivery_address':

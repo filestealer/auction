@@ -151,7 +151,7 @@ validateForm() {
           </p>
           <p>
             <span >
-              <input disabled={!this.state.formValid} type="submit" name="Login" value="Войти" onSubmit={this.login}/>
+              <input type="submit" name="Login" value="Войти" onSubmit={this.login}/>
 
             </span>
 
