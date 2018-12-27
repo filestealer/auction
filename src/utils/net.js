@@ -41,6 +41,7 @@ export function get(func, url, headers = jsonHeaders) {
 
 export function post(func, url, params = {}, headers = jsonHeaders) {
   console.log(`API::${func} -> start`, url, params);
+  let status;
   // noinspection ES6ModulesDependencies, JSUnresolvedFunction
   return fetch(url, {
     method: 'POST',
@@ -51,11 +52,14 @@ export function post(func, url, params = {}, headers = jsonHeaders) {
   })
     .then(r => {
       console.log('>>>>>', r, r.status);
+      // status = r.status;
+      // debugger;
       // if (r.status != 200) throw r;
-      return r.json();
+      return  r.json();
     })
     .then(r => {
       console.log(`API::${func} -> fetched:`, r);
+      // debugger;
       if (r) return r;
       // if (r && r.object && r.success) return r.object;
       throw r;
@@ -63,7 +67,7 @@ export function post(func, url, params = {}, headers = jsonHeaders) {
     .catch(error => {
       console.log(`API::${func} -> error:`, error);
       throw error; //normalizeError(error, -1);
-    });
+    })
 }
 export function postFiles(func, url, data, headers = jsonHeaders) {
   console.log(`API::${func} -> start`, url, data, { ...jsonHeaders, ...headers });

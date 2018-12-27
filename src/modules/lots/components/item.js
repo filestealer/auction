@@ -23,6 +23,7 @@ class Lot extends Component {
     this.state = {
       price: '',
       openRequest: false,
+      openRequestPartnership: false,
       file: {},
     };
   }
@@ -30,8 +31,15 @@ class Lot extends Component {
   request = () => {
     this.props.request({price: this.state.price, id: this.props.id, file: this.state.file});
   };
+  requestPartnership = () => {
+    this.props.requestPartnership({description: this.state.description, id: this.props.id});
+  };
+
   openRequest = () => {
     this.setState({openRequest: true});
+  };
+  openRequestPartnership = () => {
+    this.setState({openRequestPartnership: true});
   };
 
   onChange = (e) => {
@@ -136,6 +144,19 @@ class Lot extends Component {
             </div>
 
             <div className={styles.make_offer}>
+              <a className={styles['green-button']} onClick={this.openRequestPartnership}>
+                <span>Присоединиться как партнер</span>
+              </a>
+            </div>
+
+            <div className={styles.make_offer_form + (this.state.openRequestPartnership ? ' ' + styles.active : '')}>
+
+              <input placeholder={'Ваш объем'} type="text" name="description" value={this.state.description} onChange={this.onChange} />
+              <button onClick={this.requestPartnership}>Отправить</button>
+            </div>
+
+
+            <div className={styles.make_offer}>
               <a className={styles['green-button']} onClick={this.openRequest}>
                 <span>Сделать предложение</span>
               </a>
@@ -150,22 +171,58 @@ class Lot extends Component {
               {/*<input type="file" name={"file"} onChange={this.uploadFile}/>*/}
               <button onClick={this.request}>Отправить</button>
             </div>
-            <div className={styles.offers_list}>
-              <h2>
-                Ставки (<span>0</span>)
-              </h2>
-              <table>
-                <thead>
+            {this.props.isMy ? <div>
+              <div className={styles.offers_list}>
+                <h2>
+                  Предложения (<span>{this.props.partnerships.length}</span>)
+                </h2>
+                <table>
+                  <thead>
                   <tr>
-                    <td>Ставка</td>
-                    <td>Исполнитель</td>
-                    <td>Услуги</td>
+                    <td>Предложение</td>
+                    <td>Партнер</td>
+                    <td></td>
                     <td />
                     <td />
                   </tr>
-                </thead>
-              </table>
-            </div>
+                  {this.props.partnerships.map((e,i)=> { return <tr key={i}>
+                    <td>{e.description}</td>
+                    <td>{e.partner}</td>
+                    <td />
+                    <td />
+                    <td />
+                  </tr>})}
+                  </thead>
+                </table>
+              </div>
+              <div className={styles.offers_list}>
+                <h2>
+                  Ставки (<span>{this.props.bids.length}</span>)
+                </h2>
+                <table>
+                  <thead>
+                  <tr>
+                    <td>Ставка</td>
+                    <td>Исполнитель</td>
+                    <td></td>
+                    <td />
+                    <td />
+                  </tr>
+                  {this.props.bids.map((e,i)=> { return <tr key={i}>
+                    <td>{e.amount.split('.')[0]}</td>
+                    <td>{e.user}</td>
+                    <td />
+                    <td />
+                    <td />
+                  </tr>})}
+                  </thead>
+                </table>
+              </div>
+            </div> : ''}
+
+
+
+
           </div>
         </div>
         <Footer />

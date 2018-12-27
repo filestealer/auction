@@ -6,6 +6,10 @@ import { connect } from "react-redux";
 import { signIn, openRegistration, openProfile, showModal, hideModal } from "../modules/user/actions";
 import { openLots, openCreateLot } from "../modules/lots/actions";
 import FormErrors from "../components/formerrors";
+import 'react-redux-notify/dist/ReactReduxNotify.css';
+import {Notify} from 'react-redux-notify';
+
+
 
 class Header extends Component {
   constructor(props) {
@@ -105,6 +109,7 @@ validateForm() {
     let state = this.state;
 
     return <header className={styles.header}>
+      <Notify position={"right"}/>
       {(this.props.email == "") ?
         <div className={styles.login_box_enter}>
           <a className={styles.login} onClick={this.props.showModal}>

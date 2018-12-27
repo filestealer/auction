@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { createRequest } from "../actions";
+import { createRequest, createRequestPartnership } from "../actions";
 import Item from '../components/item';
 
 // const Counter = ...
@@ -17,6 +17,10 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
+  let bids = state.lots.bids.filter(e => e.auction == item.id && item.initiator.id == state.user.profile.id);
+
+  let partnerships = (item.initiator.id == state.user.profile.id) ? item.partnerships : [];
+
 
   //ownProps.match.params
   return {
@@ -29,6 +33,10 @@ const mapStateToProps = (state, ownProps) => {
     delivery_date: item.delivery_date || '',
     status: item.status || '',
     initiator: item.initiator || {person: {name: ''}},
+    user: state.user.profile,
+    partnerships,
+    bids: bids || [],
+    isMy: item.initiator.id == state.user.profile.id,
     // categories: categories || [],
     // category_name: category_name || '',
 
@@ -37,6 +45,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
   request: (data) => dispatch(createRequest(data)),
+  requestPartnership: (data) => dispatch(createRequestPartnership(data)),
 });
 
 export default connect(

@@ -10,13 +10,14 @@ function* appStart() {
   console.log('Init::Sagas::appStart');
   let storage_token = localStorage.getItem('token');
 
-  if (storage_token) {
-    yield put({type: tUser.LOCAL_AUTH, payload: storage_token});
-  }
+  // if (storage_token) {
+  //   yield put({type: tUser.LOCAL_AUTH, payload: storage_token});
+  // }
 
 
   console.log('GET TOKEN', localStorage.getItem('token'));
   yield put({type: tLots.FETCH_LIST});
+
   yield put({type: tLots.FETCH_CATEGORIES});
 
   //yield put({type: tGeoData.FETCH_GEO_DATA});
@@ -60,3 +61,4 @@ export function* sagas() {
   console.log('Init::Sagas::start', 'init finished');
 
 }
+

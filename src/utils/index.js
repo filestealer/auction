@@ -1,3 +1,6 @@
+import {createNotification, NOTIFICATION_TYPE_SUCCESS} from 'react-redux-notify';
+
+
 export function normalizeError(error = {}, code = -1) {
   error = error || {};
   if (error && error.object) error = error.object;
@@ -30,4 +33,17 @@ export function formatPhone(phone) {
 
 export function unFormatPhone(phone) {
   return `+${(phone || '').replace(/[+)( -]/g, '')}`;
+}
+
+
+export const mySuccessNotification = {
+  message: 'You have been logged in!',
+  type: NOTIFICATION_TYPE_SUCCESS,
+  duration: 30000,
+  canDismiss: false,
+  forceClose: false,
+  position: 'TopRight',
+  showCloseAllBtn: false,
+
+  // icon: <i className="fa fa-check" />
 }

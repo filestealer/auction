@@ -37,11 +37,11 @@ export function createLot(data) {
 }
 
 
-export function requestPartnership(data) {
+export function createRequestPartnership(data) {
   console.log("API LOTS requestPartnership", data);
 
   return post('Lots::CreateLot', APIUrl + 'partnerships/', {
-    ...data.data
+    ...data
     // "auction": 13,
     // "description": "Мой объем"
   }, {'Authorization': 'Token '+data.token});
@@ -100,4 +100,4 @@ export function testFileUpload(data) {
 
 
 
-export default {getList, createLot, createRequest, getBids, getCategories, testFileUpload, requestPartnership};
+export default {getList, createLot, createRequest, getBids, getCategories, testFileUpload, createRequestPartnership};

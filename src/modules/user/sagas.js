@@ -4,6 +4,10 @@ import API from '../../api/user';
 import {push} from "connected-react-router";
 import tLots from '../lots/types';
 
+import {createNotification, NOTIFICATION_TYPE_SUCCESS} from 'react-redux-notify';
+
+
+
 // import {informErrorInfo} from '../../utils/informer';
 // import {openArticleEditScene, openArticleShowScene, openArticlesScene, pushScene} from '../../utils/nav';
 // import Immutable from 'immutable';
@@ -12,11 +16,19 @@ function* signIn(data) {
   console.log('Users auth', data);
   try {
     const payload = yield API.signIn(data.payload);
-    yield put({type: t.SIGN_IN_SUCCESS, payload});
-    localStorage.setItem('token', payload.token );
-    yield put({type: t.HIDE_MODAL});
-    yield put({type: t.FETCH_PROFILE});
-    yield put({type: tLots.FETCH_BIDS});
+
+    if (payload.token) {
+      yield put({type: t.SIGN_IN_SUCCESS, payload});
+      localStorage.setItem('token', payload.token );
+      yield put({type: t.HIDE_MODAL});
+      yield put({type: t.FETCH_PROFILE});
+      yield put({type: tLots.FETCH_BIDS});
+    } else {
+      yield put({type: t.SIGN_IN_FAILURE, payload: payload});
+
+      // alert('ошибка авторизации');
+    }
+
   } catch (error) {
     // informErrorInfo(error, 'Ошибка загрузки новостей');
     yield put({type: t.SIGN_IN_FAILURE, payload: error})
@@ -27,6 +39,8 @@ function* localAuth(data) {
   yield put({type: t.SIGN_IN_SUCCESS, payload: {token: data.payload}});
   // yield put({type: t.HIDE_MODAL});
   yield put({type: t.FETCH_PROFILE});
+  yield put({type: tLots.FETCH_BIDS});
+  // yield put(createNotification(mySuccessNotification));
   // yield put({type: tLots.FETCH_BIDS});
 }
 

@@ -49,6 +49,7 @@
     "npm": ">=3"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "connected-react-router": "^6.0.0",
     "history": "^4.7.2",
     "lodash": "4.17.11",
@@ -60,6 +61,7 @@
     "react-hot-loader": "4.3.12",
     "react-input-mask": "^2.0.4",
     "react-redux": "^6.0.0",
+    "react-redux-notify": "^4.1.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",

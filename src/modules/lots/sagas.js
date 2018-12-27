@@ -5,6 +5,7 @@ import API from '../../api/lots';
 import {push} from "connected-react-router";
 import moment from 'moment';
 
+
 moment().format();
 // import {informErrorInfo} from '../../utils/informer';
 // import {openArticleEditScene, openArticleShowScene, openArticlesScene, pushScene} from '../../utils/nav';
@@ -101,6 +102,23 @@ function* createRequest(data) {
   }
 
 }
+function* createRequestPartnership(data) {
+  const state = yield select(), token = state.user.token;
+  let description = data.payload.description, id = data.payload.id;
+debugger;
+  try {
+    const payload = yield API.createRequestPartnership({token, auction: id, description});
+    yield put({type: t.REQUEST_PARTNERSHIP_SUCCESS, payload});
+    yield put({type: t.FETCH_LIST, payload});
+    alert('Ваша заявка на партнерство принята');
+    // yield put(push('/lots/'));
+  } catch (error) {
+    console.log(error);
+    yield put({type: t.REQUEST_PARTNERSHIP_FAILURE, payload: error})
+    alert(error.statusText);
+  }
+
+}
 
 function* openLotsScene() {
   yield put(push('/lots/'));
@@ -122,6 +140,7 @@ export function* sagas() {
   yield takeEvery(t.OPEN_LOT, openLotScene);
   yield takeEvery(t.OPEN_CREATE_LOT, openCreateLotScene);
   yield takeEvery(t.CREATE_REQUEST, createRequest);
+  yield takeEvery(t.REQUEST_PARTNERSHIP, createRequestPartnership);
   yield takeEvery(t.FETCH_BIDS, fetchBids);
   yield takeEvery(t.FETCH_CATEGORIES, fetchCategories);
   // yield takeEvery(FETCH_ITEM, fetchItem);
