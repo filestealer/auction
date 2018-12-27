@@ -19,6 +19,15 @@ export function openLots() {
 export function openLot(id) {
   return {type: t.OPEN_LOT, payload: id}
 }
+
+export function acceptBid(data) {
+  return {type: t.ACCEPT_BID, payload: data}
+}
+
+export function acceptPartnership(data) {
+  return {type: t.ACCEPT_PARTNERSHIP, payload: data}
+}
+
 export function createRequest(data) {
   return {type: t.CREATE_REQUEST, payload: data}
 }
@@ -30,6 +39,10 @@ export function openCreateLot() {
   return {type: t.OPEN_CREATE_LOT}
 }
 
+export function requestPartnership(payload) {
+  return {type: t.REQUEST_PARTNERSHIP}
+}
+
 
 
 export function createLot(data) {
@@ -39,5 +52,6 @@ export function createLot(data) {
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-  fetchList, openLots, createLot, openLot, openCreateLot, createRequest, fetchBids, createRequestPartnership,
+  fetchList, openLots, createLot, openLot, openCreateLot, createRequest, fetchBids, createRequestPartnership, acceptBid,
+  acceptPartnership,
 };

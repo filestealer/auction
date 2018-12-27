@@ -4,7 +4,9 @@ import API from '../../api/user';
 import {push} from "connected-react-router";
 import tLots from '../lots/types';
 
-import {createNotification, NOTIFICATION_TYPE_SUCCESS} from 'react-redux-notify';
+import {createNotification} from 'react-redux-notify';
+import {makeNotification} from '../../utils';
+
 
 
 
@@ -25,6 +27,15 @@ function* signIn(data) {
       yield put({type: tLots.FETCH_BIDS});
     } else {
       yield put({type: t.SIGN_IN_FAILURE, payload: payload});
+      yield put(createNotification(makeNotification('error', 'Ошибка авторизации. Проверьте правильность заполненных данных')));
+      // switch (payload) {
+      //   case payload.non_field_errors:
+      //     yield put(createNotification(makeNotification('error', payload.non_field_errors[0])));
+      //     break;
+      //   default:
+      //     yield put(createNotification(makeNotification('error', 'Ошибка авторизации. Проверьте правильность заполненных данных')));
+      // }
+      // yield put(createNotification(makeNotification('error', 'Test message')));
 
       // alert('ошибка авторизации');
     }
@@ -49,7 +60,7 @@ function* localAuth(data) {
   yield put({type: t.SIGN_IN_SUCCESS, payload: {token: data.payload}});
   // yield put({type: t.HIDE_MODAL});
   yield put({type: t.FETCH_PROFILE});
-  yield put({type: tLots.FETCH_BIDS});
+
   // yield put(createNotification(mySuccessNotification));
   // yield put({type: tLots.FETCH_BIDS});
 }
@@ -73,22 +84,31 @@ function* signUp(data) {
   if (type === "person") {
     try {
       payload = yield API.signUpPerson({user: user, ...person, files});
-      yield put({type: t.SIGN_UP_SUCCESS, payload});
-      yield put({type: t.FILE_UPLOAD_CLEAR});
-      alert('Вы зарегистрировались, можете войти');
+
+      if (payload && payload.id) {
+        yield put({type: t.SIGN_UP_SUCCESS, payload});
+        yield put({type: t.FILE_UPLOAD_CLEAR});
+        yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно. Можете авторизоваться.')));
+      } else {
+        yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+      }
     } catch (error) {
-      yield put({type: t.SIGN_UP_FAILURE, payload: error})
-      alert('Ошибка при регистрации');
+      yield put({type: t.SIGN_UP_FAILURE, payload: error});
+      yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
     }
   } else {
     try {
       payload = yield API.signUpCompany({user: user, ...company, files});
-      yield put({type: t.SIGN_UP_SUCCESS, payload});
-      yield put({type: t.FILE_UPLOAD_CLEAR});
-      alert('Вы зарегистрировались, можете войти');
+      if (payload && payload.id) {
+        yield put({type: t.SIGN_UP_SUCCESS, payload});
+        yield put({type: t.FILE_UPLOAD_CLEAR});
+        yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно. Можете авторизоваться.')));
+      } else {
+        yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+      }
     } catch (error) {
-      yield put({type: t.SIGN_IN_FAILURE, payload: error})
-      alert('Ошибка при регистрации');
+      yield put({type: t.SIGN_UP_FAILURE, payload: error});
+      yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
     }
   }
 }
@@ -99,7 +119,13 @@ function* fetchProfile() {
 
   try {
     const payload = yield API.fetchProfile(token);
-    yield put({type: t.FETCH_PROFILE_SUCCESS, payload});
+    if (payload && payload.id) {
+      yield put({type: t.FETCH_PROFILE_SUCCESS, payload});
+      yield put({type: tLots.FETCH_BIDS});
+      // yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно. Можете авторизоваться.')));
+    } else {
+      yield put(createNotification(makeNotification('error', 'Произошла ошибка в получении профиля. Проверьте заполненость полей.')));
+    }
   } catch (error) {
     // informErrorInfo(error, 'Ошибка загрузки новостей');
     yield put({type: t.FETCH_PROFILE_FAILURE, payload: error});
@@ -109,6 +135,7 @@ function* fetchProfile() {
 
 function* openRegistration() {
   yield put(push('/registration/'));
+  yield put({type: t.HIDE_MODAL});
 }
 function* openProfile() {
   yield put(push('/profile/'));
