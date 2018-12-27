@@ -111,6 +111,7 @@ class Profile extends Component {
             <div className={styles.orders}>
               <table>
                 <tbody>
+
                 {this.props.myList.map(e =>
                   <tr key={e.id}>
                     <td className={styles.status}>Активен</td>
@@ -126,7 +127,7 @@ class Profile extends Component {
                       </span>
                      </td>
                     <td className={styles.left + ' ' + styles.title}><a>{e.request_description}</a></td>
-                    <td>{e.partners.length} предложений</td>
+                    <td>{e.partnerships && e.partnerships.length} предложений</td>
                   </tr>
                 )}
                 {/*<tr>*/}

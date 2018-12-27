@@ -27,8 +27,8 @@
         .sweet-loading {
             position: fixed;
             background: white;
-            top: 0;
-            /* left: 50%; */
+            top: 0%;
+            left: 0%;
             z-index: 5;
             /* margin-left: -77px; */
             width: 100%;
@@ -38,10 +38,14 @@
             text-align: center;
         }
 
-        .css-1ugictw {
+        .sweet-loading > div {
             border-color: #ed9614!important;
             border-bottom-color: transparent!important;
-            margin-top: 250px!important;
+            top: 50%;
+            position: relative;
+            margin-top: -75px;
+            /*margin-top: 250px!important;*/
+            /*transform: translate(-50%,-50%);*/
         }
     </style>
 </head>

@@ -89,7 +89,7 @@ class Lot extends Component {
                   <div className={styles.back} />
 
                   <div className={styles.user + ' ' + styles.back}>
-                    <a >{(this.props.initiator.person) ? this.props.initiator.person.name : this.props.initiator.company.name}</a>
+                    <a >{(this.props.initiator.person) ? this.props.initiator.person.name : (this.props.initiator.company && this.props.initiator.company.name)}</a>
                   </div>
                 </div>
 

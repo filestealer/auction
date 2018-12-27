@@ -115,7 +115,7 @@ validateForm() {
         position={"TopRight"}
       />
       <Spinner
-        loading={false}
+        loading={this.props.loading}
       />
       {(this.props.email == "") ?
         <div className={styles.login_box_enter}>
@@ -192,6 +192,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     email: state.user.profile.email || '',
     token: state.user.token || '',
     modalActive: state.user.modalActive || false,
+    loading: state.user.isFetching || state.lots.isFetching || state.app.isFetching,
   };
 };
 
