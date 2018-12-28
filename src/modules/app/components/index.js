@@ -17,6 +17,8 @@ import iconCars from '../../../../images/icon-cars.png';
 import styles from '../../../../css/style.css';
 import Header from '../../../components/header';
 import Footer from '../../../components/footer';
+import { openCreateLot } from '../../lots/actions';
+import { connect } from 'react-redux';
 
 
 class App extends React.PureComponent {
@@ -48,81 +50,81 @@ class App extends React.PureComponent {
       <div>
         <Header/>
         {/*<nav>*/}
-          {/*<ul>*/}
-            {/*<li>*/}
-              {/*<Link to="/">Home</Link>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<Link to="/lots/">Lots</Link>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<Link to="/lot/3/">Lot</Link>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<Link to="/create_lot/">Auction_reg</Link>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<Link to="/registration/">User Reg</Link>*/}
-            {/*</li>*/}
-            {/*<li>*/}
-              {/*<Link to="/profile/">Profile</Link>*/}
-            {/*</li>*/}
-          {/*</ul>*/}
+        {/*<ul>*/}
+        {/*<li>*/}
+        {/*<Link to="/">Home</Link>*/}
+        {/*</li>*/}
+        {/*<li>*/}
+        {/*<Link to="/lots/">Lots</Link>*/}
+        {/*</li>*/}
+        {/*<li>*/}
+        {/*<Link to="/lot/3/">Lot</Link>*/}
+        {/*</li>*/}
+        {/*<li>*/}
+        {/*<Link to="/create_lot/">Auction_reg</Link>*/}
+        {/*</li>*/}
+        {/*<li>*/}
+        {/*<Link to="/registration/">User Reg</Link>*/}
+        {/*</li>*/}
+        {/*<li>*/}
+        {/*<Link to="/profile/">Profile</Link>*/}
+        {/*</li>*/}
+        {/*</ul>*/}
         {/*</nav>*/}
         <div className={styles.index}>
           <div className={styles.types}>
             <div className={styles.container}>
               <h2>Что нужно сделать?</h2>
               <h3>Выберите категорию аукциона</h3>
-              <a href=""
+              <a onClick={() => {this.props.openCreateLot(3)}}
                  className={styles.clutterFree_existingDuplicate + '' + styles.clutterFree_noIcon}>
                 <img alt={''} src={'/' + iconMebel}/>
-                  Мебель
+                Мебель
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(1)}} >
                 <img alt={''} src={'/' + iconBuilding}/>
-                  Стройматериалы
+                Стройматериалы
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(4)}} >
                 <img alt={''} src={'/' + iconPipes}/>
-                  Металлопродукция
+                Металлопродукция
               </a>
-              <a href=""
+              <a onClick={() => {this.props.openCreateLot(5)}}
                  className={styles.clutterFree_existingDuplicate + '' + styles.clutterFree_noIcon}>
                 <img alt={''} src={'/' + iconChemistry}/>
-                  Химические вещества
+                Химические вещества
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(6)}} >
                 <img alt={''} src={'/' + iconDishes}/>
-                  Посуда
+                Посуда
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(7)}} >
                 <img alt={''} src={'/' + iconCarRepair}/>
-                  Оборудование для СТО
+                Оборудование для СТО
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(8)}} >
                 <img alt={''} src={'/' + iconScissors}/>
-                  Оборудование для салонов
+                Оборудование для салонов
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(9)}} >
                 <img alt={''} src={'/' + iconGenerators}/>
-                  Генераторы
+                Генераторы
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(10)}} >
                 <img alt={''} src={'/' + iconPlumber}/>
-                  Сантехника
+                Сантехника
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(11)}} >
                 <img alt={''} src={'/' + iconCargo}/>
-                  Грузоперевозка
+                Грузоперевозка
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(12)}} >
                 <img alt={''} src={'/' + iconRailway}/>
-                  Перевозка по ж/д
+                Перевозка по ж/д
               </a>
-              <a href="">
+              <a onClick={() => {this.props.openCreateLot(13)}} >
                 <img alt={''} src={'/' +  iconCars}/>
-                  Автомобили
+                Автомобили
               </a>
             </div>
           </div>
@@ -169,4 +171,18 @@ class App extends React.PureComponent {
     );
   }
 }
-export default App;
+
+const mapStateToProps = (state /*, ownProps*/) => {
+  return {
+
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  openCreateLot: (id) => dispatch(openCreateLot(id)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

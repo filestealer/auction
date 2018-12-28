@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
   console.log('mapStateToProps LOT', state, ownProps);
   // ownProps.match.params
   return {
-    id: ownProps.match.params,
+    id: ownProps.location.state && ownProps.location.state.query && ownProps.location.state.query.id || false,
     categories: state.lots.categories,
     files: state.user.files,
   };

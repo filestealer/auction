@@ -13,7 +13,7 @@ class AuctionReg extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      request_category: 1,
+      request_category: props.id,
       auction_type: 1,
       request_description: '',
       delivery_date: '',
@@ -57,6 +57,7 @@ class AuctionReg extends Component {
       time_delayValid: false,
       formValid: false
     };
+    console.log(this.props, 'this.props::auction_reg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -242,7 +243,7 @@ class AuctionReg extends Component {
                     marginBottom: '15px',
                   }}
                   name={'request_category'}
-                  // value={user.user.password}
+                  value={this.state.request_category}
                   onChange={(event) => this.handleUserInput(event)}
 
                 >

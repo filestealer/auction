@@ -35,8 +35,8 @@ export function createRequestPartnership(data) {
   return {type: t.REQUEST_PARTNERSHIP, payload: data}
 }
 
-export function openCreateLot() {
-  return {type: t.OPEN_CREATE_LOT}
+export function openCreateLot(id) {
+  return {type: t.OPEN_CREATE_LOT, payload: id}
 }
 
 export function requestPartnership(payload) {

@@ -174,8 +174,8 @@ function* openLotScene(data) {
   yield put(push('/lot/'+data.payload+'/'));
 }
 
-function* openCreateLotScene() {
-  yield put(push('/create_lot/'));
+function* openCreateLotScene(data) {
+  yield put(push('/create_lot/',{query: {id: data.payload}}));
 }
 
 
