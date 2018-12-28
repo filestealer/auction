@@ -4,6 +4,10 @@ import Header from '../../../components/header';
 import FileUploader from '../../../components/file_uploader';
 import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Calendar from "react-datepicker";
+import MaskedTextInput from "react-text-mask";
 
 class AuctionReg extends Component {
   constructor(props) {
@@ -16,11 +20,11 @@ class AuctionReg extends Component {
       street: '',
       office: '',
       building: '',
-      auction_duration: '',
+      auction_duration: 3,
       city_address: '',
       file: '',
       time_delay: '',
-      delivery_date_day: '',
+      delivery_date_day: new Date(),
       ecp: '',
       joint_auction: false,
       formErrors: {
@@ -31,7 +35,7 @@ class AuctionReg extends Component {
         street: '',
         office: '',
         building: '',
-        auction_duration: '',
+        auction_duration: '3',
         city_address: '',
         time_delay: '',
         delivery_date_day: '',
@@ -42,6 +46,7 @@ class AuctionReg extends Component {
       auction_typeValid: false,
       request_descriptionValid: false,
       delivery_dateValid: false,
+      delivery_date_dayValid: false,
       streetValid: false,
       buildingValid: false,
       officeValid: false,
@@ -116,7 +121,7 @@ class AuctionReg extends Component {
         fieldValidationErrors.request_category = request_categoryValid ? '' : ' is invalid';
         break;
       case 'delivery_date_day':
-        delivery_dateValid = value.length >= 1;
+        delivery_dateValid = value.length >= 0;
         fieldValidationErrors.delivery_date_day = delivery_dateValid ? '': ' is too short';
         break;
       case 'time_delay':
@@ -144,7 +149,7 @@ class AuctionReg extends Component {
         fieldValidationErrors.request_description = request_descriptionValid ? '' : ' is invalid';
         break;
       case 'auction_duration':
-        auction_durationValid = value.length >= 1;
+        auction_durationValid = value.length >= 0;
         fieldValidationErrors.auction_duration = auction_durationValid ? '': ' is too short';
         break;
       // case 'file':
@@ -184,6 +189,18 @@ class AuctionReg extends Component {
       && this.state.fileValid
     });
   }
+
+  handleChange = (date) => {
+    this.setState({
+      delivery_date_day: date
+    });
+  };
+
+  handleChangeTime = (date) => {
+    this.setState({
+      time_delay: date
+    });
+  };
 
 
 // {
@@ -284,18 +301,34 @@ class AuctionReg extends Component {
                 <div className={styles.order_date}>
                   <div className={styles[this.errorClass(this.state.formErrors.delivery_date_day)]}>
                     <div className={styles.label}>Дата поставки</div>
-                    <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.onChangeCheckbox(event)}
-                           value={state.delivery_date_day}/>
+                      <Calendar
+                        selected={this.state.delivery_date_day}
+                        onChange={this.handleChange}
+                        customInput={
+                          <MaskedTextInput
+                            type="text"
+                            mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
+                          />
+                        }
+                      />
                   </div>
                   <div className={styles.time_box}>
                     <div className={styles.label}>Время</div>
-                    <input
-                      type="time"
-                      data-counter="1"
-                      name="delivery_date_time"
-                      placeholder="чч:мм"
-                      onChange={(event) => this.handleUserInput(event)}
-                      value={state.delivery_date_time}
+                    <Calendar
+                      selected={this.state.time_delay}
+                      onChange={this.handleChangeTime}
+                      showTimeSelect
+                      showTimeSelectOnly
+                      timeIntervals={15}
+                      dateFormat="hh:mm"
+                      timeFormat="HH:mm"
+                      timeCaption="Time"
+                      customInput={
+                        <MaskedTextInput
+                          type="text"
+                          mask={[/\d/, /\d/, ":", /\d/, /\d/]}
+                        />
+                      }
                     />
                   </div>
 
@@ -337,7 +370,7 @@ class AuctionReg extends Component {
                     {/*<input type="date" name="auction_duration" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)}*/}
                            {/*value={state.delivery_date_day}/>*/}
                   {/*</div>*/}
-                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.auction_duration)]}>
+                  <div className={styles.label}>
                     Запрос актуален
                     <select name={"auction_duration"} onChange={(event) => this.handleUserInput(event)}
                             value={state.auction_duration}>
