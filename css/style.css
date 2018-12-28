@@ -1978,13 +1978,20 @@ textarea {
 
 .partner_search input {
   margin-left: 15px;
+  height: 35px;
 }
 
 .partner_search .label {
   display: flex;
   align-items: center;
-  margin-left: 90px;
+  margin-left: 50px;
 }
+
+.aprove {
+  display: flex;
+  align-items: center;
+}
+
 
 /*body div {*/
   /*padding-top: 70px;*/

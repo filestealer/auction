@@ -23,8 +23,9 @@ class AuctionReg extends Component {
       auction_duration: 3,
       city_address: '',
       file: '',
-      time_delay: '',
+      time_delay: new Date(),
       delivery_date_day: new Date(),
+      delivery_date_time: '',
       ecp: '',
       joint_auction: false,
       formErrors: {
@@ -39,6 +40,7 @@ class AuctionReg extends Component {
         city_address: '',
         time_delay: '',
         delivery_date_day: '',
+        delivery_date_time: '',
         file: ''
       },
       city_addressValid: false,
@@ -198,6 +200,12 @@ class AuctionReg extends Component {
 
   handleChangeTime = (date) => {
     this.setState({
+      delivery_date_time: date
+    });
+  };
+
+  handleChangeTimeDelay = (date) => {
+    this.setState({
       time_delay: date
     });
   };
@@ -315,7 +323,7 @@ class AuctionReg extends Component {
                   <div className={styles.time_box}>
                     <div className={styles.label}>Время</div>
                     <Calendar
-                      selected={this.state.time_delay}
+                      selected={this.state.delivery_date_time}
                       onChange={this.handleChangeTime}
                       showTimeSelect
                       showTimeSelectOnly
@@ -417,8 +425,17 @@ class AuctionReg extends Component {
                     marginBottom: '15px',
                   }}
                 >
-                  <div className={styles.label}>Время ожидания</div>
-                  <input type="date" name="time_delay" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)} value={state.time_delay}/>
+                  <div className={styles.label}>Ждать предложение до</div>
+                  <Calendar
+                    selected={this.state.time_delay}
+                    onChange={this.handleChangeTimeDelay}
+                    customInput={
+                      <MaskedTextInput
+                        type="text"
+                        mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
+                      />
+                    }
+                  />
                 </div>
               </div> : ''
               }
