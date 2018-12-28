@@ -297,6 +297,7 @@ class AuctionReg extends Component {
                       <Calendar
                         selected={this.state.delivery_date_day}
                         onChange={this.handleChange}
+                        dateFormat={"dd MM yyyy"}
                         customInput={
                           <MaskedTextInput
                             type="text"
@@ -414,6 +415,7 @@ class AuctionReg extends Component {
                   <Calendar
                     selected={this.state.time_delay}
                     onChange={this.handleChangeTimeDelay}
+                    dateFormat={"dd MM yyyy"}
                     customInput={
                       <MaskedTextInput
                         type="text"
