@@ -74,6 +74,64 @@ class Profile extends Component {
                       {this.props.profile.person ? this.props.profile.person.name : ''}
                       {this.props.profile.company ? this.props.profile.company.name : ''}
                     </h2>
+                    {(this.props.profile.person ?
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td>Телефон</td>
+                            <td>{this.props.user.profile.phone}</td>
+                          </tr>
+                          <tr>
+                            <td>Баланс</td>
+                            <td>{this.props.profile.person.balance}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    : '')}
+                    {(this.props.profile.company ?
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td>Телефон</td>
+                          <td>{this.props.user.profile.phone}</td>
+                        </tr>
+                        <tr>
+                          <td>Баланс</td>
+                          <td>{this.props.profile.company.balance}</td>
+                        </tr>
+                        <tr>
+                          <td>Город</td>
+                          <td>{this.props.profile.company.city}</td>
+                        </tr>
+                        <tr>
+                          <td>Улица</td>
+                          <td>{this.props.profile.company.street}</td>
+                        </tr>
+                        <tr>
+                          <td>Дом</td>
+                          <td>{this.props.profile.company.building}</td>
+                        </tr>
+                        <tr>
+                          <td>Офис</td>
+                          <td>{this.props.profile.company.office}</td>
+                        </tr>
+                        <tr>
+                          <td>БИН</td>
+                          <td>{this.props.profile.company.bin}</td>
+                        </tr>
+                        <tr>
+                          <td>Сайт</td>
+                          <td>{this.props.profile.company.website}</td>
+                        </tr>
+                        <tr>
+                          <td>Описание</td>
+                          <td>{this.props.profile.company.description}</td>
+                        </tr>
+                      </tbody>
+
+
+                    </table>
+                    : '')}
                     {/*<div>*/}
                       {/*заказчик/перевозчик*/}
                     {/*</div>*/}
@@ -115,7 +173,6 @@ class Profile extends Component {
             <div className={styles.orders}>
               <table>
                 <tbody>
-
                 {this.props.myList.map(e =>
                   <tr key={e.id}>
                     <td className={styles.status}>Активен</td>

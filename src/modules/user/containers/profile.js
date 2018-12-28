@@ -13,6 +13,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
   return {
     profile: state.user.profile || {},
+    user: state.user,
     token: state.user.token,
     myList: myList || [],
     myBids: myBids || [],

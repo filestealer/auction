@@ -55,7 +55,7 @@ class Lots extends Component {
                   </td>
                   <td>Описание</td>
                   <td>Адрес поставки</td>
-                  <td>Габариты</td>
+                  {/*<td>Габариты</td>*/}
                   <td>Дата поставки</td>
                 </tr>
               </thead>
@@ -68,6 +68,10 @@ class Lots extends Component {
                 delivery_address={item.delivery_address}
                 expired_date={item.contract_expiration_date}
                 delivery_date={item.delivery_date}
+                city={item.city}
+                street={item.street}
+                building={item.building}
+                office={item.office}
                 onClick={()=>{this.props.openLot(item.id)}}
                 key={item.id}
               />)}

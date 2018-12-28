@@ -16,10 +16,11 @@ class ListItem extends Component {
           <a >{this.props.description}</a>
         </td>
         <td>
-          {this.props.delivery_address}
+          г. {this.props.city}, ул. {this.props.street} {this.props.building}   {this.props.office ? 'оф '+ this.props.office  : ''}
+          {/*{this.props.delivery_address}*/}
           {/*<p>1 215.92 км</p>*/}
         </td>
-        <td />
+        {/*<td />*/}
         <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
       </tr>
     );

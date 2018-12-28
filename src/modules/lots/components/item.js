@@ -33,7 +33,7 @@ class Lot extends Component {
     this.setState({openRequest: false});
   };
   requestPartnership = () => {
-    this.props.requestPartnership({description: this.state.description, id: this.props.id, volume: this.state.volume});
+    this.props.requestPartnership({description: 'test', id: this.props.id, volume: this.state.volume});
     this.setState({openRequestPartnership: false});
   };
 
@@ -78,7 +78,7 @@ class Lot extends Component {
                 </tr>
                 <tr>
                   <td><strong>Объем</strong></td>
-                  <td>{this.props.volume}</td>
+                  <td>{this.props.total_volume}</td>
                 </tr>
                 <tr>
                   <td><strong>Дата поставки</strong></td>
@@ -201,9 +201,9 @@ class Lot extends Component {
             <div className={styles.make_offer_form + (this.state.openRequestPartnership ? ' ' + styles.active : '')}>
 
               <input placeholder={'Ваш объем'} type="text" name="volume" value={this.state.volume} onChange={this.onChange} />
-              <br/>
-              <input placeholder={'Сообщение'} type="text" name="description" value={this.state.description} onChange={this.onChange} />
-              <br/>
+              {/*<br/>*/}
+              {/*<input placeholder={'Сообщение'} type="text" name="description" value={this.state.description} onChange={this.onChange} />*/}
+              {/*<br/>*/}
               <button onClick={this.requestPartnership}>Отправить</button>
             </div>
             <div className={styles.make_offer}>
@@ -236,7 +236,7 @@ class Lot extends Component {
                     <td />
                   </tr>
                   {this.props.partnerships.map((e,i)=> { return <tr key={i}>
-                    <td>{e.description}</td>
+                    <td>{e.volume}</td>
                     <td>{e.partner}</td>
                     <td>{e.confirmed ? 'Предложение принято' : <div className={styles.newButton} onClick={()=> this.props.acceptPartnership({partnership: e.id, auction: this.props.id})}>Принять</div>}</td>
                     <td />

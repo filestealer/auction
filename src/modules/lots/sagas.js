@@ -9,7 +9,7 @@ import {createNotification} from 'react-redux-notify';
 import {makeNotification} from '../../utils';
 
 
-moment().format();
+moment().format('l');
 // import {informErrorInfo} from '../../utils/informer';
 // import {openArticleEditScene, openArticleShowScene, openArticlesScene, pushScene} from '../../utils/nav';
 // import Immutable from 'immutable';
@@ -62,6 +62,8 @@ function* createLot(data) {
 //   "auction_duration": "2019-10-02T00:00:00Z"
 // }
   data = data.payload;
+  console.log(moment(moment(data.delivery_date_day).format('MM-DD-YYYY') + ' ' + (moment(data.delivery_date_time).format('HH:mm') || "00:00")).format('YYYY-MM-DD HH:mm:ssZ'));
+  debugger;
 
   let files = Object.values(state.user.files).map(e => e.id);
 
@@ -75,7 +77,7 @@ function* createLot(data) {
     building: data.building,
     street: data.street,
     office: data.office,
-    delivery_date: moment(data.delivery_date_day + ' ' + (data.delivery_date_time || "00:00")).format('YYYY-MM-DD HH:mm:ssZ'),
+    delivery_date: moment(moment(data.delivery_date_day).format('MM-DD-YYYY') + ' ' + (moment(data.delivery_date_time).format('HH:mm') || "00:00")).format('YYYY-MM-DD HH:mm:ssZ'),
     auction_duration: moment().add(data.auction_duration, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
     files,
     volume: data.volume,
@@ -105,11 +107,16 @@ function* createBid(data) {
   let files = Object.values(state.user.files).map(e => e.id);
   try {
     const payload = yield API.createBid({token, amount, id, files});
-    yield put({type: t.CREATE_REQUEST_SUCCESS, payload});
-    yield put({type: t.FETCH_LIST, payload});
-    yield put({type: tUser.FILE_UPLOAD_CLEAR});
-    alert('Ваша ставка принята');
-    yield put(push('/lots/'));
+    if (payload && payload.id) {
+      yield put({type: t.CREATE_REQUEST_SUCCESS, payload});
+      yield put({type: t.FETCH_LIST, payload});
+      yield put({type: tUser.FILE_UPLOAD_CLEAR});
+      yield put(createNotification(makeNotification('success', "Ваша ставка принята")));
+      yield put(push('/lots/'));
+    } else {
+      yield put({type: t.CREATE_REQUEST_FAILURE, payload: error});
+      yield put(createNotification(makeNotification('error', "Произошла ошибка")));
+    }
   } catch (error) {
     console.log(error);
     yield put({type: t.CREATE_REQUEST_FAILURE, payload: error})
@@ -159,22 +166,32 @@ function* createRequestPartnership(data) {
 
   try {
     const payload = yield API.createRequestPartnership({token, auction: id, description, volume});
-    yield put({type: t.REQUEST_PARTNERSHIP_SUCCESS, payload});
-    yield put({type: t.FETCH_LIST, payload});
-    alert('Ваша заявка на партнерство принята');
+    if (payload && typeof(payload) !== "string") {
+      yield put({type: t.REQUEST_PARTNERSHIP_SUCCESS, payload});
+      yield put({type: t.FETCH_LIST, payload});
+      yield put(createNotification(makeNotification('success', "Ваша заявка на партнерство принята")));
+    } else {
+      yield put({type: t.REQUEST_PARTNERSHIP_FAILURE, payload: error})
+      yield put(createNotification(makeNotification('error', "Произошла ошибка")));
+    }
+
+
     // yield put(push('/lots/'));
   } catch (error) {
     console.log(error);
     yield put({type: t.REQUEST_PARTNERSHIP_FAILURE, payload: error})
-    alert(error.statusText);
+    yield put(createNotification(makeNotification('error', "Произошла ошибка")));
+
   }
 
 }
 
 function* openLotsScene() {
+  yield put({type: t.FETCH_LIST});
   yield put(push('/lots/'));
 }
 function* openLotScene(data) {
+  yield put({type: t.FETCH_LIST});
   yield put(push('/lot/'+data.payload+'/'));
 }
 
