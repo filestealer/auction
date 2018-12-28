@@ -90,7 +90,7 @@ class Lot extends Component {
                 </tr>
                 <tr>
                   <td><strong>Адрес поставки</strong></td>
-                  <td>{this.props.delivery_address}</td>
+                  <td>г. {this.props.city}, ул. {this.props.street} {this.props.building}   {this.props.office ? 'оф '+ this.props.office  : ''}</td>
                 </tr>
                 <tr>
                   <td><strong>Статус</strong></td>

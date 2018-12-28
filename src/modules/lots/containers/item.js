@@ -69,6 +69,9 @@ const mapStateToProps = (state, ownProps) => {
     total_volume: item.total_volume,
     measure: item.measure,
     eds_required: item.eds_required,
+    city: item.city,
+    street: item.street,
+    building: item.building,
     // categories: categories || [],
     // category_name: category_name || '',
 
