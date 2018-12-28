@@ -53,7 +53,7 @@ class AuctionReg extends Component {
       officeValid: false,
       auction_durationValid: false,
       fileValid: true,
-      time_delayValid: true,
+      time_delayValid: false,
       formValid: false
     };
     console.log(this.props, 'this.props::auction_reg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
@@ -68,17 +68,23 @@ class AuctionReg extends Component {
 
   save = () => {
     this.validateField('request_category', this.state.request_category);
+    console.log(this.state.request_category);
     this.validateField('auction_type', this.state.auction_type);
+    console.log(this.state.auction_type);
     this.validateField('request_description', this.state.request_description);
-    this.validateField('delivery_date_day', this.state.delivery_date);
+    console.log(this.state.request_description);
     this.validateField('street', this.state.street);
+    console.log(this.state.street);
     this.validateField('building', this.state.building);
-    this.validateField('office', this.state.office);
+    console.log(this.state.building);
     this.validateField('city', this.state.city);
+    console.log(this.state.city);
     this.validateField('auction_duration', this.state.auction_duration);
-    this.validateField('file', this.state.files);
-    this.validateField('time_delay', this.state.time_delay);
+    console.log(this.state.auction_duration);
+
     if (!this.state.formValid) {
+
+      console.log(this.state.formValid);
       return;
     };
     this.props.save(this.state);
@@ -108,11 +114,9 @@ class AuctionReg extends Component {
     let request_categoryValid = this.state.request_categoryValid;
     let auction_typeValid = this.state.auction_typeValid;
     let request_descriptionValid = this.state.request_descriptionValid;
-    let delivery_dateValid = this.state.delivery_dateValid;
     let streetValid = this.state.streetValid;
     let buildingValid = this.state.buildingValid;
     let officeValid = this.state.officeValid;
-    let auction_durationValid = this.state.auction_durationValid;
     let cityValid = this.state.cityValid;
     let time_delayValid = this.state.time_delayValid;
     let fileValid = this.state.fileValid;
@@ -122,14 +126,6 @@ class AuctionReg extends Component {
         request_categoryValid = value.length >= 1;
         fieldValidationErrors.request_category = request_categoryValid ? '' : ' is invalid';
         break;
-      case 'delivery_date_day':
-        delivery_dateValid = value.length >= 0;
-        fieldValidationErrors.delivery_date_day = delivery_dateValid ? '': ' is too short';
-        break;
-      case 'time_delay':
-        time_delayValid = value.length >= 0;
-        fieldValidationErrors.time_delay = time_delayValid ? '': ' is too short';
-        break;
       case 'street':
         streetValid = value.length >= 1;
         fieldValidationErrors.street = streetValid ? '' : ' is invalid';
@@ -138,10 +134,6 @@ class AuctionReg extends Component {
         buildingValid = value.length >= 1;
         fieldValidationErrors.building = buildingValid ? '' : ' is invalid';
         break;
-      case 'office':
-        officeValid = value.length >= 0;
-        fieldValidationErrors.office = officeValid ? '' : ' is invalid';
-        break;
       case 'city':
         cityValid = value.length >= 1;
         fieldValidationErrors.city = cityValid ? '' : ' is invalid';
@@ -149,10 +141,6 @@ class AuctionReg extends Component {
       case 'request_description':
         request_descriptionValid = value.length >= 1;
         fieldValidationErrors.request_description = request_descriptionValid ? '' : ' is invalid';
-        break;
-      case 'auction_duration':
-        auction_durationValid = value.length >= 0;
-        fieldValidationErrors.auction_duration = auction_durationValid ? '': ' is too short';
         break;
       // case 'file':
       //   fileValid = Object.values(value).length >= 1;
@@ -164,12 +152,9 @@ class AuctionReg extends Component {
     this.setState({formErrors: fieldValidationErrors,
       request_categoryValid,
       request_descriptionValid,
-      delivery_dateValid,
       streetValid,
-      auction_durationValid,
       cityValid,
       time_delayValid,
-      fileValid
 
     }, this.validateForm);
   };
@@ -181,15 +166,15 @@ class AuctionReg extends Component {
   validateForm() {
     this.setState({formValid:
       this.state.request_categoryValid
-      && this.state.request_categoryValid
       && this.state.request_descriptionValid
-      && this.state.delivery_dateValid
       && this.state.streetValid
-      && this.state.auction_durationValid
       && this.state.cityValid
-      && this.state.time_delayValid
-      && this.state.fileValid
     });
+    console.log(this.state.request_categoryValid, 'request_categoryValid');
+    console.log(this.state.request_descriptionValid, 'request_descriptionValid');
+    console.log(this.state.streetValid, 'streetValid');
+    console.log(this.state.cityValid, 'cityValid');
+    console.log(this.state.fileValid, 'fileValid');
   }
 
   handleChange = (date) => {
@@ -420,7 +405,7 @@ class AuctionReg extends Component {
                   <input type="checkbox" name="rulesChecked"/>
                 </div>
                 <div
-                  className={styles.label+ ' ' + styles[this.errorClass(this.state.formErrors.time_delay)]}
+                  className={styles.label}
                   style={{
                     marginBottom: '15px',
                   }}
