@@ -13,19 +13,24 @@ class AuctionReg extends Component {
       auction_type: 1,
       request_description: '',
       delivery_date: '',
-      delivery_address: '',
+      street: '',
+      office: '',
+      building: '',
       auction_duration: '',
       city_address: '',
       file: '',
       time_delay: '',
       delivery_date_day: '',
       ecp: '',
+      joint_auction: false,
       formErrors: {
         request_category: '',
         auction_type: '',
         request_description: '',
         delivery_date: '',
-        delivery_address: '',
+        street: '',
+        office: '',
+        building: '',
         auction_duration: '',
         city_address: '',
         time_delay: '',
@@ -37,7 +42,9 @@ class AuctionReg extends Component {
       auction_typeValid: false,
       request_descriptionValid: false,
       delivery_dateValid: false,
-      delivery_addressValid: false,
+      streetValid: false,
+      buildingValid: false,
+      officeValid: false,
       auction_durationValid: false,
       fileValid: true,
       time_delayValid: false,
@@ -57,7 +64,9 @@ class AuctionReg extends Component {
     this.validateField('auction_type', this.state.auction_type);
     this.validateField('request_description', this.state.request_description);
     this.validateField('delivery_date_day', this.state.delivery_date);
-    this.validateField('delivery_address', this.state.delivery_address);
+    this.validateField('street', this.state.street);
+    this.validateField('building', this.state.building);
+    this.validateField('office', this.state.office);
     this.validateField('city_address', this.state.city_address);
     this.validateField('auction_duration', this.state.auction_duration);
     this.validateField('file', this.state.files);
@@ -81,13 +90,21 @@ class AuctionReg extends Component {
     console.log(e, e.target.value, e.target.name);
   };
 
+  onChangeCheckbox = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({[name]: !this.state.joint_auction});
+  };
+
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
     let request_categoryValid = this.state.request_categoryValid;
     let auction_typeValid = this.state.auction_typeValid;
     let request_descriptionValid = this.state.request_descriptionValid;
     let delivery_dateValid = this.state.delivery_dateValid;
-    let delivery_addressValid = this.state.delivery_addressValid;
+    let streetValid = this.state.streetValid;
+    let buildingValid = this.state.buildingValid;
+    let officeValid = this.state.officeValid;
     let auction_durationValid = this.state.auction_durationValid;
     let city_addressValid = this.state.city_addressValid;
     let time_delayValid = this.state.time_delayValid;
@@ -106,9 +123,17 @@ class AuctionReg extends Component {
         time_delayValid = value.length >= 0;
         fieldValidationErrors.time_delay = time_delayValid ? '': ' is too short';
         break;
-      case 'delivery_address':
-        delivery_addressValid = value.length >= 1;
-        fieldValidationErrors.delivery_address = delivery_addressValid ? '' : ' is invalid';
+      case 'street':
+        streetValid = value.length >= 1;
+        fieldValidationErrors.street = streetValid ? '' : ' is invalid';
+        break;
+      case 'building':
+        buildingValid = value.length >= 1;
+        fieldValidationErrors.building = buildingValid ? '' : ' is invalid';
+        break;
+      case 'office':
+        officeValid = value.length >= 0;
+        fieldValidationErrors.office = officeValid ? '' : ' is invalid';
         break;
       case 'city_address':
         city_addressValid = value.length >= 1;
@@ -133,7 +158,7 @@ class AuctionReg extends Component {
       request_categoryValid,
       request_descriptionValid,
       delivery_dateValid,
-      delivery_addressValid,
+      streetValid,
       auction_durationValid,
       city_addressValid,
       time_delayValid,
@@ -152,7 +177,7 @@ class AuctionReg extends Component {
       && this.state.request_categoryValid
       && this.state.request_descriptionValid
       && this.state.delivery_dateValid
-      && this.state.delivery_addressValid
+      && this.state.streetValid
       && this.state.auction_durationValid
       && this.state.city_addressValid
       && this.state.time_delayValid
@@ -166,7 +191,7 @@ class AuctionReg extends Component {
 //   "auction_type": 1,
 //   "request_description": "Вот такой вот аукцион",
 //   "delivery_date": "2019-10-02T00:00:00Z",
-//   "delivery_address": "куда?:D",
+//   "street": "куда?:D",
 //   "auction_duration": "2019-10-02T00:00:00Z"
 // }
 
@@ -220,10 +245,20 @@ class AuctionReg extends Component {
                     <input type="text" data-counter="1" name="city_address" onChange={(event) => this.handleUserInput(event)}
                            value={state.city_address}/>
                   </div>
-                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.delivery_address)]}>
-                    Адрес:
-                    <input type="text" data-counter="1" name="delivery_address" onChange={(event) => this.handleUserInput(event)}
-                           value={state.delivery_address}/>
+                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.street)]}>
+                    Улица:
+                    <input type="text" data-counter="1" name="street" onChange={(event) => this.handleUserInput(event)}
+                           value={state.street}/>
+                  </div>
+                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.building)]}>
+                    Здание:
+                    <input type="text" data-counter="1" name="building" onChange={(event) => this.handleUserInput(event)}
+                           value={state.building}/>
+                  </div>
+                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.office)]}>
+                    Офис:
+                    <input type="text" data-counter="1" name="office" onChange={(event) => this.handleUserInput(event)}
+                           value={state.office}/>
                   </div>
                   {/*<a className={styles.delete_node} />*/}
                 </div>
@@ -249,7 +284,7 @@ class AuctionReg extends Component {
                 <div className={styles.order_date}>
                   <div className={styles[this.errorClass(this.state.formErrors.delivery_date_day)]}>
                     <div className={styles.label}>Дата поставки</div>
-                    <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)}
+                    <input type="date" name="delivery_date_day" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.onChangeCheckbox(event)}
                            value={state.delivery_date_day}/>
                   </div>
                   <div className={styles.time_box}>
@@ -320,28 +355,42 @@ class AuctionReg extends Component {
               </div>
               <h2>4. Файлы</h2>
               <FileUploader />
-              <h2>5. Совместный аукцион</h2>
-              <div
-                className={styles.aprove}
-                style={{
-                  marginBottom: '15px',
-                }}
-              >
-                <input type="checkbox" name="rulesChecked"/>
-                Наличие ЭЦП
-                <a href="">
+              <h2>
+                5. Совместный аукцион
 
-                </a>
+              </h2>
+              <div className={styles.partner_search}>
+                Найти партнера?
+                <input
+                  type="checkbox"
+                  name="joint_auction"
+                  checked={this.state.joint_auction}
+                  onChange={()=>{this.setState({joint_auction: !this.state.joint_auction})}}
+                />
               </div>
-              <div
-                className={styles.label+ ' ' + styles[this.errorClass(this.state.formErrors.time_delay)]}
-                style={{
-                  marginBottom: '15px',
-                }}
-              >
-                <div className={styles.label}>Время ожидания</div>
-                <input type="date" name="time_delay" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)} value={state.time_delay}/>
-              </div>
+              {this.state.joint_auction ? <div className={styles.partner_search}>
+                <div
+                  className={styles.aprove}
+                  style={{
+                    marginBottom: '15px',
+                  }}
+                >
+                  Наличие ЭЦП
+                  <input type="checkbox" name="rulesChecked"/>
+                </div>
+                <div
+                  className={styles.label+ ' ' + styles[this.errorClass(this.state.formErrors.time_delay)]}
+                  style={{
+                    marginBottom: '15px',
+                  }}
+                >
+                  <div className={styles.label}>Время ожидания</div>
+                  <input type="date" name="time_delay" placeholder="дд.мм.гггг" min={current_date} onChange={(event) => this.handleUserInput(event)} value={state.time_delay}/>
+                </div>
+              </div> : ''
+              }
+
+
 
               {/*<div className={styles.fields}>*/}
                 {/*<div className={styles.order_address}>*/}

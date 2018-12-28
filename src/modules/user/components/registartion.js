@@ -12,7 +12,7 @@ class Registration extends Component {
   // PERSON
   // "name": "Евгений",
   // "last_name": "Култышев",
-  // "address": "Алматы",
+  // "street": "Алматы",
   // "balance": 5000,
   // "user": {
   //   "email": "cds@gmail.com",
@@ -22,7 +22,7 @@ class Registration extends Component {
   // COMPANY
   // {
   //   "name": "OWLSTUDIO",
-  //   "address": "Somewhere",
+  //   "street": "Somewhere",
   //   "website": "https://owlstudio.kz",
   //   "description": "web studio",
   //   "balance": 5000,
@@ -37,7 +37,9 @@ class Registration extends Component {
     this.state = {
       company: {
         name: "",
-        address: "",
+        street: "",
+        building: "",
+        office: "",
         website: "",
         description: "",
         balance: 0,
@@ -52,13 +54,13 @@ class Registration extends Component {
       person: {
         name: "",
         last_name: "",
-        address: "",
+        street: "",
         balance: 0,
       },
       files: props.files,
       type: 'person',
       // formErrors: {user: {email: '', password: '', phone: '', file: ''}},
-      formErrors: {user: {email: '', password: '', phone: '', file: ''}, company: {bin: '', website: '', address: ''}},
+      formErrors: {user: {email: '', password: '', phone: '', file: ''}, company: {bin: '', website: '', street: '', office: "", building: "",}},
       phoneValid: false,
       emailValid: false,
       fileValid: false,
@@ -66,7 +68,9 @@ class Registration extends Component {
       binValid: false,
       websiteValid: false,
       formValid: false,
-      addressValid: false,
+      streetValid: false,
+      officeValid: false,
+      buildingValid: false,
     };
   }
 
@@ -97,7 +101,9 @@ class Registration extends Component {
       this.validateField('file', this.state.files);
       this.validateField('bin', this.state.company.bin);
       this.validateField('website', this.state.company.website);
-      this.validateField('address', this.state.company.address);
+      this.validateField('street', this.state.company.street);
+      this.validateField('building', this.state.company.building);
+      this.validateField('office', this.state.company.office);
     }
     if (!this.state.formValid) {
       return;
@@ -152,7 +158,9 @@ class Registration extends Component {
     let websiteValid = this.state.websiteValid;
     let phoneValid = this.state.phoneValid;
     let fileValid = this.state.fileValid;
-    let addressValid = this.state.addressValid;
+    let streetValid = this.state.streetValid;
+    let buildingValid = this.state.buildingValid;
+    let officeValid = this.state.officeValid;
 
     switch(fieldName) {
       case 'email':
@@ -179,9 +187,15 @@ class Registration extends Component {
         fileValid = Object.values(value).length >= 1 || this.state.type === 'person';
         fieldValidationErrors.user.file = fileValid ? '': 'need to upload file';
         break;
-      case 'address':
-        addressValid = Object.values(value).length >= 1;
-        fieldValidationErrors.company.address = addressValid ? '': 'is invalid';
+      case 'street':
+        streetValid = Object.values(value).length >= 1;
+        fieldValidationErrors.company.street = streetValid ? '': 'is invalid';
+      case 'building':
+        buildingValid = Object.values(value).length >= 1;
+        fieldValidationErrors.company.building = buildingValid ? '': 'is invalid';
+      case 'office':
+        officeValid = Object.values(value).length >= 0;
+        fieldValidationErrors.company.office = officeValid ? '': 'is invalid';
       default:
         break;
     }
@@ -192,7 +206,9 @@ class Registration extends Component {
       websiteValid,
       phoneValid,
       fileValid,
-      addressValid,
+      streetValid,
+      officeValid,
+      buildingValid,
 
     }, this.validateForm);
   };
@@ -220,7 +236,9 @@ class Registration extends Component {
           && this.state.websiteValid
           && this.state.phoneValid
           && this.state.fileValid
-          && this.state.addressValid
+          && this.state.streetValid
+          && this.state.officeValid
+          && this.state.buildingValid
       });
     }
 
@@ -286,12 +304,32 @@ class Registration extends Component {
 
                   </div>
 
-                  <div className={styles.name + ' ' + styles.input_block+ ' ' +(this.state.addressValid ? '' : styles[this.errorClass(this.state.formErrors.company.address)] ) }>
+                  <div className={styles.name + ' ' + styles.input_block+ ' ' +(this.state.streetValid ? '' : styles[this.errorClass(this.state.formErrors.company.street)] ) }>
                     <div className={styles.label}>
-                      Адрес:
+                      Улица:
                     </div>
                     <div className={styles.input_box}>
-                      <input type="text" className={styles.name} name="address" value={user.company.address} onChange={(event) => this.handleCompanyInput(event)}/>
+                      <input type="text" className={styles.name} name="street" value={user.company.street} onChange={(event) => this.handleCompanyInput(event)}/>
+                    </div>
+
+                  </div>
+
+                  <div className={styles.name + ' ' + styles.input_block+ ' ' +(this.state.buildingValid ? '' : styles[this.errorClass(this.state.formErrors.company.building)] ) }>
+                    <div className={styles.label}>
+                      Здание:
+                    </div>
+                    <div className={styles.input_box}>
+                      <input type="text" className={styles.name} name="building" value={user.company.building} onChange={(event) => this.handleCompanyInput(event)}/>
+                    </div>
+
+                  </div>
+
+                  <div className={styles.name + ' ' + styles.input_block+ ' ' +(this.state.officeValid ? '' : styles[this.errorClass(this.state.formErrors.company.office)] ) }>
+                    <div className={styles.label}>
+                      Офис:
+                    </div>
+                    <div className={styles.input_box}>
+                      <input type="text" className={styles.name} name="office" value={user.company.office} onChange={(event) => this.handleCompanyInput(event)}/>
                     </div>
 
                   </div>
