@@ -95,9 +95,13 @@ class Profile extends Component {
 							{this.props.profile.person ? 'Физическое лицо' : 'Компания' }
 						</span>
                 </div>
-                <a href="" className={styles.change_password}>
-                  Сменить пароль
+                {/*<a href="" className={styles.change_password}>*/}
+                  {/*Сменить пароль*/}
+                {/*</a>*/}
+                <a className={styles.change_password} onClick={this.props.openEditProfile}>
+                  Редактировать профиль
                 </a>
+
               </div>
               {/*<div className={styles.categories}>*/}
                 {/*Категории перевозок*/}

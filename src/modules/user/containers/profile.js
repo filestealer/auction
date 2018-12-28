@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { getProfile } from "../actions";
+import { getProfile, openEditProfile } from "../actions";
 import Profile from '../components/profile';
 import {testFileUpload} from '../../../api/lots';
 
@@ -21,6 +21,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
 const mapDispatchToProps = (dispatch) => ({
   testFileUpload: (data) => testFileUpload(data),
+  openEditProfile: () => dispatch(openEditProfile()),
 });
 
 export default connect(

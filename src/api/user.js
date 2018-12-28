@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedVariable
 
 import {APIUrl} from '../config'
-import {post, get, postFiles} from '../utils/net';
+import {post, get, patch, postFiles} from '../utils/net';
 import {unFormatPhone} from '../utils';
 
 
@@ -44,28 +44,27 @@ export function signUpCompany(user) {
   });
 }
 export function signUpPerson(user) {
-  // user = Object.select(user, [
-  //   'phone', 'email', 'password',
-  //   'name', 'surname', 'company_name', 'company_address', 'company_bin',
-  //   'company_contacts', 'company_description',
-  // ]);
-  // user.phone = unFormatPhone(user.phone);
-  // TODO: пока регистрироваться с веба могут только работадатели
-  // user.group = 'employers';
+
   return post('Auth::reg', APIUrl + 'register/person/', {
     ...user,
-  // {
-  //   "name": "Евгений",
-  //   "last_name": "Култышев",
-  //   "address": "Алматы",
-  //   "balance": 5000,
-  //   "user": {
-  //   "email": "cds@gmail.com",
-  //     "password": "Qwerty123456"
-  // }
-  // }
   });
 }
+
+export function updatePerson(payload, id, token) {
+
+  return patch('Auth::reg', APIUrl + 'persons/'+id+'/', {
+    ...payload,
+  },{'Authorization': 'Token '+token});
+}
+
+export function updateCompany(payload, id, token) {
+  debugger;
+
+  return patch('Auth::reg', APIUrl + 'companies/'+id+'/', {
+    ...payload,
+  },{'Authorization': 'Token '+token});
+}
+
 
 export function signOut() {
   return post('Auth::signOut', APIUrl + '/user/sign_out');
@@ -107,4 +106,7 @@ export function updatePassword(params) {
   return post('Auth::updatePassword', APIUrl + '/user/update_password', params);
 }
 
-export default {signIn, fetchProfile, signUpCompany, signUpPerson, signOut, restorePasswordSend, restorePasswordCheck, updatePassword, test, test_auth, fileUpload};
+export default {signIn, fetchProfile, signUpCompany, signUpPerson,
+                signOut, restorePasswordSend, restorePasswordCheck, updatePassword,
+                test, test_auth, fileUpload,
+                updatePerson, updateCompany};

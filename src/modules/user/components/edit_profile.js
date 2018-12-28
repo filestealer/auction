@@ -6,71 +6,51 @@ import TopBlock from '../../../components/top_block';
 import InputMask from 'react-input-mask';
 import FileUploader from '../../../components/file_uploader';
 
-class Registration extends Component {
-
-
-  // PERSON
-  // "name": "Евгений",
-  // "last_name": "Култышев",
-  // "street": "Алматы",
-  // "balance": 5000,
-  // "user": {
-  //   "email": "cds@gmail.com",
-  //   "password": "Qwerty123456"
-  // }
-
-  // COMPANY
-  // {
-  //   "name": "OWLSTUDIO",
-  //   "street": "Somewhere",
-  //   "website": "https://owlstudio.kz",
-  //   "description": "web studio",
-  //   "balance": 5000,
-  //   "user": {
-  //     "email": "csa@gmail.com",
-  //     "password": "Qwerty123456"
-  //   }
-  // }
-
+class EditProfile extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
-      company: {
-        name: "",
-        street: "",
-        building: "",
-        office: "",
-        city: "",
-        website: "",
-        description: "",
-        balance: 0,
-        bin: '',
-      },
-      user: {
-        email: '',
-        password: '',
-        phone: '',
-        file: '',
-      },
-      person: {
-        name: "",
-        last_name: "",
-        balance: 0,
-      },
-      files: props.files,
-      type: 'person',
+      ...props.profile,
+      phone: '+7'+props.profile.phone,
+      company: (props.profile.company ? {
+        name: props.profile.company.name || '',
+        street: props.profile.company.street || '',
+        building: props.profile.company.building || '',
+        office: props.profile.company.office || '',
+        city: props.profile.company.city || '',
+        website: props.profile.company.website || '',
+        description: props.profile.company.description || '',
+        balance: props.profile.company.balance || '',
+        bin: props.profile.company.bin || '',
+        id: props.profile.company.id,
+        files: props.profile.company.files,
+      } : false ),
+      isPerson: !!props.profile.person,
+      // user: {
+      //   email: '',
+      //   password: '',
+      //   phone: '',
+      //   file: '',
+      // },
+      // person: {
+      //   name: "",
+      //   last_name: "",
+      //   street: "",
+      //   balance: 0,
+      // },
       // formErrors: {user: {email: '', password: '', phone: '', file: ''}},
       formErrors: {user: {email: '', password: '', phone: '', file: ''}, company: {bin: '', city: '', website: '', street: '', office: "", building: "",}},
-      phoneValid: false,
-      emailValid: false,
-      fileValid: false,
-      passwordValid: false,
-      binValid: false,
-      websiteValid: false,
+      phoneValid: true,
+      emailValid: true,
+      fileValid: true,
+      passwordValid: true,
+      binValid: true,
+      websiteValid: true,
       formValid: false,
-      streetValid: false,
-      officeValid: false,
-      buildingValid: false,
+      streetValid: true,
+      officeValid: true,
+      buildingValid: true,
       cityValid: false,
     };
   }
@@ -82,24 +62,13 @@ class Registration extends Component {
     }
   }
 
-  // shouldComponentUpdate(nextProps, nextState){
-  //
-  //   if (nextProps.files != nextState.files) {
-  //       return true;
-  //
-  //   }
-  // }
-
   save = () => {
-    if (this.state.type === 'person') {
-      this.validateField('email', this.state.user.email);
-      this.validateField('password', this.state.user.password);
-      this.validateField('phone', this.state.user.phone);
+
+
+    if (this.state.isPerson) {
+      this.validateField('phone', this.state.phone);
     } else {
-      this.validateField('email', this.state.user.email);
-      this.validateField('password', this.state.user.password);
-      this.validateField('phone', this.state.user.phone);
-      this.validateField('file', this.state.files);
+      this.validateField('phone', this.state.phone);
       this.validateField('bin', this.state.company.bin);
       this.validateField('website', this.state.company.website);
       this.validateField('street', this.state.company.street);
@@ -113,25 +82,10 @@ class Registration extends Component {
     this.props.save(this.state);
   };
 
-  onChangeUser = (e) => {
-    console.log(e, e.target.value, e.target.name);
-    this.setState({user: {...this.state.user, [e.target.name]: e.target.value}})
-  };
-
-  onChangeCompany = (e) => {
-    console.log(e, e.target.value, e.target.name);
-    this.setState({company: {...this.state.company, [e.target.name]: e.target.value}})
-  };
-
-  onChangePerson = (e) => {
-    console.log(e, e.target.value, e.target.name);
-    this.setState({person: {...this.state.person, [e.target.name]: e.target.value}})
-  };
-
   handleUserInput (e) {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({user: {...this.state.user, [e.target.name]: e.target.value}},
+    this.setState({[e.target.name]: e.target.value},
       () => { this.validateField(name, value) });
     console.log(e, e.target.value, e.target.name);
   };
@@ -165,6 +119,8 @@ class Registration extends Component {
     let officeValid = this.state.officeValid;
     let cityValid = this.state.cityValid;
 
+    console.log(fieldName, value, this.state);
+
     switch(fieldName) {
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) && value.length >= 1;
@@ -187,7 +143,7 @@ class Registration extends Component {
         fieldValidationErrors.user.phone = phoneValid ? '' : ' is invalid';
         break;
       case 'file':
-        fileValid = Object.values(value).length >= 1 || this.state.type === 'person';
+        fileValid = Object.values(value).length >= 1 || this.state.isPerson;
         fieldValidationErrors.user.file = fileValid ? '': 'need to upload file';
         break;
       case 'street':
@@ -209,6 +165,16 @@ class Registration extends Component {
       default:
         break;
     }
+    console.log({ emailValid,
+      passwordValid,
+      binValid,
+      websiteValid,
+      phoneValid,
+      fileValid,
+      streetValid,
+      officeValid,
+      buildingValid,
+      cityValid});
     this.setState({formErrors: fieldValidationErrors,
       emailValid,
       passwordValid,
@@ -229,9 +195,9 @@ class Registration extends Component {
 
   };
 
-  validateForm(type = this.state.type) {
+  validateForm(type = this.state.isPerson) {
     console.log(type, 'TYPE!!!');
-    if (type == 'person') {
+    if (type) {
       this.setState({formValid:
           this.state.emailValid
           && this.state.passwordValid
@@ -262,28 +228,17 @@ class Registration extends Component {
 
     return <div>
       <Header />
-      <TopBlock text="Регистрация" />
+      <TopBlock text="Редактирование" />
       <div className={styles.reg_content}>
         <div className={styles.container}>
           <form className={styles.register}>
-            <div className={styles.reg_tabs}>
-              <div className={styles.person + ((user.type === 'person') ? ' '+ styles.active : '')}
-                   onClick={()=>{this.setState({type: 'person'}); this.validateForm('person')}}>
-                Физическое лицо
-              </div>
-              <div className={styles.person + ((user.type === 'company') ? ' '+ styles.active : '')}
-                   onClick={()=>{this.setState({type: 'company'}); this.validateForm('company')}}>
-                Юридическое лицо
-              </div>
-            </div>
-
               <div className={styles.registaer_content}>
                 <div className={styles.mail + ' ' + styles.input_block + ' ' +(this.state.emailValid ? '' : styles[this.errorClass(this.state.formErrors.user.email)] ) }>
                   <div className={styles.label}>
                     Электронная почта:
                   </div>
                   <div className={styles.input_box}>
-                    <input type="email" value={user.user.email} name="email" placeholder="mail@example.com" onChange={(event) => this.handleUserInput(event)}/>
+                    <input disabled type="email" value={user.email} name="email" placeholder="mail@example.com" onChange={(event) => this.handleUserInput(event)}/>
                     <span>
                       <strong>
                         Обязательно проверьте e-mail адрес!
@@ -294,17 +249,8 @@ class Registration extends Component {
 
                 </div>
 
-                <div className={styles.mail + ' ' + styles.input_block + ' ' +(this.state.passwordValid ? '' : styles[this.errorClass(this.state.formErrors.user.password)] ) }>
-                  <div className={styles.label}>
-                    Пароль:
-                  </div>
-                  <div className={styles.input_box}>
-                    <input type="password" value={user.user.password} name="password"  onChange={(event) => this.handleUserInput(event)}/>
-                  </div>
 
-                </div>
-
-                {(user.type === 'company') ? <div>
+                {(!user.isPerson) ? <div>
 
                   <div className={styles.name + ' ' + styles.input_block}>
                     <div className={styles.label}>
@@ -404,27 +350,19 @@ class Registration extends Component {
                     Телефон:
                   </div>
                   <div className={styles.input_box}>
-                    <InputMask mask="+7 (999) 999 99 99" type="phone" className={styles.phone} name="phone" placeholder="+7 (777) 777-77-77" value={user.user.phone} onChange={(event) => this.handleUserInput(event)}/>
+                    <InputMask mask="+7 (999) 999 99 99" type="phone" className={styles.phone} name="phone" placeholder="+7 (777) 777-77-77" value={user.phone} onChange={(event) => this.handleUserInput(event)}/>
                   </div>
 
                 </div>
 
-                <FileUploader className={(this.state.fileValid ? '' : styles[this.errorClass(this.state.formErrors.user.file)])}/>
+                {/*<FileUploader className={(this.state.fileValid ? '' : styles[this.errorClass(this.state.formErrors.user.file)])}/>*/}
                 {/*{(user.type === 'company')*/}
                   {/*? <FormErrors formErrors={this.state.formErrors} />*/}
-
-                <div className={styles.aprove}>
-                  <input type="checkbox" name="rulesChecked"/>
-                  Я ознакомился и принимаю
-                  <a href="">
-                    Соглашение об использовании
-                  </a>
-                </div>
 
                 <div disabled={!this.state.formValid} className={styles.center} onClick={this.save}>
                   <a>
                     <span>
-                        Зарегистрироваться
+                        Сохранить
                     </span>
                   </a>
                 </div>
@@ -450,4 +388,4 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+export default EditProfile;

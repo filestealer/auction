@@ -66,6 +66,9 @@ const mapStateToProps = (state, ownProps) => {
     isMy: item && item.initiator && item.initiator.id === state.user.profile.id,
     chosen_bid: item.chosen_bid,
     volume: item.volume,
+    total_volume: item.total_volume,
+    measure: item.measure,
+    eds_required: item.eds_required,
     // categories: categories || [],
     // category_name: category_name || '',
 

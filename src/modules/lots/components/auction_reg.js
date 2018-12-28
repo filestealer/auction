@@ -20,8 +20,8 @@ class AuctionReg extends Component {
       street: '',
       office: '',
       building: '',
+      city: '',
       auction_duration: 3,
-      city_address: '',
       file: '',
       time_delay: new Date(),
       delivery_date_day: new Date(),
@@ -36,14 +36,12 @@ class AuctionReg extends Component {
         street: '',
         office: '',
         building: '',
-        auction_duration: '3',
-        city_address: '',
         time_delay: '',
         delivery_date_day: '',
         delivery_date_time: '',
         file: ''
       },
-      city_addressValid: false,
+      cityValid: false,
       request_categoryValid: false,
       auction_typeValid: false,
       request_descriptionValid: false,
@@ -75,7 +73,7 @@ class AuctionReg extends Component {
     this.validateField('street', this.state.street);
     this.validateField('building', this.state.building);
     this.validateField('office', this.state.office);
-    this.validateField('city_address', this.state.city_address);
+    this.validateField('city', this.state.city);
     this.validateField('auction_duration', this.state.auction_duration);
     this.validateField('file', this.state.files);
     this.validateField('time_delay', this.state.time_delay);
@@ -114,7 +112,7 @@ class AuctionReg extends Component {
     let buildingValid = this.state.buildingValid;
     let officeValid = this.state.officeValid;
     let auction_durationValid = this.state.auction_durationValid;
-    let city_addressValid = this.state.city_addressValid;
+    let cityValid = this.state.cityValid;
     let time_delayValid = this.state.time_delayValid;
     let fileValid = this.state.fileValid;
 
@@ -143,9 +141,9 @@ class AuctionReg extends Component {
         officeValid = value.length >= 0;
         fieldValidationErrors.office = officeValid ? '' : ' is invalid';
         break;
-      case 'city_address':
-        city_addressValid = value.length >= 1;
-        fieldValidationErrors.city_address = city_addressValid ? '' : ' is invalid';
+      case 'city':
+        cityValid = value.length >= 1;
+        fieldValidationErrors.city = cityValid ? '' : ' is invalid';
         break;
       case 'request_description':
         request_descriptionValid = value.length >= 1;
@@ -168,7 +166,7 @@ class AuctionReg extends Component {
       delivery_dateValid,
       streetValid,
       auction_durationValid,
-      city_addressValid,
+      cityValid,
       time_delayValid,
       fileValid
 
@@ -187,7 +185,7 @@ class AuctionReg extends Component {
       && this.state.delivery_dateValid
       && this.state.streetValid
       && this.state.auction_durationValid
-      && this.state.city_addressValid
+      && this.state.cityValid
       && this.state.time_delayValid
       && this.state.fileValid
     });
@@ -266,10 +264,10 @@ class AuctionReg extends Component {
               <h2>2. Куда поставить</h2>
               <div className={styles.fields}>
                 <div className={styles.order_address}>
-                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.city_address)]}>
+                  <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.city)]}>
                     Город:
-                    <input type="text" data-counter="1" name="city_address" onChange={(event) => this.handleUserInput(event)}
-                           value={state.city_address}/>
+                    <input type="text" data-counter="1" name="city" onChange={(event) => this.handleUserInput(event)}
+                           value={state.city}/>
                   </div>
                   <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.street)]}>
                     Улица:
