@@ -47,7 +47,7 @@ class EditProfile extends Component {
       passwordValid: true,
       binValid: true,
       websiteValid: true,
-      formValid: false,
+      formValid: true,
       streetValid: true,
       officeValid: true,
       buildingValid: true,

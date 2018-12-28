@@ -39,7 +39,8 @@ class AuctionReg extends Component {
         time_delay: '',
         delivery_date_day: '',
         delivery_date_time: '',
-        file: ''
+        file: '',
+        city: '',
       },
       cityValid: false,
       request_categoryValid: false,
@@ -52,7 +53,7 @@ class AuctionReg extends Component {
       officeValid: false,
       auction_durationValid: false,
       fileValid: true,
-      time_delayValid: false,
+      time_delayValid: true,
       formValid: false
     };
     console.log(this.props, 'this.props::auction_reg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
