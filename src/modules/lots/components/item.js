@@ -30,9 +30,11 @@ class Lot extends Component {
 
   request = () => {
     this.props.request({price: this.state.price, id: this.props.id, file: this.state.file});
+    this.setState({openRequest: false});
   };
   requestPartnership = () => {
-    this.props.requestPartnership({description: this.state.description, id: this.props.id});
+    this.props.requestPartnership({description: this.state.description, id: this.props.id, volume: this.state.volume});
+    this.setState({openRequestPartnership: false});
   };
 
   openRequest = () => {
@@ -62,85 +64,132 @@ class Lot extends Component {
           <TopBlock text={"Заказ №" + this.props.id} />
 
         </div>
+        <div className={styles.lot_content}>
+          <div className={styles.container}>
+            <table style={{margin: '0 auto', maxWidth: '800px', width: '500px', td: {padding: '10px'}}}>
+              <tbody>
+                <tr>
+                  <td><strong>Категория</strong></td>
+                  <td>{this.props.request_category.name}</td>
+                </tr>
+                <tr>
+                  <td><strong>Описание</strong></td>
+                  <td>{this.props.description}</td>
+                </tr>
+                <tr>
+                  <td><strong>Объем</strong></td>
+                  <td>{this.props.volume}</td>
+                </tr>
+                <tr>
+                  <td><strong>Дата поставки</strong></td>
+                  <td>{moment(this.props.delivery_date).format('DD-MM-YYYY HH:mm')}</td>
+                </tr>
+                <tr>
+                  <td><strong>Инициатор</strong></td>
+                  <td><a >{(this.props.initiator.person) ? this.props.initiator.person.name : (this.props.initiator.company && this.props.initiator.company.name)}</a></td>
+                </tr>
+                <tr>
+                  <td><strong>Адрес поставки</strong></td>
+                  <td>{this.props.delivery_address}</td>
+                </tr>
+                <tr>
+                  <td><strong>Статус</strong></td>
+                  <td>{this.props.status == 'active' ? 'Активен' : this.props.status}</td>
+                </tr>
+                <tr>
+                  <td><strong>Создан</strong></td>
+                  <td>{moment(this.props.publish_date).format('DD-MM-YYYY')}</td>
+                </tr>
+                <tr>
+                  <td><strong>Окончание</strong></td>
+                  <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
+                </tr>
+
+              </tbody>
+
+
+            </table>
+          </div>
+        </div>
 
         <div className={styles.lot_content}>
           <div className={styles.container}>
-            <h1 className={styles.title}>{this.props.category.name}</h1>
-            <h3 />
+            {/*<h1 className={styles.title}>{this.props.request_category.name}</h1>*/}
+            {/*<h3 />*/}
             <div className={styles.main_part}>
 
-              <p>{this.props.description}</p>
-              <div className={styles.columns}>
-                <div className={styles.column + ' ' + styles.left}>
-                  <div className={styles.when_date + ' ' + styles.back}>
-                    <span className={styles.name}>Когда нужно:</span>
-                    <span className={styles.date}>
-                      {moment(this.props.delivery_date).format('DD-MM-YYYY')}
-                      <span className={styles.time}>{moment(this.props.delivery_date).format('HH:mm')}</span>
-                    </span>
-                  </div>
-
-                  {/*<div className={styles.weight + ' ' + styles.back}>*/}
-                    {/*<span className={styles.name}>Вес:</span>*/}
-
-                    {/*<span className={styles.date}>0 кг.</span>*/}
+              {/*<p>{this.props.description}</p>*/}
+              {/*<div className={styles.columns}>*/}
+                {/*<div className={styles.column + ' ' + styles.left}>*/}
+                  {/*<div className={styles.when_date + ' ' + styles.back}>*/}
+                    {/*<span className={styles.name}>Когда нужно:</span>*/}
+                    {/*<span className={styles.date}>*/}
+                      {/*{moment(this.props.delivery_date).format('DD-MM-YYYY')}*/}
+                      {/*<span className={styles.time}>{moment(this.props.delivery_date).format('HH:mm')}</span>*/}
+                    {/*</span>*/}
                   {/*</div>*/}
 
-                  <div className={styles.back} />
+                  {/*/!*<div className={styles.weight + ' ' + styles.back}>*!/*/}
+                    {/*/!*<span className={styles.name}>Вес:</span>*!/*/}
 
-                  <div className={styles.user + ' ' + styles.back}>
-                    <a >{(this.props.initiator.person) ? this.props.initiator.person.name : (this.props.initiator.company && this.props.initiator.company.name)}</a>
-                  </div>
-                </div>
+                    {/*/!*<span className={styles.date}>0 кг.</span>*!/*/}
+                  {/*/!*</div>*!/*/}
 
-                <div className={styles.column + ' ' + styles.right}>
-                  <div className={styles.destination_points}>
-                    <div className={styles.destination_holder}>
-                      <div className={styles.flex_box}>
-                        <div className={styles.from}>
-                          <span className={styles.city}>{this.props.delivery_address}</span>
-                          <span className={styles.address} />
-                        </div>
-                        {/*<i />*/}
-                        <div className={styles.to}>
-                          <span className={styles.city}></span>
-                          <span className={styles.address} />
-                        </div>
-                      </div>
-                      <span className={styles.distance}></span>
-                      <div className={styles.flex_box}>
-                        <input type="hidden" name="geo_saved" value="0" />
-                        <input
-                          type="hidden"
-                          name="coordinates"
-                          value='["",""]'
-                        />
-                        <div
-                          className={styles['map"']}
-                          style={{
-                            width: '400px',
-                            height: '305px',
-                          }}
-                        />
-                        <aside>
-                          <div className={styles.box}>
-                            <div className={styles.status}>
-                              Статус:
-                              <span>{this.props.status == 'active' ? 'Активен' : this.props.status}</span>
-                            </div>
-                            <div className={styles.create_at}>
-                              Создан: {moment(this.props.publish_date).format('DD-MM-YYYY')}
-                            </div>
-                            <div className={styles.finish}>
-                              <strong>Окончание: {moment(this.props.delivery_date).format('DD-MM-YYYY')}</strong>
-                            </div>
-                          </div>
-                        </aside>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  {/*<div className={styles.back} />*/}
+
+                  {/*<div className={styles.user + ' ' + styles.back}>*/}
+                    {/*<a >{(this.props.initiator.person) ? this.props.initiator.person.name : (this.props.initiator.company && this.props.initiator.company.name)}</a>*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+
+                {/*<div className={styles.column + ' ' + styles.right}>*/}
+                  {/*<div className={styles.destination_points}>*/}
+                    {/*<div className={styles.destination_holder}>*/}
+                      {/*<div className={styles.flex_box}>*/}
+                        {/*<div className={styles.from}>*/}
+                          {/*<span className={styles.city}>{this.props.delivery_address}</span>*/}
+                          {/*<span className={styles.address} />*/}
+                        {/*</div>*/}
+                        {/*/!*<i />*!/*/}
+                        {/*<div className={styles.to}>*/}
+                          {/*<span className={styles.city}></span>*/}
+                          {/*<span className={styles.address} />*/}
+                        {/*</div>*/}
+                      {/*</div>*/}
+                      {/*<span className={styles.distance}></span>*/}
+                      {/*<div className={styles.flex_box}>*/}
+                        {/*<input type="hidden" name="geo_saved" value="0" />*/}
+                        {/*<input*/}
+                          {/*type="hidden"*/}
+                          {/*name="coordinates"*/}
+                          {/*value='["",""]'*/}
+                        {/*/>*/}
+                        {/*<div*/}
+                          {/*className={styles['map"']}*/}
+                          {/*style={{*/}
+                            {/*width: '400px',*/}
+                            {/*height: '305px',*/}
+                          {/*}}*/}
+                        {/*/>*/}
+                        {/*<aside>*/}
+                          {/*<div className={styles.box}>*/}
+                            {/*<div className={styles.status}>*/}
+                              {/*Статус:*/}
+                              {/*<span>{this.props.status == 'active' ? 'Активен' : this.props.status}</span>*/}
+                            {/*</div>*/}
+                            {/*<div className={styles.create_at}>*/}
+                              {/*Создан: {moment(this.props.publish_date).format('DD-MM-YYYY')}*/}
+                            {/*</div>*/}
+                            {/*<div className={styles.finish}>*/}
+                              {/*<strong>Окончание: {moment(this.props.delivery_date).format('DD-MM-YYYY')}</strong>*/}
+                            {/*</div>*/}
+                          {/*</div>*/}
+                        {/*</aside>*/}
+                      {/*</div>*/}
+                    {/*</div>*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+              {/*</div>*/}
             </div>
             {!this.props.isMy ? <div>
             <div className={styles.make_offer}>
@@ -151,7 +200,10 @@ class Lot extends Component {
 
             <div className={styles.make_offer_form + (this.state.openRequestPartnership ? ' ' + styles.active : '')}>
 
-              <input placeholder={'Ваш объем'} type="text" name="description" value={this.state.description} onChange={this.onChange} />
+              <input placeholder={'Ваш объем'} type="text" name="volume" value={this.state.volume} onChange={this.onChange} />
+              <br/>
+              <input placeholder={'Сообщение'} type="text" name="description" value={this.state.description} onChange={this.onChange} />
+              <br/>
               <button onClick={this.requestPartnership}>Отправить</button>
             </div>
             <div className={styles.make_offer}>
@@ -186,7 +238,7 @@ class Lot extends Component {
                   {this.props.partnerships.map((e,i)=> { return <tr key={i}>
                     <td>{e.description}</td>
                     <td>{e.partner}</td>
-                    <td><div className={styles.newButton} onClick={()=> this.props.acceptPartnership({partnership: e.id, auction: this.props.id})}>Принять</div></td>
+                    <td>{e.confirmed ? 'Предложение принято' : <div className={styles.newButton} onClick={()=> this.props.acceptPartnership({partnership: e.id, auction: this.props.id})}>Принять</div>}</td>
                     <td />
                     <td />
                   </tr>})}
@@ -209,7 +261,8 @@ class Lot extends Component {
                   {this.props.bids.map((e,i)=> { return <tr key={i}>
                     <td>{e.amount.split('.')[0]}</td>
                     <td>{e.user}</td>
-                    <td><div className={styles.newButton} onClick={()=> this.props.acceptBid({bid: e.id, auction: this.props.id})}>Принять</div></td>
+                    <td>{(this.props.chosen_bid && this.props.chosen_bid.id === e.id)  ? 'Ставка принята': (this.props.chosen_bid && this.props.chosen_bid.id ? '' : <div className={styles.newButton} onClick={()=> this.props.acceptBid({bid: e.id, auction: this.props.id})}>Принять</div>) }
+                    </td>
                     <td />
                     <td />
                   </tr>})}

@@ -74,6 +74,7 @@ function* createLot(data) {
     delivery_date: moment(data.delivery_date_day + ' ' + (data.delivery_date_time || "00:00")).format('YYYY-MM-DD HH:mm:ssZ'),
     auction_duration: moment().add(data.auction_duration, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
     files,
+    volume: data.volume,
   };
   console.log(info);
 
@@ -116,7 +117,6 @@ function* acceptBid(data) {
   const state = yield select(), token = state.user.token;
   let auction = data.payload.auction;
   let bid = data.payload.bid;
-  debugger;
   try {
     const payload = yield API.acceptBid({token, auction, bid});
     yield put({type: t.ACCEPT_BID_SUCCESS, payload});
@@ -151,10 +151,10 @@ function* acceptPartnership(data) {
 
 function* createRequestPartnership(data) {
   const state = yield select(), token = state.user.token;
-  let description = data.payload.description, id = data.payload.id;
+  let description = data.payload.description, id = data.payload.id, volume= data.payload.volume;
 
   try {
-    const payload = yield API.createRequestPartnership({token, auction: id, description});
+    const payload = yield API.createRequestPartnership({token, auction: id, description, volume});
     yield put({type: t.REQUEST_PARTNERSHIP_SUCCESS, payload});
     yield put({type: t.FETCH_LIST, payload});
     alert('Ваша заявка на партнерство принята');

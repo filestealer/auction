@@ -263,7 +263,23 @@ class AuctionReg extends Component {
                       value={state.delivery_date_time}
                     />
                   </div>
+
+
                   {/*<a className={styles.add_node} />*/}
+                </div>
+                <br/>
+                <div className={styles.fields}>
+                  <div className={styles.label}>
+                    Объем поставки:
+                    <input
+                      className={styles['input-width-100']}
+                      type="number"
+                      name="volume"
+                      onChange={(event) => this.handleUserInput(event)}
+                      value={state.volume}
+                    />
+
+                  </div>
                 </div>
               </div>
               <h2>3. Дополнительная информация</h2>

@@ -38,9 +38,8 @@ export function acceptBid(data) {
 
 }
 export function acceptPartnership(data) {
-  return post('Lots::CreateLot', APIUrl + 'choose_partnership/', {
-    auction: data.auction,
-    partnership: data.partnership
+  return patch('Lots::CreateLot', APIUrl + 'partnerships/'+data.partnership+'/', {
+    confirmed: true,
     // "request_category": 1,
     // "auction_type": 1,
     // "request_description": "Вот такой вот аукцион",

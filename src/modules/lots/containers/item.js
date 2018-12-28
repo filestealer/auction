@@ -22,10 +22,37 @@ const mapStateToProps = (state, ownProps) => {
   let partnerships = (item && item.initiator && item.initiator.id == state.user.profile.id) ? item.partnerships : [];
 
 
+
+  // auction_duration: "2019-01-03T23:47:26+06:00"
+  // auction_type: 1
+  // bids: Array(1)
+  // 0: {amount: "150000.0000", user: 3, auction: 27, id: 15}
+  // length: 1
+  // __proto__: Array(0)
+  // chosen_bid: {amount: "150000.0000", user: 3, auction: 27, id: 15}
+  // contract_expiration_date: null
+  // created: "2018-12-27T23:47:26.795275+06:00"
+  // delivery_address: "Абая 23"
+  // delivery_date: "2018-12-28T12:00:00+06:00"
+  // delivery_frequency: null
+  // eds_required: false
+  // files: [{…}]
+  // id: 27
+  // initiator: {id: 2, email: "test@test.test", person: {…}, phone: "87071367581"}
+  // modified: "2018-12-27T23:48:58.648532+06:00"
+  // partners_waiting_time: null
+  // partnerships: []
+  // request_category: {id: 1, name: "Стройматериалы"}
+  // request_description: "Тест заявки"
+  // status: "active"
+
+
   //ownProps.match.params
   return {
+    auction_duration: item.auction_duration,
+    auction_type: item.auction_type || 1,
     id: item.id || '',
-    category: item.request_category || {name: ''},
+    request_category: item.request_category || {name: ''},
     publish_date: item.created || '',
     description: item.request_description || '',
     delivery_address: item.delivery_address || '',
@@ -35,8 +62,10 @@ const mapStateToProps = (state, ownProps) => {
     initiator: item.initiator || {person: {name: ''}},
     user: state.user.profile,
     partnerships,
-    bids: bids || [],
-    isMy: item && item.initiator && item.initiator.id == state.user.profile.id,
+    bids: item.bids || [],
+    isMy: item && item.initiator && item.initiator.id === state.user.profile.id,
+    chosen_bid: item.chosen_bid,
+    volume: item.volume,
     // categories: categories || [],
     // category_name: category_name || '',
 
