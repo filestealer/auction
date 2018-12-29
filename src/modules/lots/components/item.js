@@ -104,6 +104,14 @@ class Lot extends Component {
                   <td><strong>Окончание</strong></td>
                   <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
                 </tr>
+                <tr>
+                  <td><strong>Минимальная сумма</strong></td>
+                  <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
+                </tr>
+                <tr>
+                  <td><strong>Количество заявок</strong></td>
+                  <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
+                </tr>
 
               </tbody>
 
