@@ -19,6 +19,16 @@ const mapStateToProps = (state, ownProps) => {
 
   let bids = state.lots.bids.filter(e => e.auction == item.id && item && item.initiator && item.initiator.id == state.user.profile.id);
 
+  let min_bid = item.bids.sort((a,b) => {
+    if (a.amount < b.amount) {
+      return -1;
+    }
+    if (a.amount > b.amount) {
+      return 1;
+    }
+    return 0;
+  })[0];
+
   let partnerships = (item && item.initiator && item.initiator.id == state.user.profile.id) ? item.partnerships : [];
 
 
@@ -72,6 +82,7 @@ const mapStateToProps = (state, ownProps) => {
     city: item.city,
     street: item.street,
     building: item.building,
+    min_bid,
     // categories: categories || [],
     // category_name: category_name || '',
 

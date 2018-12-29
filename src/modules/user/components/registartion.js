@@ -69,7 +69,7 @@ class Registration extends Component {
       websiteValid: false,
       formValid: false,
       streetValid: false,
-      officeValid: false,
+      officeValid: true,
       buildingValid: false,
       cityValid: false,
     };
@@ -91,6 +91,8 @@ class Registration extends Component {
   // }
 
   save = () => {
+    console.log(this.state);
+
     if (this.state.type === 'person') {
       this.validateField('email', this.state.user.email);
       this.validateField('password', this.state.user.password);
@@ -107,6 +109,7 @@ class Registration extends Component {
       this.validateField('office', this.state.company.office);
       this.validateField('city', this.state.company.city);
     }
+    console.log(this.state);
     if (!this.state.formValid) {
       return;
     }

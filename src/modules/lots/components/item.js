@@ -6,6 +6,8 @@ import Header from '../../../components/header';
 import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
 import moment from 'moment';
+
+import {statusLocale} from '../../../utils/locales';
 moment().format();
 
 class Lot extends Component {
@@ -56,7 +58,7 @@ class Lot extends Component {
 
 
   render() {
-
+    console.log(this.props);
     return (
       <div>
         <div id="app">
@@ -94,7 +96,7 @@ class Lot extends Component {
                 </tr>
                 <tr>
                   <td><strong>Статус</strong></td>
-                  <td>{this.props.status == 'active' ? 'Активен' : this.props.status}</td>
+                  <td>{statusLocale[this.props.status]}</td>
                 </tr>
                 <tr>
                   <td><strong>Создан</strong></td>

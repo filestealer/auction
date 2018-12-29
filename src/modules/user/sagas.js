@@ -68,6 +68,7 @@ function* localAuth(data) {
 function* signUp(data) {
   const state = yield select();
   let info = data.payload,
+      user = info.user,
       type = info.type,
       company = info.company,
       person = info.person;
