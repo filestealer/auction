@@ -290,6 +290,10 @@ function* changeLocation(action) {
       }
     }
 
+    if (pathname === '/profile/') {
+        yield put({type: tUser.FETCH_PROFILE});
+    }
+
   }
 
 

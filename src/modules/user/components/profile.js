@@ -61,6 +61,10 @@ class Profile extends Component {
                    onClick={()=>{this.setState({tabActive: 'requests'})}}>
                 Мои предложения
               </div>
+              <div className={styles.person + ((state.tabActive === 'partnerships') ? ' '+ styles.active : '')}
+                   onClick={()=>{this.setState({tabActive: 'partnerships'})}}>
+                Мои совместные покупки
+              </div>
             </div>
             {(state.tabActive === 'profile') ?
             <div className={styles.profile}>
@@ -81,7 +85,7 @@ class Profile extends Component {
                         <tbody>
                           <tr>
                             <td>Телефон</td>
-                            <td>{this.props.user.profile.phone}</td>
+                            <td>{this.props.profile.phone}</td>
                           </tr>
                           <tr>
                             <td>Баланс</td>
@@ -95,7 +99,7 @@ class Profile extends Component {
                       <tbody>
                         <tr>
                           <td>Телефон</td>
-                          <td>{this.props.user.profile.phone}</td>
+                          <td>{this.props.profile.phone}</td>
                         </tr>
                         <tr>
                           <td>Баланс</td>
@@ -183,7 +187,7 @@ class Profile extends Component {
             <div className={styles.orders}>
               <table>
                 <tbody>
-                {this.props.myList.map(e =>
+                {this.props.profile && this.props.profile.initiated_auctions && this.props.profile.initiated_auctions.map(e =>
                   <tr key={e.id} onClick={() => this.props.openLot(e.id)}>
                     <td className={styles.status}>{statusLocale[e.status]}</td>
                     <td className={styles.left + ' ' + styles.info} onClick={() => this.props.openLot(e.id)}>
@@ -226,22 +230,23 @@ class Profile extends Component {
               <table>
                 <tbody>
 
-                {this.props.myBids.map(e =>
+                {this.props.profile && this.props.profile.bids && this.props.profile.bids.map(e =>
                   <tr key={e.id}>
-                    <td className={styles.status}>{statusLocale[e.status]}</td>
-                    <td className={styles.left + ' ' + styles.info} onClick={() => this.props.openLot(e.auction)}>
+                    <td className={styles.status}>{statusLocale[e.auction.status]}</td>
+                    <td className={styles.left + ' ' + styles.info} onClick={() => this.props.openLot(e.auction.id)}>
                       <p>
-                        Лот № {e.auction}
+                        Лот № {e.auction.id}
                       </p>
                       <span className={styles.category}>
-                          {e.auction_info.request_category.name}
+                          {this.props.categories && this.props.categories.filter(c => c.id === e.auction.request_category)[0].name}
                       </span>
                       <span className={styles.publishedon}>
-                        {moment(e.auction_info.contract_expiration_date).format('DD.MM.YYYY')}
+                        {moment(e.auction.delivery_date).format('DD.MM.YYYY')}
                       </span>
                     </td>
-                    <td className={styles.left + ' ' + styles.title}><a>{e.auction_info.request_description}</a></td>
-                    <td>{e.amount}</td>
+                    <td className={styles.left + ' ' + styles.title}><a>{e.auction.request_description}</a></td>
+                    <td>{e.amount && e.amount.split('.')[0]}</td>
+                    <td>{e.is_chosen ? 'предложение принято' : 'Ожидает ответа'}</td>
                   </tr>
                 )}
                 {/*<tr>*/}
@@ -264,6 +269,51 @@ class Profile extends Component {
               </table>
             </div>
             :  null }
+
+            {(state.tabActive === 'partnerships') ?
+              <div className={styles.requests}>
+                <table>
+                  <tbody>
+
+                  {this.props.profile && this.props.profile.partnerships && this.props.profile.partnerships.map(e =>
+                    <tr key={e.id}>
+                      <td className={styles.status}>{statusLocale[e.auction.status]}</td>
+                      <td className={styles.left + ' ' + styles.info} onClick={() => this.props.openLot(e.auction.id)}>
+                        <p>
+                          Лот № {e.auction.id}
+                        </p>
+                        <span className={styles.category}>
+                          {this.props.categories && this.props.categories.filter(c => c.id === e.auction.request_category)[0].name}
+                      </span>
+                        <span className={styles.publishedon}>
+                        {moment(e.auction.delivery_date).format('DD.MM.YYYY')}
+                      </span>
+                      </td>
+                      <td className={styles.left + ' ' + styles.title}><a>{e.auction.request_description}</a></td>
+                      <td>{e.volume && e.volume.split('.')[0]}</td>
+                      <td>{e.confirmed ? 'предложение принято' : 'Ожидает ответа'}</td>
+                    </tr>
+                  )}
+                  {/*<tr>*/}
+                  {/*<td className={styles.status}>Активен</td>*/}
+                  {/*<td className={styles.left + ' ' + styles.info}>*/}
+                  {/*<p>*/}
+                  {/*№392334634*/}
+                  {/*</p>*/}
+                  {/*<span className={styles.category}>*/}
+                  {/*Стройматериалы*/}
+                  {/*</span>*/}
+                  {/*<span className={styles.publishedon}>*/}
+                  {/*16:52 16 декабря*/}
+                  {/*</span>*/}
+                  {/*</td>*/}
+                  {/*<td className={styles.left + ' ' + styles.title}><a href="#">Цемент</a></td>*/}
+                  {/*<td>50 000 тенге</td>*/}
+                  {/*</tr>*/}
+                  </tbody>
+                </table>
+              </div>
+              :  null }
           </div>
         </div>
     </div>

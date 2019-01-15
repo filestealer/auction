@@ -102,7 +102,7 @@ class Lot extends Component {
                 </tr>
                 <tr>
                   <td><strong>Инициатор</strong></td>
-                  <td><a >{(this.props.initiator.person) ? this.props.initiator.person.name : (this.props.initiator.company && this.props.initiator.company.name)}</a></td>
+                  <td onClick={()=>this.props.openUser(this.props.initiator.id)}><a >{(this.props.initiator.person) ? this.props.initiator.person.name : (this.props.initiator.company && this.props.initiator.company.name)}</a></td>
                 </tr>
                 <tr>
                   <td><strong>Адрес поставки</strong></td>
@@ -272,7 +272,7 @@ class Lot extends Component {
                   </tr>
                   {this.props.partnerships.map((e,i)=> { return <tr key={i}>
                     <td>{e.volume.split('.')[0]}</td>
-                    <td onClick={()=>this.props.openUser(e.partner)}>{e.partner}</td>
+                    <td onClick={()=>this.props.openUser(e.partner.id)}>{e.partner && e.partner.company && e.partner.company.name || e.partner && e.partner.person && e.partner.person.name}</td>
                     <td>{e.confirmed ? 'Предложение принято' : <div className={styles.newButton} onClick={()=> this.props.acceptPartnership({partnership: e.id, auction: this.props.id})}>Принять</div>}</td>
                     <td />
                     <td />

@@ -8,9 +8,13 @@ moment().format();
 
 const mapStateToProps = (state /*, ownProps*/) => {
 
-  const lots = state.lots, list = state.lots.list && state.lots.cities && state.lots.list.filter((e) => {
-    return e.chosen_bid == null //(moment(e.auction_duration).format('YYYYMMDD') >= moment().format('YYYYMMDD')) &&
-  }).map(e => {return {...e, city: state.lots.cities.filter(c => c.id == e.city)[0]}});
+  const lots = state.lots,
+    list = state.lots.list &&
+      state.lots.cities &&
+      state.lots.list.map(e => {return {...e, city: state.lots.cities.filter(c => c.id == e.city)[0]}});
+  //.filter((e) => {
+  //     return e.chosen_bid == null //(moment(e.auction_duration).format('YYYYMMDD') >= moment().format('YYYYMMDD')) &&
+  //   })
   console.log('LIST CONTAINER', list);
   return {
     list: list || [],
