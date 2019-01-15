@@ -7,9 +7,13 @@ import {push} from 'connected-react-router';
 // import tCareers from '../careers/types';
 import {createNotification} from 'react-redux-notify';
 import {makeNotification} from '../../utils';
+import moment from 'moment';
 
 function* appStart() {
   console.log('Init::Sagas::appStart');
+  let state = yield select();
+  console.log("APP START", state);
+
   let storage_token = localStorage.getItem('token');
 
   if (storage_token) {
@@ -18,8 +22,9 @@ function* appStart() {
 
 
   console.log('GET TOKEN', localStorage.getItem('token'));
-  yield put({type: tLots.FETCH_LIST});
-
+  // yield put({type: tLots.FETCH_LIST});
+  // yield put({type: tLots.FETCH_BIDS});
+  yield put({type: tLots.FETCH_CITIES});
   yield put({type: tLots.FETCH_CATEGORIES});
   // yield put(createNotification(makeNotification('success', 'Test message')));
   //yield put({type: tGeoData.FETCH_GEO_DATA});

@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     id: ownProps.location.state && ownProps.location.state.query && ownProps.location.state.query.id || false,
     categories: state.lots.categories,
     files: state.user.files,
+    cities: state.lots.cities,
   };
 };
 

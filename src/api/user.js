@@ -13,6 +13,12 @@ export function fetchProfile(token) {
   return get('Auth::profile', APIUrl + 'profile/', {'Authorization': 'Token '+token});
 }
 
+export function fetchUser(id) {
+  return get('Auth::profile', APIUrl + 'users/'+id);
+}
+
+
+
 export function fileUpload(data) {
   const body = new FormData();
   body.append('content', data);
@@ -108,5 +114,5 @@ export function updatePassword(params) {
 
 export default {signIn, fetchProfile, signUpCompany, signUpPerson,
                 signOut, restorePasswordSend, restorePasswordCheck, updatePassword,
-                test, test_auth, fileUpload,
+                test, test_auth, fileUpload, fetchUser,
                 updatePerson, updateCompany};

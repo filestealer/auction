@@ -13,6 +13,7 @@ const defaultState ={
   },
   modalActive: false,
   files: {},
+  users: {},
 };
 
 export function Reducers(state = defaultState, action) {
@@ -36,7 +37,47 @@ export function Reducers(state = defaultState, action) {
         // token: payload.token
 
       });
+
+    case t.FETCH_USER:
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: false
+      });
+    case t.FETCH_USER_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: false,
+        users: {...state.users, [payload.id]: payload},
+      });
+    case t.FETCH_USER_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: true,
+        // items: {...state.items, [payload.id]: payload},
+      });
+
     case t.SIGN_IN_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: true,
+        token: '',
+      });
+
+    case t.SIGN_UP:
+      return Object.assign({}, state, {
+        isFetching: true,
+        error: false,
+        email: payload.email,
+      });
+    case t.SIGN_UP_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        error: false,
+        // ...payload,
+        // token: payload.token
+
+      });
+    case t.SIGN_UP_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
         error: true,

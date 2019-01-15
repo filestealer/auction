@@ -1,67 +1,45 @@
 import { connect } from "react-redux";
-import { createRequest, createRequestPartnership, acceptBid, acceptPartnership } from "../actions";
+import { createRequest, createRequestPartnership, acceptBid, acceptPartnership, fetchItem } from "../actions";
 import Item from '../components/item';
+import {push} from "connected-react-router";
 
 // const Counter = ...
 
 const mapStateToProps = (state, ownProps) => {
   console.log('mapStateToProps LOT',state, ownProps);
 
-  let list = state.lots.list, item, categories, category_name;
-  if (list) {
-    item = list.filter((el) => {return el.id == ownProps.match.params.id})[0];
-    console.log(item);
-    if (item) {
-      categories = state.lots.categories;
-      category_name = categories.filter(el => { return el.id == item.request_category })[0];
-    }
+
+  let item_id = ownProps.match.params.id,
+      min_bid = {amount: ''},
+      item = state.lots.items[item_id] || {};
+
+  // if (item) {
+  //   categories = state.lots.categories;
+  //   category_name = categories.filter(el => { return el.id == item.request_category })[0];
+  // }
+
+  // let bids = state.lots.bids.filter(e => e.auction == item.id && item && item.initiator && item.initiator.id == state.user.profile.id);
+  if (item && item.bids && item.bids.length > 0) {
+    min_bid = item.bids.sort((a,b) => {
+      if (a.amount < b.amount) {
+        return -1;
+      }
+      if (a.amount > b.amount) {
+        return 1;
+      }
+      return 0;
+    })[0];
+  } else {
+    min_bid =  {amount: ''}
   }
 
-  let bids = state.lots.bids.filter(e => e.auction == item.id && item && item.initiator && item.initiator.id == state.user.profile.id);
+  let city = item.city && state.lots && state.lots.cities && state.lots.cities.length > 0 && state.lots.cities.filter(c => c.id == item.city)[0].name || '';
 
-  let min_bid = item.bids.sort((a,b) => {
-    if (a.amount < b.amount) {
-      return -1;
-    }
-    if (a.amount > b.amount) {
-      return 1;
-    }
-    return 0;
-  })[0];
-
-  let partnerships = (item && item.initiator && item.initiator.id == state.user.profile.id) ? item.partnerships : [];
-
-
-
-  // auction_duration: "2019-01-03T23:47:26+06:00"
-  // auction_type: 1
-  // bids: Array(1)
-  // 0: {amount: "150000.0000", user: 3, auction: 27, id: 15}
-  // length: 1
-  // __proto__: Array(0)
-  // chosen_bid: {amount: "150000.0000", user: 3, auction: 27, id: 15}
-  // contract_expiration_date: null
-  // created: "2018-12-27T23:47:26.795275+06:00"
-  // delivery_address: "Абая 23"
-  // delivery_date: "2018-12-28T12:00:00+06:00"
-  // delivery_frequency: null
-  // eds_required: false
-  // files: [{…}]
-  // id: 27
-  // initiator: {id: 2, email: "test@test.test", person: {…}, phone: "87071367581"}
-  // modified: "2018-12-27T23:48:58.648532+06:00"
-  // partners_waiting_time: null
-  // partnerships: []
-  // request_category: {id: 1, name: "Стройматериалы"}
-  // request_description: "Тест заявки"
-  // status: "active"
-
-
-  //ownProps.match.params
+  //let partnerships = (item && item.initiator && item.initiator.id == state.user.profile.id) ? item.partnerships : [];
   return {
-    auction_duration: item.auction_duration,
+    auction_duration: item.auction_duration || '',
     auction_type: item.auction_type || 1,
-    id: item.id || '',
+    id: item.id || ownProps.match.params.id || '',
     request_category: item.request_category || {name: ''},
     publish_date: item.created || '',
     description: item.request_description || '',
@@ -71,21 +49,21 @@ const mapStateToProps = (state, ownProps) => {
     status: item.status || '',
     initiator: item.initiator || {person: {name: ''}},
     user: state.user.profile,
-    partnerships,
+    partnerships: item.partnerships,
     bids: item.bids || [],
+    files: item.files || [],
     isMy: item && item.initiator && item.initiator.id === state.user.profile.id,
-    chosen_bid: item.chosen_bid,
-    volume: item.volume,
-    total_volume: item.total_volume,
-    measure: item.measure,
-    eds_required: item.eds_required,
-    city: item.city,
-    street: item.street,
-    building: item.building,
+    chosen_bid: item.chosen_bid  || '',
+    volume: item.volume  || '',
+    total_volume: item.total_volume  || '',
+    measure: item.measure  || '',
+    eds_required: item.eds_required  || '',
+    city: city || '',
+    street: item.street || '',
+    building: item.building || '',
     min_bid,
     // categories: categories || [],
     // category_name: category_name || '',
-
   };
 };
 
@@ -94,6 +72,8 @@ const mapDispatchToProps = (dispatch) => ({
   requestPartnership: (data) => dispatch(createRequestPartnership(data)),
   acceptPartnership: (data) => dispatch(acceptPartnership(data)),
   acceptBid: (data) => dispatch(acceptBid(data)),
+  reload: (id) => dispatch(fetchItem(id)),
+  openUser: (id) => dispatch(push('/users/'+id)),
 });
 
 export default connect(

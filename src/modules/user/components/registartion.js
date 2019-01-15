@@ -324,7 +324,22 @@ class Registration extends Component {
                       Город:
                     </div>
                     <div className={styles.input_box}>
-                      <input type="text" className={styles.name} name="city" value={user.company.city} onChange={(event) => this.handleCompanyInput(event)}/>
+                      <select
+                        style={{
+                          width: '100%',
+                          marginBottom: '15px',
+                        }}
+                        name={'city'}
+                        value={user.company.city}
+                        onChange={(event) => this.handleCompanyInput(event)}
+
+                      >
+                        <option value={'city'}>Выберите Город</option>
+                        {this.props.cities.map((e)=>
+                          <option key={e.id} value={e.id}>{e.name}</option>
+                        )}
+                      </select>
+                      {/*<input type="text" className={styles.name} name="city" value={user.company.city} onChange={(event) => this.handleCompanyInput(event)}/>*/}
                     </div>
 
                   </div>
@@ -364,7 +379,8 @@ class Registration extends Component {
                       БИН:
                     </div>
                     <div className={styles.input_box}>
-                      <input type="number" className={styles.name} name="bin" value={user.company.bin} onChange={(event) => this.handleCompanyInput(event)}/>
+                      <InputMask mask="999999999999" type="text" className={styles.name} name="bin" placeholder="" value={user.company.bin} onChange={(event) => this.handleCompanyInput(event)}/>
+                      {/*<input type="number" className={styles.name} name="bin" maxlength="12" value={user.company.bin} onChange={(event) => this.handleCompanyInput(event)}/>*/}
                     </div>
 
                   </div>

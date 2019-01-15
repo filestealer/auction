@@ -24,7 +24,6 @@ function* signIn(data) {
       localStorage.setItem('token', payload.token );
       yield put({type: t.HIDE_MODAL});
       yield put({type: t.FETCH_PROFILE});
-      yield put({type: tLots.FETCH_BIDS});
     } else {
       yield put({type: t.SIGN_IN_FAILURE, payload: payload});
       yield put(createNotification(makeNotification('error', 'Ошибка авторизации. Проверьте правильность заполненных данных')));
@@ -78,6 +77,10 @@ function* signUp(data) {
 
   user.phone = info.user.phone.replace(/[|&;_ $%@"<>()+,]/g, "").substr(1);
 
+  if (company.website && company.website.indexOf('http') < 0) {
+    company.website = 'http://'+company.website;
+  }
+
   let files = Object.values(state.user.files).map(e => e.id);
   let payload;
 
@@ -87,9 +90,12 @@ function* signUp(data) {
 
       if (payload && payload.id) {
         yield put({type: t.SIGN_UP_SUCCESS, payload});
+        yield put({type: t.SIGN_IN, payload: {email: user.email, password: user.password}});
         yield put({type: t.FILE_UPLOAD_CLEAR});
-        yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно. Можете авторизоваться.')));
+        yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно.')));
+        yield put(push('/'));
       } else {
+        yield put({type: t.SIGN_UP_FAILURE, payload});
         yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
       }
     } catch (error) {
@@ -101,9 +107,12 @@ function* signUp(data) {
       payload = yield API.signUpCompany({user: user, ...company, files});
       if (payload && payload.id) {
         yield put({type: t.SIGN_UP_SUCCESS, payload});
+        yield put({type: t.SIGN_IN, payload: {email: user.email, password: user.password}});
         yield put({type: t.FILE_UPLOAD_CLEAR});
-        yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно. Можете авторизоваться.')));
+        yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно.')));
+        yield put(push('/'));
       } else {
+        yield put({type: t.SIGN_UP_FAILURE, payload});
         yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
       }
     } catch (error) {
@@ -197,15 +206,17 @@ function* editProfile(data) {
 function* fetchProfile() {
   console.log('Fetch Profile');
   const state = yield select(), token = state.user.token;
+  console.log('fetch profile token', token);
 
   try {
     const payload = yield API.fetchProfile(token);
     if (payload && payload.id) {
       yield put({type: t.FETCH_PROFILE_SUCCESS, payload});
-      yield put({type: tLots.FETCH_BIDS});
       // yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно. Можете авторизоваться.')));
     } else {
       yield put(createNotification(makeNotification('error', 'Произошла ошибка в получении профиля. Проверьте заполненость полей.')));
+      yield put({type: t.FETCH_PROFILE_FAILURE});
+      localStorage.setItem('token', '');
     }
   } catch (error) {
     // informErrorInfo(error, 'Ошибка загрузки новостей');
@@ -213,6 +224,21 @@ function* fetchProfile() {
     localStorage.setItem('token', '');
   }
 }
+
+function* fetchUser(action) {
+  console.log('LOTS FetchList');
+  const state = yield select();
+  try {
+    const payload = yield API.fetchUser(action.payload);
+    yield put({type: t.FETCH_USER_SUCCESS, payload});
+  } catch (error) {
+    // informErrorInfo(error, 'Ошибка загрузки новостей');
+    yield put({type: t.FETCH_USER_FAILURE, payload: error});
+  }
+}
+
+
+
 
 function* openRegistration() {
   yield put(push('/registration/'));
@@ -256,6 +282,7 @@ export function* sagas() {
   yield takeEvery(t.OPEN_EDIT_PROFILE, openEditProfile);
   yield takeEvery(t.EDIT_PROFILE, editProfile);
   yield takeEvery(t.FILE_UPLOAD, fileUpload);
+  yield takeEvery(t.FETCH_USER, fetchUser);
   // yield takeEvery(FETCH_ITEM, fetchItem);
   // yield takeEvery(OPEN_SHOW_SCENE, openShowScene);
   // yield takeEvery(OPEN_EDIT_SCENE, openEditScene);

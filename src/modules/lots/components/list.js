@@ -4,44 +4,70 @@ import Header from '../../../components/header';
 import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
 import ListItem from './list_item';
+import Pagination from "react-js-pagination";
+import Calendar from "react-datepicker";
+import MaskedTextInput from "react-text-mask";
 
 
 class Lots extends Component {
   render() {
     return (
+
       <div>
         <div id="app">
           <Header />
           <TopBlock text="Заказы" />
         </div>
         <div className={styles.filter}>
-          <form method="get">
+          <div>
             <div className={styles.container}>
               <div className={styles.columns}>
                 <div className={styles.column + ' ' + styles.date}>
                   <div className={styles.label}>Дата доставки</div>
                   <div className={styles.input_row}>
                     <span>с</span>
-                    <input type="date" name="date_from" />
+                    <Calendar
+                      selected={this.props.delivery_date__gte}
+                      onChange={this.props.onChangeDateFrom}
+                      dateFormat={"dd MM yyyy"}
+                      customInput={
+                        <MaskedTextInput
+                          type="text"
+                          mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
+                        />
+                      }
+                    />
+
                   </div>
                   <div className={styles.input_row}>
-                    <span>с</span>
-                    <input type="date" name="date_to" />
+                    <span>по</span>
+                    <Calendar
+                      selected={this.props.delivery_date__lte}
+                      onChange={this.props.onChangeDateTo}
+                      dateFormat={"dd MM yyyy"}
+                      customInput={
+                        <MaskedTextInput
+                          type="text"
+                          mask={[/\d/, /\d/, ".", /\d/, /\d/, ".", /\d/, /\d/, /\d/, /\d/]}
+                        />
+                      }
+                    />
+
                   </div>
                 </div>
 
-                <div className={styles.column + ' ' + styles.order}>
-                  <div className={styles.label}>Номер заказа</div>
-                  <div className={styles.input_row}>
-                    <input type="text" name="lot_id" />
-                  </div>
-                  <a href="">
-                    <span>Найти</span>
-                  </a>
-                </div>
+                {/*<div className={styles.column + ' ' + styles.order}>*/}
+                  {/*<div className={styles.label}>Номер заказа</div>*/}
+                  {/*<div className={styles.input_row}>*/}
+                    {/*<input type="text" name="lot_id" />*/}
+                  {/*</div>*/}
+                  {/*<a href="">*/}
+                    {/*<span>Найти</span>*/}
+                  {/*</a>*/}
+                {/*</div>*/}
               </div>
             </div>
-          </form>
+          </div>
         </div>
         <div className={styles.lots_content}>
           <div className={styles.container}>
@@ -59,42 +85,34 @@ class Lots extends Component {
                   <td>Дата поставки</td>
                 </tr>
               </thead>
-              <tbody>
-              {this.props.list.map((item)=> <ListItem
-                id={item.id}
-                category={item.request_category}
-                publish_date={item.created}
-                description={item.request_description}
-                delivery_address={item.delivery_address}
-                expired_date={item.contract_expiration_date}
-                delivery_date={item.delivery_date}
-                city={item.city}
-                street={item.street}
-                building={item.building}
-                office={item.office}
-                onClick={()=>{this.props.openLot(item.id)}}
-                key={item.id}
-              />)}
-                {/*<tr>*/}
-                  {/*<td>*/}
-                    {/*<p>№ 00000696</p>*/}
-                    {/*<span className={styles.category}>Металлопродукция</span>*/}
-                    {/*<span className={styles.publishedon}>*/}
-                      {/*21:31 / 19.11.2018*/}
-                    {/*</span>*/}
-                  {/*</td>*/}
-                  {/*<td>*/}
-                    {/*<a href="">Трубы</a>*/}
-                  {/*</td>*/}
-                  {/*<td>*/}
-                    {/*Астана→Алматы*/}
-                    {/*<p>1 215.92 км</p>*/}
-                  {/*</td>*/}
-                  {/*<td />*/}
-                  {/*<td>20 Ноябрь</td>*/}
-                {/*</tr>*/}
-              </tbody>
+              {this.props.list && this.props.list.length > 0 ?
+                <tbody>
+                  {this.props.list.map((item)=> <ListItem
+                    id={item.id}
+                    category={item.request_category}
+                    publish_date={item.created}
+                    description={item.request_description}
+                    delivery_address={item.delivery_address}
+                    expired_date={item.contract_expiration_date}
+                    delivery_date={item.delivery_date}
+                    city={item.city && item.city.name || ''}
+                    street={item.street}
+                    building={item.building}
+                    office={item.office}
+                    onClick={()=>{this.props.openLot(item.id)}}
+                    key={item.id}
+                  />)}
+                </tbody>
+              : ''}
             </table>
+
+            <Pagination
+              activePage={this.props.page}
+              itemsCountPerPage={2}
+              totalItemsCount={this.props.count}
+              pageRangeDisplayed={5}
+              onChange={this.props.changePage}
+            />
           </div>
         </div>
         <Footer />

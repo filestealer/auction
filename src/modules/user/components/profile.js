@@ -5,6 +5,8 @@ import iconUserpic from '../../../../images/icon-userpic.png';
 import logo_text from '../../../../images/logo-text.png';
 import moment from 'moment';
 import FileUploader from '../../../components/file_uploader';
+import {ServerAddr} from "../../../config";
+import {statusLocale} from '../../../utils/locales';
 moment().format();
 
 class Profile extends Component {
@@ -97,11 +99,11 @@ class Profile extends Component {
                         </tr>
                         <tr>
                           <td>Баланс</td>
-                          <td>{this.props.profile.company.balance}</td>
+                          <td>{this.props.profile.company.balance.split('.')[0]}</td>
                         </tr>
                         <tr>
                           <td>Город</td>
-                          <td>{this.props.profile.company.city}</td>
+                          <td>{this.props.cities.filter(e => e.id == this.props.profile.company.city)[0].name}</td>
                         </tr>
                         <tr>
                           <td>Улица</td>
@@ -127,6 +129,14 @@ class Profile extends Component {
                           <td>Описание</td>
                           <td>{this.props.profile.company.description}</td>
                         </tr>
+                        {(this.props.profile.company.files.length > 0) ?
+                          <tr>
+                            <td>Прикрепленные файлы</td>
+                            <td>
+                              {this.props.profile.company.files.map((e,i) => <div key={i}><a href={ServerAddr + '' + e.content} target={"_blank"}>{e.content.split('/')[e.content.split('/').length -1]}</a></div>)}
+                            </td>
+                          </tr>
+                          : ''}
                       </tbody>
 
 
@@ -174,21 +184,21 @@ class Profile extends Component {
               <table>
                 <tbody>
                 {this.props.myList.map(e =>
-                  <tr key={e.id}>
-                    <td className={styles.status}>Активен</td>
-                    <td className={styles.left + ' ' + styles.info}>
+                  <tr key={e.id} onClick={() => this.props.openLot(e.id)}>
+                    <td className={styles.status}>{statusLocale[e.status]}</td>
+                    <td className={styles.left + ' ' + styles.info} onClick={() => this.props.openLot(e.id)}>
                       <p>
-                        {e.id}
+                        Лот № {e.id}
                       </p>
                       <span className={styles.category}>
                           {e.request_category.name}
                       </span>
                       <span className={styles.publishedon}>
-                        {moment(e.contract_expiration_date).format('DD.MM.YYY')}
+                        {moment(e.auction_duration).format('DD.MM.YYYY')}
                       </span>
                      </td>
                     <td className={styles.left + ' ' + styles.title}><a>{e.request_description}</a></td>
-                    <td>{e.partnerships && e.partnerships.length} предложений</td>
+                    <td> ставок {e.bids && e.bids.length || 0}  / предложений {e.partnerships && e.partnerships.length || 0} </td>
                   </tr>
                 )}
                 {/*<tr>*/}
@@ -215,18 +225,19 @@ class Profile extends Component {
             <div className={styles.requests}>
               <table>
                 <tbody>
+
                 {this.props.myBids.map(e =>
                   <tr key={e.id}>
-                    <td className={styles.status}>Активен</td>
-                    <td className={styles.left + ' ' + styles.info}>
+                    <td className={styles.status}>{statusLocale[e.status]}</td>
+                    <td className={styles.left + ' ' + styles.info} onClick={() => this.props.openLot(e.auction)}>
                       <p>
-                        {e.auction}
+                        Лот № {e.auction}
                       </p>
                       <span className={styles.category}>
                           {e.auction_info.request_category.name}
                       </span>
                       <span className={styles.publishedon}>
-                        {moment(e.auction_info.contract_expiration_date).format('DD.MM.YYY')}
+                        {moment(e.auction_info.contract_expiration_date).format('DD.MM.YYYY')}
                       </span>
                     </td>
                     <td className={styles.left + ' ' + styles.title}><a>{e.auction_info.request_description}</a></td>

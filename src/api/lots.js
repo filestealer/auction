@@ -3,12 +3,19 @@
 import {APIUrl} from '../config'
 import {post, get, postFiles, patch} from '../utils/net';
 import {unFormatPhone} from '../utils';
+import queryString from 'query-string';
 
-
-export function getList() {
+export function getList(payload) {
   console.log("API LOTS GETLIST");
-  return get('Auth::getList', APIUrl + 'auctions/', {});
+  let query = queryString.stringify(payload);
+  return get('Auth::getList', APIUrl + 'auctions/?'+query, {});
 }
+
+export function getItem(id, token) {
+  console.log("API LOTS GET_ITEM");
+  return get('Auth::getList', APIUrl + 'auctions/'+id+'/', (token ? {'Authorization': 'Token '+token} : {}));
+}
+
 
 export function getBids() {
   console.log("API LOTS getBids");
@@ -18,6 +25,11 @@ export function getBids() {
 export function getCategories() {
   console.log("API LOTS getBids");
   return get('Auth::getBids', APIUrl + 'categories/', {});
+}
+
+export function getCities() {
+  console.log("API LOTS getBids");
+  return get('Auth::getBids', APIUrl + 'cities/', {});
 }
 
 export function acceptBid(data) {
@@ -109,4 +121,8 @@ export function testFileUpload(data) {
 
 
 
-export default {getList, createLot, createBid, getBids, getCategories, testFileUpload, createRequestPartnership, acceptPartnership, acceptBid};
+export default {
+  getList, createLot, createBid, getBids, getCategories,
+  testFileUpload, createRequestPartnership, acceptPartnership, acceptBid, getCities,
+  getItem
+};

@@ -27,6 +27,7 @@ class AuctionReg extends Component {
       delivery_date_day: new Date(),
       delivery_date_time: '',
       ecp: '',
+      volume: '',
       joint_auction: false,
       formErrors: {
         request_category: '',
@@ -41,6 +42,7 @@ class AuctionReg extends Component {
         delivery_date_time: '',
         file: '',
         city: '',
+        volume: '',
       },
       cityValid: false,
       request_categoryValid: false,
@@ -54,7 +56,8 @@ class AuctionReg extends Component {
       auction_durationValid: false,
       fileValid: true,
       time_delayValid: false,
-      formValid: false
+      formValid: false,
+      volumeValid: false,
     };
     console.log(this.props, 'this.props::auction_reg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
   }
@@ -80,6 +83,8 @@ class AuctionReg extends Component {
     this.validateField('city', this.state.city);
     console.log(this.state.city);
     this.validateField('auction_duration', this.state.auction_duration);
+    console.log(this.state.auction_duration);
+    this.validateField('volume', this.state.volume);
     console.log(this.state.auction_duration);
 
     if (!this.state.formValid) {
@@ -120,6 +125,7 @@ class AuctionReg extends Component {
     let cityValid = this.state.cityValid;
     let time_delayValid = this.state.time_delayValid;
     let fileValid = this.state.fileValid;
+    let volumeValid = this.state.volumeValid;
 
     switch(fieldName) {
       case 'request_category':
@@ -138,6 +144,10 @@ class AuctionReg extends Component {
         cityValid = value.length >= 1;
         fieldValidationErrors.city = cityValid ? '' : ' is invalid';
         break;
+      case 'volume':
+        volumeValid = value.length >= 1;
+        fieldValidationErrors.volume = volumeValid ? '' : ' is invalid';
+        break;
       case 'request_description':
         request_descriptionValid = value.length >= 1;
         fieldValidationErrors.request_description = request_descriptionValid ? '' : ' is invalid';
@@ -155,6 +165,7 @@ class AuctionReg extends Component {
       streetValid,
       cityValid,
       time_delayValid,
+      volumeValid,
 
     }, this.validateForm);
   };
@@ -251,9 +262,24 @@ class AuctionReg extends Component {
               <div className={styles.fields}>
                 <div className={styles.order_address}>
                   <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.city)]}>
-                    Город:
-                    <input type="text" data-counter="1" name="city" onChange={(event) => this.handleUserInput(event)}
-                           value={state.city}/>
+                    {/*Город:*/}
+                    <select
+                      style={{
+                        width: '100%',
+                        marginBottom: '15px',
+                      }}
+                      name={'city'}
+                      value={state.city}
+                      onChange={(event) => this.handleUserInput(event)}
+
+                    >
+                      <option value={'city'}>Выберите Город</option>
+                      {this.props.cities.map((e)=>
+                        <option key={e.id} value={e.id}>{e.name}</option>
+                      )}
+                    </select>
+                    {/*<input type="text" data-counter="1" name="city" onChange={(event) => this.handleUserInput(event)}*/}
+                           {/*value={state.city}/>*/}
                   </div>
                   <div className={styles.label + ' ' + styles[this.errorClass(this.state.formErrors.street)]}>
                     Улица:
@@ -331,6 +357,7 @@ class AuctionReg extends Component {
                 </div>
                 <br/>
                 <div className={styles.fields}>
+                  <div className={styles[this.errorClass(this.state.formErrors.volume)]}>
                   <div className={styles.label}>
                     Объем поставки:
                     <input
@@ -340,7 +367,7 @@ class AuctionReg extends Component {
                       onChange={(event) => this.handleUserInput(event)}
                       value={state.volume}
                     />
-
+                  </div>
                   </div>
                 </div>
               </div>

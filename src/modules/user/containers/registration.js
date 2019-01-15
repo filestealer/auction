@@ -7,6 +7,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
   return {
     counter: state.counter,
     files: state.user.files,
+    cities: state.lots.cities || [],
   };
 };
 

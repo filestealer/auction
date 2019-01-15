@@ -6,6 +6,7 @@ import Header from '../../../components/header';
 import Footer from '../../../components/footer';
 import TopBlock from '../../../components/top_block';
 import moment from 'moment';
+import {ServerAddr} from '../../../config'
 
 import {statusLocale} from '../../../utils/locales';
 moment().format();
@@ -29,6 +30,10 @@ class Lot extends Component {
       file: {},
     };
   }
+
+  // componentDidMount(state,props) {
+  //   this.props.reload(this.props.id);
+  // }
 
   request = () => {
     this.props.request({price: this.state.price, id: this.props.id, file: this.state.file});
@@ -68,7 +73,8 @@ class Lot extends Component {
         </div>
         <div className={styles.lot_content}>
           <div className={styles.container}>
-            <table style={{margin: '0 auto', maxWidth: '800px', width: '500px', td: {padding: '10px'}}}>
+            {this.props.description ?
+              <table style={{margin: '0 auto', maxWidth: '800px', width: '500px', td: {padding: '10px'}}}>
               <tbody>
                 <tr>
                   <td><strong>Категория</strong></td>
@@ -79,9 +85,17 @@ class Lot extends Component {
                   <td>{this.props.description}</td>
                 </tr>
                 <tr>
-                  <td><strong>Объем</strong></td>
+                  <td><strong>Общий объем</strong></td>
                   <td>{this.props.total_volume}</td>
                 </tr>
+                {this.props.isMy ?
+                  <tr>
+                    <td><strong>Мой объем</strong></td>
+                    <td>{this.props.volume.split('.')[0]}</td>
+                  </tr>
+
+                  :'' }
+
                 <tr>
                   <td><strong>Дата поставки</strong></td>
                   <td>{moment(this.props.delivery_date).format('DD-MM-YYYY HH:mm')}</td>
@@ -96,7 +110,7 @@ class Lot extends Component {
                 </tr>
                 <tr>
                   <td><strong>Статус</strong></td>
-                  <td>{statusLocale[this.props.status]}</td>
+                  <td>{this.props.chosen_bid ? statusLocale['closed'] : statusLocale[this.props.status]}</td>
                 </tr>
                 <tr>
                   <td><strong>Создан</strong></td>
@@ -104,21 +118,30 @@ class Lot extends Component {
                 </tr>
                 <tr>
                   <td><strong>Окончание</strong></td>
-                  <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
+                  <td>{moment(this.props.auction_duration).format('DD-MM-YYYY')}</td>
                 </tr>
                 <tr>
-                  <td><strong>Минимальная сумма</strong></td>
-                  <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
+                  <td><strong>Минимальная ставка</strong></td>
+                  <td>{this.props.min_bid && this.props.min_bid.amount.split('.')[0] || 'ставок нет'}</td>
                 </tr>
                 <tr>
                   <td><strong>Количество заявок</strong></td>
-                  <td>{moment(this.props.delivery_date).format('DD-MM-YYYY')}</td>
+                  <td>{this.props.bids.length}</td>
                 </tr>
+                {(this.props.files.length > 0) ?
+                <tr>
+                  <td><strong>Прикрепленные файлы</strong></td>
+                  <td>
+                    {this.props.files.map((e,i) => <div key={i}><a href={ServerAddr + '' + e.content} target={"_blank"}>{e.content.split('/')[e.content.split('/').length -1]}</a></div>)}
+                  </td>
+                </tr>
+                : ''}
 
               </tbody>
 
 
             </table>
+            : ''}
           </div>
         </div>
 
@@ -202,20 +225,22 @@ class Lot extends Component {
               {/*</div>*/}
             </div>
             {!this.props.isMy ? <div>
-            <div className={styles.make_offer}>
-              <a className={styles['green-button']} onClick={this.openRequestPartnership}>
-                <span>Совместная покупка</span>
-              </a>
-            </div>
+              {(this.props.bids.length == 0) ? <div>
+                <div className={styles.make_offer}>
+                  <a className={styles['green-button']} onClick={this.openRequestPartnership}>
+                    <span>Совместная покупка</span>
+                  </a>
+                </div>
 
-            <div className={styles.make_offer_form + (this.state.openRequestPartnership ? ' ' + styles.active : '')}>
+                <div className={styles.make_offer_form + (this.state.openRequestPartnership ? ' ' + styles.active : '')}>
 
-              <input placeholder={'Ваш объем'} type="text" name="volume" value={this.state.volume} onChange={this.onChange} />
-              {/*<br/>*/}
-              {/*<input placeholder={'Сообщение'} type="text" name="description" value={this.state.description} onChange={this.onChange} />*/}
-              {/*<br/>*/}
-              <button onClick={this.requestPartnership}>Отправить</button>
-            </div>
+                  <input placeholder={'Ваш объем'} type="text" name="volume" value={this.state.volume} onChange={this.onChange} />
+                  {/*<br/>*/}
+                  {/*<input placeholder={'Сообщение'} type="text" name="description" value={this.state.description} onChange={this.onChange} />*/}
+                  {/*<br/>*/}
+                  <button onClick={this.requestPartnership}>Отправить</button>
+                </div>
+              </div>: '' }
             <div className={styles.make_offer}>
               <a className={styles['green-button']} onClick={this.openRequest}>
                 <span>Сделать предложение</span>
@@ -246,8 +271,8 @@ class Lot extends Component {
                     <td />
                   </tr>
                   {this.props.partnerships.map((e,i)=> { return <tr key={i}>
-                    <td>{e.volume}</td>
-                    <td>{e.partner}</td>
+                    <td>{e.volume.split('.')[0]}</td>
+                    <td onClick={()=>this.props.openUser(e.partner)}>{e.partner}</td>
                     <td>{e.confirmed ? 'Предложение принято' : <div className={styles.newButton} onClick={()=> this.props.acceptPartnership({partnership: e.id, auction: this.props.id})}>Принять</div>}</td>
                     <td />
                     <td />
@@ -270,7 +295,7 @@ class Lot extends Component {
                   </tr>
                   {this.props.bids.map((e,i)=> { return <tr key={i}>
                     <td>{e.amount.split('.')[0]}</td>
-                    <td>{e.user}</td>
+                    <td onClick={()=>this.props.openUser(e.user && e.user.id)}>{e.user && e.user.company && e.user.company.name || e.user && e.user.person && e.user.person.name}</td>
                     <td>{(this.props.chosen_bid && this.props.chosen_bid.id === e.id)  ? 'Ставка принята': (this.props.chosen_bid && this.props.chosen_bid.id ? '' : <div className={styles.newButton} onClick={()=> this.props.acceptBid({bid: e.id, auction: this.props.id})}>Принять</div>) }
                     </td>
                     <td />
