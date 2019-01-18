@@ -54,6 +54,44 @@ class Lots extends Component {
                     />
 
                   </div>
+                  <div>
+                    <select
+                      style={{
+                        width: '100%',
+                        marginBottom: '15px',
+                      }}
+                      name={'request_category'}
+                      value={this.props.request_category || ''}
+                      onChange={(event) => this.props.onChangeFilter(event)}
+
+                    >
+                      <option value={''}>Выберите категорию</option>
+                      {this.props.categories.map((e)=>
+                        <option key={e.id} value={e.id}>{e.name}</option>
+                      )}
+                    </select>
+                  </div>
+                  <div>
+                    <select
+                      style={{
+                        width: '100%',
+                        marginBottom: '15px',
+                      }}
+                      name={'city'}
+                      value={this.props.city || ''}
+                      onChange={(event) => this.props.onChangeFilter(event)}
+
+                    >
+                      <option value={''}>Выберите город</option>
+                      {this.props.cities.map((e)=>
+                        <option key={e.id} value={e.id}>{e.name}</option>
+                      )}
+                    </select>
+                  </div>
+                  <div>
+                    <span>По тексту</span>
+                    <input type="text" name={"request_description__icontains"} value={this.props.request_description__icontains} onChange={e => this.props.onChangeFilter(e)}/>
+                  </div>
                 </div>
 
                 {/*<div className={styles.column + ' ' + styles.order}>*/}

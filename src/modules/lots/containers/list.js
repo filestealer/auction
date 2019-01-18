@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import {fetchList, openLots, openLot, changeDate, changePage, filterList} from "../actions";
+import {fetchList, openLots, openLot, changeDate, changePage, filterList, changeFilter} from "../actions";
 import List from '../components/list';
 
 import moment from 'moment';
@@ -20,19 +20,27 @@ const mapStateToProps = (state /*, ownProps*/) => {
     list: list || [],
     cities: lots.cities,
     count: lots.count,
+    city: lots.city,
+
     page: lots.page,
     delivery_date__gte: lots.delivery_date__gte,
     delivery_date__lte: lots.delivery_date__lte,
+    request_category: lots.request_category,
+    request_description__icontains: lots.request_description__icontains,
+    categories: lots.categories,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   openLot: (id) => dispatch(openLot(id)),
   onChangeDateFrom: (e) => {
-    dispatch(changeDate({delivery_date__gte: moment(e).format('YYYY-MM-DD HH:mm:ssZ')}));
+    dispatch(changeFilter({delivery_date__gte: moment(e).format('YYYY-MM-DD HH:mm:ssZ')}));
   },
   onChangeDateTo: (e) => {
-    dispatch(changeDate({delivery_date__lte: moment(e).format('YYYY-MM-DD HH:mm:ssZ')}));
+    dispatch(changeFilter({delivery_date__lte: moment(e).format('YYYY-MM-DD HH:mm:ssZ')}));
+  },
+  onChangeFilter: (e) => {
+    dispatch(changeFilter({[e.target.name]: e.target.value}));
   },
   filter: (data) => {
     dispatch(filterList(data));

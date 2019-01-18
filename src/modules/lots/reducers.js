@@ -18,6 +18,9 @@ const defaultState ={
   page: 1,
   delivery_date__gte: moment().format('YYYY-MM-DD HH:mm:ssZ'),
   delivery_date__lte: moment().add(10, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
+  request_category: null,
+  city: null,
+  request_description__icontains: null,
 };
 
 export function lotsReducers(state = defaultState, action) {
@@ -34,6 +37,9 @@ export function lotsReducers(state = defaultState, action) {
         page: payload.page,
         delivery_date__gte: payload.delivery_date__gte || moment().format('YYYY-MM-DD HH:mm:ssZ'),
         delivery_date__lte: payload.delivery_date__lte || moment().add(365, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
+        request_category: payload.request_category || '',
+        city: payload.city || '',
+        request_description__icontains: payload.request_description__icontains || '',
       });
     case t.FETCH_LIST_SUCCESS:
       return Object.assign({}, state, {
@@ -165,6 +171,11 @@ export function lotsReducers(state = defaultState, action) {
         // list: [],
       });
     case t.CHANGE_DATE:
+      return Object.assign({}, state, {
+        ...payload
+        // list: [],
+      });
+    case t.CHANGE_FILTER:
       return Object.assign({}, state, {
         ...payload
         // list: [],

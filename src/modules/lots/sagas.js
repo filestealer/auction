@@ -244,6 +244,38 @@ function* changeDate(action) {
 
 }
 
+function* changeFilter(action) {
+  const state = yield select(), lots = state.lots;
+
+  // let query = {
+  //   page: lots.page || 1,
+  //   delivery_date__gte: lots.delivery_date__gte || moment().format('YYYY-MM-DD HH:mm:ssZ'),
+  //   delivery_date__lte: lots.delivery_date__lte || moment().add(365, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
+  //   ...action.payload
+  // };
+  let queryHash = {};
+  if (lots.page) {
+    queryHash['page'] = lots.page || 1;
+  }
+  if (lots.delivery_date__lte) {
+    queryHash['delivery_date__lte'] = lots.delivery_date__lte || moment().add(365, 'days').format('YYYY-MM-DD HH:mm:ssZ');
+  }
+  if (lots.delivery_date__gte) {
+    queryHash['delivery_date__gte'] = lots.delivery_date__gte || moment().format('YYYY-MM-DD HH:mm:ssZ');
+  }
+  if (lots.request_category) {
+    queryHash['request_category'] = lots.request_category;
+  }
+  if (lots.request_description__icontains) {
+    queryHash['request_description__icontains'] = lots.request_description__icontains;
+  }
+  if (lots.city) {
+    queryHash['city'] = lots.city;
+  }
+  yield put(push('/lots/?'+queryString.stringify(queryHash)));
+
+}
+
 function* changePage(action) {
   const state = yield select(), lots = state.lots;
 
@@ -269,11 +301,31 @@ function* changeLocation(action) {
 
     console.log(queryString.parse(search));
     if (pathname === '/lots/') {
-      yield put({type: t.FETCH_LIST, payload: {
-        page: query.page || 1,
-        delivery_date__gte: query.delivery_date__gte || moment().format('YYYY-MM-DD HH:mm:ssZ'),
-        delivery_date__lte: query.delivery_date__lte || moment().add(365, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
-      }})
+
+      let queryHash = {
+        // page: query.page || 1,
+        // delivery_date__gte: query.delivery_date__gte || moment().format('YYYY-MM-DD HH:mm:ssZ'),
+        // delivery_date__lte: query.delivery_date__lte || moment().add(365, 'days').format('YYYY-MM-DD HH:mm:ssZ'),
+      };
+      if (query.page) {
+        queryHash['page'] = query.page || 1;
+      }
+      if (query.delivery_date__lte) {
+        queryHash['delivery_date__lte'] = query.delivery_date__lte || moment().add(365, 'days').format('YYYY-MM-DD HH:mm:ssZ');
+      }
+      if (query.delivery_date__gte) {
+        queryHash['delivery_date__gte'] = query.delivery_date__gte || moment().format('YYYY-MM-DD HH:mm:ssZ');
+      }
+      if (query.request_category) {
+        queryHash['request_category'] = query.request_category;
+      }
+      if (query.request_description__icontains) {
+        queryHash['request_description__icontains'] = query.request_description__icontains;
+      }
+      if (query.city) {
+        queryHash['city'] = query.city;
+      }
+      yield put({type: t.FETCH_LIST, payload: queryHash});
     }
 
     if (pathname.indexOf('/lot/') === 0) {
@@ -304,6 +356,7 @@ export function* sagas() {
   console.log('LOTS SAGAS');
   yield takeEvery(t.FETCH_LIST, fetchList);
   yield takeEvery(t.CHANGE_DATE, changeDate);
+  yield takeEvery(t.CHANGE_FILTER, changeFilter);
   yield takeEvery(t.CHANGE_PAGE, changePage);
   yield takeEvery(t.FILTER_LIST, fetchList);
   yield takeEvery(t.FETCH_ITEM, fetchItem);

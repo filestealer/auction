@@ -35,6 +35,10 @@ export function acceptBid(data) {
 export function changeDate(payload) {
   return {type: t.CHANGE_DATE, payload}
 }
+export function changeFilter(payload) {
+  return {type: t.CHANGE_FILTER, payload}
+}
+
 export function changePage(payload) {
   return {type: t.CHANGE_PAGE, payload}
 }
@@ -68,5 +72,5 @@ export function createLot(data) {
 // noinspection JSUnusedGlobalSymbols
 export default {
   fetchList, openLots, createLot, openLot, openCreateLot, createRequest, fetchBids, createRequestPartnership, acceptBid,
-  acceptPartnership, fetchItem, changeDate,
+  acceptPartnership, fetchItem, changeDate, changeFilter
 };
