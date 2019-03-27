@@ -64,8 +64,6 @@ export function updatePerson(payload, id, token) {
 }
 
 export function updateCompany(payload, id, token) {
-  debugger;
-
   return patch('Auth::reg', APIUrl + 'companies/'+id+'/', {
     ...payload,
   },{'Authorization': 'Token '+token});

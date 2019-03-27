@@ -122,17 +122,17 @@ class Lot extends Component {
                 </tr>
                 <tr>
                   <td><strong>Минимальная ставка</strong></td>
-                  <td>{this.props.min_bid && this.props.min_bid.amount.split('.')[0] || 'ставок нет'}</td>
+                  <td>{this.props.min_bid_amount || 'ставок нет'}</td>
                 </tr>
                 <tr>
                   <td><strong>Количество заявок</strong></td>
-                  <td>{this.props.bids.length}</td>
+                  <td>{this.props.bids_count || 0}</td>
                 </tr>
                 {(this.props.files.length > 0) ?
                 <tr>
                   <td><strong>Прикрепленные файлы</strong></td>
                   <td>
-                    {this.props.files.map((e,i) => <div key={i}><a href={ServerAddr + '' + e.content} target={"_blank"}>{e.content.split('/')[e.content.split('/').length -1]}</a></div>)}
+                    {this.props.files.map((e,i) => <div key={i}><a href={e.content} target={"_blank"}>{decodeURI(e.content).split('/').last()}</a></div>)}
                   </td>
                 </tr>
                 : ''}
@@ -297,6 +297,11 @@ class Lot extends Component {
                     <td>{e.amount.split('.')[0]}</td>
                     <td onClick={()=>this.props.openUser(e.user && e.user.id)}>{e.user && e.user.company && e.user.company.name || e.user && e.user.person && e.user.person.name}</td>
                     <td>{(this.props.chosen_bid && this.props.chosen_bid.id === e.id)  ? 'Ставка принята': (this.props.chosen_bid && this.props.chosen_bid.id ? '' : <div className={styles.newButton} onClick={()=> this.props.acceptBid({bid: e.id, auction: this.props.id})}>Принять</div>) }
+                    </td>
+                    <td>{
+                      (this.props.chosen_bid && this.props.chosen_bid.id === e.id)  ?
+                        <button className={styles.newButton} onClick={()=>this.props.openPopup()}>Подписать</button> :
+                        '' }
                     </td>
                     <td />
                     <td />

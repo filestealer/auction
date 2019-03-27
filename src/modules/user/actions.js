@@ -24,6 +24,15 @@ export function openEditProfile() {
 export function editProfile(payload) {
   return {type: t.EDIT_PROFILE, payload}
 }
+export function editProfilePopup(payload) {
+  return {type: t.EDIT_PROFILE_POPUP, payload}
+}
+export function openPopup() {
+  return {type: t.SHOW_POPUP}
+}
+export function hidePopup() {
+  return {type: t.HIDE_POPUP}
+}
 
 export function showModal() {
   return {type: t.SHOW_MODAL}
@@ -47,5 +56,6 @@ export function deleteFile(payload) {
 
 // noinspection JSUnusedGlobalSymbols
 export default {
-  signIn, signOut, fetchProfile, openRegistration, signUp, openProfile, showModal, hideModal, fileUpload,deleteFile, openEditProfile
+  signIn, signOut, fetchProfile, openRegistration, signUp, openProfile, showModal, hideModal, fileUpload,deleteFile, openEditProfile,
+  openPopup, hidePopup, editProfilePopup,
 };

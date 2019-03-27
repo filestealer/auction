@@ -14,6 +14,7 @@ const defaultState ={
   modalActive: false,
   files: {},
   users: {},
+  popupActive: false,
 };
 
 export function Reducers(state = defaultState, action) {
@@ -147,6 +148,14 @@ export function Reducers(state = defaultState, action) {
     case t.HIDE_MODAL:
       return Object.assign({}, state, {
         modalActive: false
+      });
+    case t.SHOW_POPUP:
+      return Object.assign({}, state, {
+        popupActive: true
+      });
+    case t.HIDE_POPUP:
+      return Object.assign({}, state, {
+        popupActive: false
       });
 
 

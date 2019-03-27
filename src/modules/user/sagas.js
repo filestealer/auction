@@ -67,13 +67,16 @@ function* localAuth(data) {
 function* signUp(data) {
   const state = yield select();
   let info = data.payload,
-      user = info.user,
+      user = {...info.user},
       type = info.type,
       company = info.company,
       person = info.person;
-    person['street'] = 'test';
-    // company['address'] = 'test';
-    person['last_name'] = 'test';
+    // person['street'] = 'test';
+    company['description'] = 'test';
+    company['balance'] = 1000;
+    person['balance'] = 1000;
+    company['website'] = 'http://google.com';
+    // person['last_name'] = 'test';
 
   user.phone = info.user.phone.replace(/[|&;_ $%@"<>()+,]/g, "").substr(1);
 
@@ -95,8 +98,14 @@ function* signUp(data) {
         yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно.')));
         yield put(push('/'));
       } else {
-        yield put({type: t.SIGN_UP_FAILURE, payload});
-        yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+        if (payload[0] && payload[0] === "Email is already registered") {
+          yield put({type: t.SIGN_UP_FAILURE, payload});
+          yield put(createNotification(makeNotification('error', 'Данный Email уже используется.')));
+        } else {
+
+          yield put({type: t.SIGN_UP_FAILURE, payload});
+          yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+        }
       }
     } catch (error) {
       yield put({type: t.SIGN_UP_FAILURE, payload: error});
@@ -112,8 +121,14 @@ function* signUp(data) {
         yield put(createNotification(makeNotification('success', 'Регистрация прошла успешно.')));
         yield put(push('/'));
       } else {
-        yield put({type: t.SIGN_UP_FAILURE, payload});
-        yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+        if (payload[0] && payload[0] === "Email is already registered") {
+          yield put({type: t.SIGN_UP_FAILURE, payload});
+          yield put(createNotification(makeNotification('error', 'Данный Email уже используется.')));
+        } else {
+
+          yield put({type: t.SIGN_UP_FAILURE, payload});
+          yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+        }
       }
     } catch (error) {
       yield put({type: t.SIGN_UP_FAILURE, payload: error});
@@ -126,12 +141,13 @@ function* signUp(data) {
 function* editProfile(data) {
   const state = yield select();
 
-  let info = data.payload,
+  let info = {...data.payload},
       // user = info.user,
-      isPerson = info.isPerson,
+      isPerson = !!state.user.profile.person,
       company = info.company,
       person = info.person,
-      token = state.user.token;
+      token = state.user.token,
+      id = state.user.profile.person && state.user.profile.person.id || state.user.profile.company && state.user.profile.company.id;
 
 
   info.phone = info.phone.replace(/[|&;_ $%@"<>()+,]/g, "").substr(1);
@@ -146,7 +162,8 @@ function* editProfile(data) {
       // person['last_name'] = 'test';
 
       let postObject = {
-        name: person.name,
+
+        ...person,
         // name: company.name,
         // office: company.office,
         // city: company.city,
@@ -154,10 +171,10 @@ function* editProfile(data) {
         // building: company.building,
         // balance: company.balance,
         // website: company.website,
-        files: person.files.map(e => e.id),
+        // files: person.files.map(e => e.id),
       };
 
-      payload = yield API.updatePerson(postObject, person.id, token);
+      payload = yield API.updatePerson(postObject,id, token);
 
       if (payload && payload.id) {
         yield put({type: t.EDIT_PROFILE_SUCCESS, payload});
@@ -174,20 +191,107 @@ function* editProfile(data) {
     try {
 
       let postObject = {
-        bin: company.bin,
-        name: company.name,
-        office: company.office,
-        city: company.city,
-        street: company.street,
-        building: company.building,
-        balance: company.balance,
-        website: company.website,
-        files: company.files.map(e => e.id),
+
+        ...company,
+        // bin: company.bin,
+        // name: company.name,
+        // office: company.office,
+        // city: company.city,
+        // street: company.street,
+        // building: company.building,
+        // balance: company.balance,
+        // website: company.website,
+        // files: company.files.map(e => e.id),
       };
-      payload = yield API.updateCompany(postObject, company.id, token);
+      payload = yield API.updateCompany(postObject, id, token);
       if (payload && payload.id) {
         yield put({type: t.EDIT_PROFILE_SUCCESS, payload});
         yield put({type: t.FETCH_PROFILE});
+        // yield put({type: t.FILE_UPLOAD_CLEAR});
+        yield put(createNotification(makeNotification('success', 'Профиль обновлен.')));
+      } else {
+        yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+      }
+    } catch (error) {
+      yield put({type: t.EDIT_PROFILE_FAILURE, payload: error});
+      yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+    }
+  }
+}
+
+function* editProfilePopup(data) {
+  const state = yield select();
+
+  let info = {...data.payload},
+      // user = info.user,
+      isPerson = !!state.user.profile.person,
+      company = info.company,
+      person = info.person,
+      token = state.user.token,
+      id = state.user.profile.person && state.user.profile.person.id || state.user.profile.company && state.user.profile.company.id;
+
+
+  info.phone = info.phone.replace(/[|&;_ $%@"<>()+,]/g, "").substr(1);
+
+  // let files = Object.values(state.user.files).map(e => e.id);
+  let payload;
+
+  if (isPerson) {
+    try {
+      // person['street'] = 'test';
+      // company['address'] = 'test';
+      // person['last_name'] = 'test';
+
+      let postObject = {
+
+        ...person,
+        // name: company.name,
+        // office: company.office,
+        // city: company.city,
+        // street: company.street,
+        // building: company.building,
+        // balance: company.balance,
+        // website: company.website,
+        // files: person.files.map(e => e.id),
+        files: []
+      };
+
+      payload = yield API.updatePerson(postObject,id, token);
+
+      if (payload && payload.id) {
+        yield put({type: t.EDIT_PROFILE_SUCCESS, payload});
+        // yield put({type: t.FILE_UPLOAD_CLEAR});
+        yield put(createNotification(makeNotification('success', 'Профиль обновлен.')));
+        yield put({type: t.HIDE_POPUP});
+      } else {
+        yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+      }
+    } catch (error) {
+      yield put({type: t.EDIT_PROFILE_FAILURE, payload: error});
+      yield put(createNotification(makeNotification('error', 'Произошла ошибка. Проверьте заполненость полей.')));
+    }
+  } else {
+    try {
+
+      let postObject = {
+
+        ...company,
+        // bin: company.bin,
+        // name: company.name,
+        // office: company.office,Пи
+        // city: company.city,
+        // street: company.street,
+        // building: company.building,
+        // balance: company.balance,
+        // website: company.website,
+        // files: company.files.map(e => e.id),
+        files: []
+      };
+      payload = yield API.updateCompany(postObject, id, token);
+      if (payload && payload.id) {
+        yield put({type: t.EDIT_PROFILE_SUCCESS, payload});
+        yield put({type: t.FETCH_PROFILE});
+        yield put({type: t.HIDE_POPUP});
         // yield put({type: t.FILE_UPLOAD_CLEAR});
         yield put(createNotification(makeNotification('success', 'Профиль обновлен.')));
       } else {
@@ -281,6 +385,7 @@ export function* sagas() {
   yield takeEvery(t.LOCAL_AUTH, localAuth);
   yield takeEvery(t.OPEN_EDIT_PROFILE, openEditProfile);
   yield takeEvery(t.EDIT_PROFILE, editProfile);
+  yield takeEvery(t.EDIT_PROFILE_POPUP, editProfilePopup);
   yield takeEvery(t.FILE_UPLOAD, fileUpload);
   yield takeEvery(t.FETCH_USER, fetchUser);
   // yield takeEvery(FETCH_ITEM, fetchItem);

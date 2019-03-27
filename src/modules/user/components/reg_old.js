@@ -49,6 +49,7 @@ class Registration extends Component {
       user: {
         email: '',
         password: '',
+        password_confirmation: '',
         phone: '',
         file: '',
       },
@@ -236,24 +237,24 @@ class Registration extends Component {
     console.log(type, 'TYPE!!!');
     if (type == 'person') {
       this.setState({formValid:
-          this.state.emailValid
-          && this.state.passwordValid
-          && this.state.phoneValid
+        this.state.emailValid
+        && this.state.passwordValid
+        && this.state.phoneValid
       });
     }
 
     else {
       this.setState({formValid:
-          this.state.emailValid
-          && this.state.passwordValid
-          && this.state.binValid
-          && this.state.websiteValid
-          && this.state.phoneValid
-          && this.state.fileValid
-          && this.state.streetValid
-          && this.state.officeValid
-          && this.state.buildingValid
-          && this.state.cityValid
+        this.state.emailValid
+        && this.state.passwordValid
+        && this.state.binValid
+        && this.state.websiteValid
+        && this.state.phoneValid
+        && this.state.fileValid
+        && this.state.streetValid
+        && this.state.officeValid
+        && this.state.buildingValid
+        && this.state.cityValid
       });
     }
 
@@ -280,34 +281,44 @@ class Registration extends Component {
               </div>
             </div>
 
-              <div className={styles.registaer_content}>
-                <div className={styles.mail + ' ' + styles.input_block + ' ' +(this.state.emailValid ? '' : styles[this.errorClass(this.state.formErrors.user.email)] ) }>
-                  <div className={styles.label}>
-                    Электронная почта:
-                  </div>
-                  <div className={styles.input_box}>
-                    <input type="email" value={user.user.email} name="email" placeholder="mail@example.com" onChange={(event) => this.handleUserInput(event)}/>
-                    <span>
+            <div className={styles.registaer_content}>
+              <div className={styles.mail + ' ' + styles.input_block + ' ' +(this.state.emailValid ? '' : styles[this.errorClass(this.state.formErrors.user.email)] ) }>
+                <div className={styles.label}>
+                  Электронная почта:
+                </div>
+                <div className={styles.input_box}>
+                  <input type="email" value={user.user.email} name="email" placeholder="mail@example.com" onChange={(event) => this.handleUserInput(event)}/>
+                  <span>
                       <strong>
                         Обязательно проверьте e-mail адрес!
                       </strong>
                         На данный адрес будет выслана ссылка для подтверждения регистрации.
                     </span>
-                  </div>
-
                 </div>
 
-                <div className={styles.mail + ' ' + styles.input_block + ' ' +(this.state.passwordValid ? '' : styles[this.errorClass(this.state.formErrors.user.password)] ) }>
-                  <div className={styles.label}>
-                    Пароль:
-                  </div>
-                  <div className={styles.input_box}>
-                    <input type="password" value={user.user.password} name="password"  onChange={(event) => this.handleUserInput(event)}/>
-                  </div>
+              </div>
 
+              <div className={styles.mail + ' ' + styles.input_block + ' ' +(this.state.passwordValid ? '' : styles[this.errorClass(this.state.formErrors.user.password)] ) }>
+                <div className={styles.label}>
+                  Пароль:
+                </div>
+                <div className={styles.input_box}>
+                  <input type="password" value={user.user.password} name="password"  onChange={(event) => this.handleUserInput(event)}/>
                 </div>
 
-                {(user.type === 'company') ? <div>
+              </div>
+
+              <div className={styles.mail + ' ' + styles.input_block + ' ' +(this.state.passwordValid ? '' : styles[this.errorClass(this.state.formErrors.user.password)] ) }>
+                <div className={styles.label}>
+                  Подтверждение пароля:
+                </div>
+                <div className={styles.input_box}>
+                  <input type="password_confirmation" value={user.user.password_confirmation} name="password_confirmation"  onChange={(event) => this.handleUserInput(event)}/>
+                </div>
+
+              </div>
+
+              {(user.type === 'company') ? <div>
 
                   <div className={styles.name + ' ' + styles.input_block}>
                     <div className={styles.label}>
@@ -407,66 +418,66 @@ class Registration extends Component {
 
                 </div>
                 : <div>
-                    <div className={styles.name + ' ' + styles.input_block}>
-                      <div className={styles.label}>
-                        Имя:
-                      </div>
-                      <div className={styles.input_box}>
-                        <input type="text" className={styles.name} name="name" value={user.person.name} onChange={(event) => this.handlePersonInput(event)}/>
-                      </div>
+                  <div className={styles.name + ' ' + styles.input_block}>
+                    <div className={styles.label}>
+                      Имя:
                     </div>
+                    <div className={styles.input_box}>
+                      <input type="text" className={styles.name} name="name" value={user.person.name} onChange={(event) => this.handlePersonInput(event)}/>
+                    </div>
+                  </div>
 
                 </div> }
 
-                <div className={styles.phone + ' ' + styles.input_block + ' ' +(this.state.phoneValid ? '' : styles[this.errorClass(this.state.formErrors.user.phone)] ) }>
-                  <div className={styles.label}>
-                    Телефон:
-                  </div>
-                  <div className={styles.input_box}>
-                    <InputMask mask="+7 (999) 999 99 99" type="phone" className={styles.phone} name="phone" placeholder="+7 (777) 777-77-77" value={user.user.phone} onChange={(event) => this.handleUserInput(event)}/>
-                  </div>
-
+              <div className={styles.phone + ' ' + styles.input_block + ' ' +(this.state.phoneValid ? '' : styles[this.errorClass(this.state.formErrors.user.phone)] ) }>
+                <div className={styles.label}>
+                  Телефон:
+                </div>
+                <div className={styles.input_box}>
+                  <InputMask mask="+7 (999) 999 99 99" type="phone" className={styles.phone} name="phone" placeholder="+7 (777) 777-77-77" value={user.user.phone} onChange={(event) => this.handleUserInput(event)}/>
                 </div>
 
-                <FileUploader className={(this.state.fileValid ? '' : styles[this.errorClass(this.state.formErrors.user.file)])}/>
-                {/*{(user.type === 'company')*/}
-                  {/*? <FormErrors formErrors={this.state.formErrors} />*/}
+              </div>
+
+              <FileUploader className={(this.state.fileValid ? '' : styles[this.errorClass(this.state.formErrors.user.file)])}/>
+              {/*{(user.type === 'company')*/}
+              {/*? <FormErrors formErrors={this.state.formErrors} />*/}
 
                 <div className={styles.aprove}>
-                  <input type="checkbox" name="rulesChecked"/>
-                  Я ознакомился и принимаю
-                  <a href="">
-                    Соглашение об использовании
-                  </a>
+                <input type="checkbox" name="rulesChecked"/>
+                Я ознакомился и принимаю
+                <a href="">
+                Соглашение об использовании
+                </a>
                 </div>
 
                 <div disabled={!this.state.formValid} className={styles.center} onClick={this.save}>
-                  <a>
-                    <span>
-                        Зарегистрироваться
-                    </span>
-                  </a>
+                <a>
+                <span>
+                Зарегистрироваться
+                </span>
+                </a>
                 </div>
-              </div>
+                </div>
 
 
 
-          </form>
+                </form>
 
-          <div className={styles.support_block}>
-            <span className={styles.font}>
+                <div className={styles.support_block}>
+                <span className={styles.font}>
                 Служба поддержки: +7 777 617 27 71
-            </span>
-            <a>
-              <span>
-                  Заказать звонок
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  }
-}
+                </span>
+                <a>
+                <span>
+                Заказать звонок
+                </span>
+                </a>
+                </div>
+                </div>
+                </div>
+                </div>
+                }
+              }
 
-export default Registration;
+              export default Registration;

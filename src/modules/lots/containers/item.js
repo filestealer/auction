@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
-import { createRequest, createRequestPartnership, acceptBid, acceptPartnership, fetchItem } from "../actions";
+import { createRequest, createRequestPartnership, acceptBid, acceptPartnership, fetchItem} from "../actions";
+import {openPopup} from "../../user/actions";
 import Item from '../components/item';
 import {push} from "connected-react-router";
 
@@ -47,6 +48,9 @@ const mapStateToProps = (state, ownProps) => {
     expired_date: item.contract_expiration_date || '',
     delivery_date: item.delivery_date || '',
     status: item.status || '',
+    office: item.office || '',
+    bids_count: item.bids_count || 0,
+    min_bid_amount: item.min_bid_amount || 0,
     initiator: item.initiator || {person: {name: ''}},
     user: state.user.profile,
     partnerships: item.partnerships,
@@ -74,6 +78,7 @@ const mapDispatchToProps = (dispatch) => ({
   acceptBid: (data) => dispatch(acceptBid(data)),
   reload: (id) => dispatch(fetchItem(id)),
   openUser: (id) => dispatch(push('/users/'+id)),
+  openPopup: () => dispatch(openPopup()),
 });
 
 export default connect(

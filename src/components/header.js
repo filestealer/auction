@@ -10,6 +10,7 @@ import FormErrors from "../components/formerrors";
 import 'react-redux-notify/dist/ReactReduxNotify.css';
 import {Notify} from 'react-redux-notify';
 import Spinner from './spinner';
+import UpdateProfilePopup from '../modules/user/containers/update_profile_popup';
 
 
 
@@ -182,7 +183,9 @@ validateForm() {
           </a>
         </div>
       </div>
+      <UpdateProfilePopup />
     </header>
+
   }
 }
 
@@ -192,6 +195,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     email: state.user.profile.email || '',
     token: state.user.token || '',
     modalActive: state.user.modalActive || false,
+    popupActive: state.user.popupActive || false,
     loading: state.user.isFetching || state.lots.isFetching || state.app.isFetching,
   };
 };
